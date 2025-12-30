@@ -1,0 +1,9 @@
+# 忽略所有内容
+/*
+# 重新包含我们需要的目录
+!/main_code/
+!/log/
+!/.gitignore
+# 忽略 main_code 下可能产生的大文件（双重保险）
+main_code/result/
+main_code/__pycache__/
