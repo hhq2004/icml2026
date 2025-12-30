@@ -6,14 +6,14 @@ from datasets import DATASET_REGISTRY
 from methods import METHOD_REGISTRY
 
 # 引入我们刚才写的 VideoLLaVAWrapper
-from models.video_llava import VideoLLaVAWrapper
+from models.video_llava_7b import VideoLLaVAWrapper
 
 def load_model(backbone_name):
     """
     模型加载工厂函数
     """
     if backbone_name == "Video-LLaVA-7B":
-        from models.video_llava import VideoLLaVAWrapper
+        from models.video_llava_7b import VideoLLaVAWrapper
         return VideoLLaVAWrapper()
     elif backbone_name == "LLaVA-NeXT-Video-34B":
         # ⭐ 新增：34B模型支持
@@ -47,6 +47,12 @@ def parse_args():
     # Q-Frame等方法的温度参数
     parser.add_argument("--temperature", type=float, default=1.0,
                         help="Temperature for Gumbel-Max sampling in Q-Frame (default: 1.0)")
+    
+    # ⭐ FastV方法的参数
+    parser.add_argument("--fastv_k", type=int, default=2, choices=[0, 2, 3, 5],
+                        help="FastV filtering layer K (default: 2, from paper Table 1)")
+    parser.add_argument("--fastv_r", type=float, default=0.5, choices=[0.5, 0.75, 0.9],
+                        help="FastV filtering ratio R (default: 0.5=50%%, from paper Table 1)")
     
     # ⭐ 新增：限制样本数（用于快速测试）
     parser.add_argument("--max_samples", type=int, default=None,

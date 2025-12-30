@@ -99,8 +99,32 @@ class VideoLLaVAWrapper:
             print(f"   ✓ Vision tower found")
         else:
             print(f"   ⚠️  Vision tower not found")
+        
+        # FastV剪枝配置
+        self.fastv_enabled = False
+        self.fastv_filtering_layer = 2
+        self.fastv_filtering_ratio = 0.5
+        self.fastv_hook_handle = None
+        self.fastv_pruned_indices = None
+        self.fastv_num_image_tokens = 0
             
         print(f"✅ Model loaded successfully on {self.device}")
+
+    def enable_fastv_pruning(self, filtering_layer, filtering_ratio):
+        """启用FastV剪枝 - 7B模型简化版(仅支持K=0)"""
+        self.fastv_enabled = True
+        self.fastv_filtering_layer = filtering_layer
+        self.fastv_filtering_ratio = filtering_ratio
+        
+        if filtering_layer != 0:
+            print(f"⚠️  Video-LLaVA-7B only supports K=0, falling back")
+        
+        print(f"[FastV] Enabled for 7B: K={filtering_layer}, R={filtering_ratio}")
+    
+    def disable_fastv_pruning(self):
+        """禁用FastV剪枝"""
+        self.fastv_enabled = False
+        print(f"[FastV] Disabled")
 
     def _load_video_frames(self, video_path, start_time, end_time, num_frames=8):
         """ 
