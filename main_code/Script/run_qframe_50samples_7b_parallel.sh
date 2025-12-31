@@ -20,13 +20,13 @@ echo "========================================================================"
 export TOKENIZERS_PARALLELISM=false
 
 # 创建输出目录
-mkdir -p ./result/test_50samples_7b_parallel
+mkdir -p ../result/test_50samples_7b_parallel
 
 # 并行启动4个进程，每个使用不同GPU处理不同数据块
 echo "🚀 启动4卡并行..."
 
 # GPU 0: chunk 0/4 (样本1-13)
-CUDA_VISIBLE_DEVICES=0 python run_inference.py \
+CUDA_VISIBLE_DEVICES=0 python ../run_inference.py \
     --dataset VideoMME \
     --method Q-Frame-Clean \
     --backbone Video-LLaVA-7B \
@@ -37,11 +37,11 @@ CUDA_VISIBLE_DEVICES=0 python run_inference.py \
     --max_samples 50 \
     --num_chunks 4 \
     --chunk_idx 0 \
-    --output_dir ./result/test_50samples_7b_parallel \
-    > ./result/test_50samples_7b_parallel/gpu0.log 2>&1 &
+    --output_dir ../result/test_50samples_7b_parallel \
+    > ../result/test_50samples_7b_parallel/gpu0.log 2>&1 &
 
 # GPU 1: chunk 1/4 (样本14-26)
-CUDA_VISIBLE_DEVICES=1 python run_inference.py \
+CUDA_VISIBLE_DEVICES=1 python ../run_inference.py \
     --dataset VideoMME \
     --method Q-Frame-Clean \
     --backbone Video-LLaVA-7B \
@@ -52,11 +52,11 @@ CUDA_VISIBLE_DEVICES=1 python run_inference.py \
     --max_samples 50 \
     --num_chunks 4 \
     --chunk_idx 1 \
-    --output_dir ./result/test_50samples_7b_parallel \
-    > ./result/test_50samples_7b_parallel/gpu1.log 2>&1 &
+    --output_dir ../result/test_50samples_7b_parallel \
+    > ../result/test_50samples_7b_parallel/gpu1.log 2>&1 &
 
 # GPU 2: chunk 2/4 (样本27-39)
-CUDA_VISIBLE_DEVICES=2 python run_inference.py \
+CUDA_VISIBLE_DEVICES=2 python ../run_inference.py \
     --dataset VideoMME \
     --method Q-Frame-Clean \
     --backbone Video-LLaVA-7B \
@@ -67,11 +67,11 @@ CUDA_VISIBLE_DEVICES=2 python run_inference.py \
     --max_samples 50 \
     --num_chunks 4 \
     --chunk_idx 2 \
-    --output_dir ./result/test_50samples_7b_parallel \
-    > ./result/test_50samples_7b_parallel/gpu2.log 2>&1 &
+    --output_dir ../result/test_50samples_7b_parallel \
+    > ../result/test_50samples_7b_parallel/gpu2.log 2>&1 &
 
 # GPU 3: chunk 3/4 (样本40-50)
-CUDA_VISIBLE_DEVICES=3 python run_inference.py \
+CUDA_VISIBLE_DEVICES=3 python ../run_inference.py \
     --dataset VideoMME \
     --method Q-Frame-Clean \
     --backbone Video-LLaVA-7B \
@@ -82,15 +82,15 @@ CUDA_VISIBLE_DEVICES=3 python run_inference.py \
     --max_samples 50 \
     --num_chunks 4 \
     --chunk_idx 3 \
-    --output_dir ./result/test_50samples_7b_parallel \
-    > ./result/test_50samples_7b_parallel/gpu3.log 2>&1 &
+    --output_dir ../result/test_50samples_7b_parallel \
+    > ../result/test_50samples_7b_parallel/gpu3.log 2>&1 &
 
 echo "✅ 4个进程已启动，后台运行中..."
 echo "📝 日志文件："
-echo "  - GPU 0: ./result/test_50samples_7b_parallel/gpu0.log"
-echo "  - GPU 1: ./result/test_50samples_7b_parallel/gpu1.log"
-echo "  - GPU 2: ./result/test_50samples_7b_parallel/gpu2.log"
-echo "  - GPU 3: ./result/test_50samples_7b_parallel/gpu3.log"
+echo "  - GPU 0: ../result/test_50samples_7b_parallel/gpu0.log"
+echo "  - GPU 1: ../result/test_50samples_7b_parallel/gpu1.log"
+echo "  - GPU 2: ../result/test_50samples_7b_parallel/gpu2.log"
+echo "  - GPU 3: ../result/test_50samples_7b_parallel/gpu3.log"
 echo ""
 echo "⏳ 等待所有进程完成..."
 
@@ -110,7 +110,7 @@ import glob
 # 读取所有chunk文件
 chunks = []
 for i in range(4):
-    chunk_file = f'./result/test_50samples_7b_parallel/VideoMME_Q-Frame-Clean_all_Video-LLaVA-7B_chunk{i}.json'
+    chunk_file = f'../result/test_50samples_7b_parallel/VideoMME_Q-Frame-Clean_all_Video-LLaVA-7B_chunk{i}.json'
     try:
         with open(chunk_file, 'r') as f:
             chunks.extend(json.load(f))
@@ -118,20 +118,23 @@ for i in range(4):
         print(f'Warning: {chunk_file} not found')
 
 # 保存合并结果
-with open('./result/test_50samples_7b_parallel/VideoMME_Q-Frame-Clean_all_Video-LLaVA-7B_merged.json', 'w') as f:
+with open('../result/test_50samples_7b_parallel/VideoMME_Q-Frame-Clean_all_Video-LLaVA-7B_merged.json', 'w') as f:
     json.dump(chunks, f, indent=4)
 
 # 计算准确率
 correct = sum(1 for r in chunks if r.get('pred') == r.get('gt'))
 total = len(chunks)
-print(f'\n📊 合并结果统计:')
-print(f'  - 总样本数: {total}')
-print(f'  - 正确数: {correct}')
-print(f'  - 准确率: {100*correct/total:.2f}%')
+if total > 0:
+    print(f'\n📊 合并结果统计:')
+    print(f'  - 总样本数: {total}')
+    print(f'  - 正确数: {correct}')
+    print(f'  - 准确率: {100*correct/total:.2f}%')
+else:
+    print('\n⚠️  没有找到任何结果文件！')
 "
 
 echo ""
-echo "结果文件: ./result/test_50samples_7b_parallel/VideoMME_Q-Frame-Clean_all_Video-LLaVA-7B_merged.json"
+echo "结果文件: ../result/test_50samples_7b_parallel/VideoMME_Q-Frame-Clean_all_Video-LLaVA-7B_merged.json"
 
 # ⭐ 添加错误检测
 echo ""
@@ -140,18 +143,18 @@ echo "🔍 检查日志中的错误..."
 echo "========================================================================"
 
 # 检查是否有generate()错误
-if grep -q "attribute 'generate'" ./result/test_50samples_7b_parallel/*.log 2>/dev/null; then
+if grep -q "attribute 'generate'" ../result/test_50samples_7b_parallel/*.log 2>/dev/null; then
     echo "❌ 警告: 检测到 generate() 方法错误！"
     echo ""
     echo "详细错误信息:"
-    grep -n "AttributeError.*generate" ./result/test_50samples_7b_parallel/*.log 2>/dev/null | head -5
+    grep -n "AttributeError.*generate" ../result/test_50samples_7b_parallel/*.log 2>/dev/null | head -5
     echo ""
     echo "⚠️  模型推理失败！准确率可能是随机猜测的结果（~25%）"
     echo "   请检查模型加载是否使用了正确的类（VideoLlavaForConditionalGeneration）"
     echo ""
     echo "建议操作:"
     echo "  1. 检查 video_llava_7b.py 的模型加载部分"
-    echo "  2. 查看完整日志: cat ./result/test_50samples_7b_parallel/gpu0.log | head -30"
+    echo "  2. 查看完整日志: cat ../result/test_50samples_7b_parallel/gpu0.log | head -30"
 else
     echo "✅ 未检测到 generate() 错误"
     echo "✅ 模型推理正常"
