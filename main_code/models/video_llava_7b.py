@@ -41,23 +41,7 @@ class VideoLLaVAWrapper:
         print(f"   ✓ Processor loaded successfully")
         
         
-        # ⭐ 关键修复1：强制设置image_processor的size为336
-        # Video-LLaVA使用CLIP-ViT-L/14，image_size必须是336
-        if hasattr(self.processor, 'image_processor'):
-            self.processor.image_processor.size = {"shortest_edge": 336}
-            self.processor.image_processor.crop_size = {"height": 336, "width": 336}
-            print(f"   ✓ Image processor size set to 336x336")
-        
-        # ⭐ 关键修复2：设置patch_size（CLIP-ViT-L/14 = 14）
-        # 这个是processor计算token数量时需要的
-        if not hasattr(self.processor, 'patch_size') or self.processor.patch_size is None:
-            self.processor.patch_size = 14
-            print(f"   ✓ Patch size set to 14")
-        
-        # ⭐ 关键修复3：设置vision_feature_select_strategy
-        # 某些processor版本需要这个参数
-        if not hasattr(self.processor, 'vision_feature_select_strategy'):
-            self.processor.vision_feature_select_strategy = "default"
+        # ⭐ 先不设置image size，等模型加载后根据模型类型动态设置
 
         # 3. 检查transformers版本
         import transformers
@@ -65,18 +49,79 @@ class VideoLLaVAWrapper:
         if transformers.__version__ < "4.30" or transformers.__version__ >= "5.0":
             print(f"   ⚠️  Model was trained with transformers 4.31.0")
 
-        # 4. 加载模型
-        self.model = AutoModel.from_pretrained(
-            model_path,
-            torch_dtype=torch.float16,
-            device_map="auto",
-            local_files_only=True,  # ⭐ 路径已修正
-            trust_remote_code=True
-        )
+        # 4. 加载模型  
+        # ⭐ 关键修复：Video-LLaVA必须使用VideoLlavaForConditionalGeneration
+        # config.json显示model_type="video_llava"，所以要用对应的生成模型类
+        try:
+            # 方法1: 直接导入VideoLlavaForConditionalGeneration
+            from transformers import VideoLlavaForConditionalGeneration
+            self.model = VideoLlavaForConditionalGeneration.from_pretrained(
+                model_path,
+                torch_dtype=torch.float16,
+                device_map="auto",
+                local_files_only=True,
+                trust_remote_code=True
+            )
+            print(f"   ✓ Model loaded as VideoLlavaForConditionalGeneration")
+        except ImportError:
+            # 方法2: 使用AutoModelForCausalLM with auto_map
+            print(f"   ⚠️ VideoLlavaForConditionalGeneration not found, trying AutoModelForCausalLM...")
+            from transformers import AutoModelForCausalLM
+            self.model = AutoModelForCausalLM.from_pretrained(
+                model_path,
+                torch_dtype=torch.float16,
+                device_map="auto",
+                local_files_only=True,
+                trust_remote_code=True
+            )
+            print(f"   ✓ Model loaded as AutoModelForCausalLM")
+        except Exception as e:
+            # 方法3: Fallback到AutoModel（但会缺少generate方法）
+            print(f"   ⚠️ Both VideoLlavaForConditionalGeneration and AutoModelForCausalLM failed: {e}")
+            print(f"   Using AutoModel as last resort...")
+            self.model = AutoModel.from_pretrained(
+                model_path,
+                torch_dtype=torch.float16,
+                device_map="auto",
+                local_files_only=True,
+                trust_remote_code=True
+            )
+            print(f"   ⚠️ Model loaded as AutoModel (may lack generate method!)")
+        
         self.model.eval()
-        print(f"   ✓ Model loaded successfully")
-
-        # 5. 获取并初始化 Vision Tower（增强版）
+        print(f"   ✓ Model ready")
+        
+        # ⭐ 关键修复：根据模型类型设置正确的image size
+        model_class_name = self.model.__class__.__name__
+        print(f"   Detected model class: {model_class_name}")
+        
+        if "VideoLlavaForConditionalGeneration" in model_class_name:
+            # VideoLlavaForConditionalGeneration的image_tower期望224x224
+            target_size = 224
+            print(f"   → Using 224x224 for VideoLlavaForConditionalGeneration")
+        else:
+            # AutoModel及其他类型使用336x336
+            target_size = 336
+            print(f"   → Using 336x336 for {model_class_name}")
+        
+        # 设置processor的image size
+        if hasattr(self.processor, 'image_processor'):
+            self.processor.image_processor.size = {"shortest_edge": target_size}
+            self.processor.image_processor.crop_size = {"height": target_size, "width": target_size}
+            print(f"   ✓ Image processor configured to {target_size}x{target_size}")
+        
+        # 设置patch_size（CLIP-ViT-L/14 = 14）
+        if not hasattr(self.processor, 'patch_size') or self.processor.patch_size is None:
+            self.processor.patch_size = 14
+            print(f"   ✓ Patch size set to 14")
+        
+        # 设置vision_feature_select_strategy
+        if not hasattr(self.processor, 'vision_feature_select_strategy'):
+            self.processor.vision_feature_select_strategy = "default"
+        
+        # 保存target_size供后续使用
+        self.target_image_size = target_size
+        
         self.vision_tower = None
         
         # 尝试多种方式获取vision tower
@@ -291,56 +336,47 @@ class VideoLLaVAWrapper:
         else:
             raise TypeError(f"Unsupported video_tensor type: {type(video_tensor)}")
         
-        # ⭐ 关键修复：确保所有帧都是336x336
-        # 即使processor配置了size，我们也显式resize以确保万无一失
-        frames = [f.resize((336, 336), Image.Resampling.BILINEAR) if f.size != (336, 336) else f 
+        # ⭐ 关键修复：使用动态检测的image size
+        # VideoLlavaForConditionalGeneration使用224x224
+        # AutoModel使用336x336
+        target_size = self.target_image_size
+        frames = [f.resize((target_size, target_size), Image.Resampling.BILINEAR) 
+                  if f.size != (target_size, target_size) else f 
                   for f in frames]
         
-        print(f"   📊 Processing {len(frames)} frames at 336x336")
+        print(f"   📊 Processing {len(frames)} frames at {target_size}x{target_size}")
         
-        # 2. 构建Prompt（在frames定义之后）
-        # ⭐ 注意：LLaVA processor期望<image>标记，不是<video>
-        formatted_prompt = f"USER: <image>\\n{prompt}\\n"
+        # 2. 构建娿rompt（在frames定义之后）
+        # ⭐ 关键修复：Video-LLaVA期望prompt中的<image>数量 = frames数量
+        num_frames = len(frames)
+        
+        if num_frames == 1:
+            image_tokens = "<image>"
+        else:
+            # 多帧：每帧一个<image>，用换行分隔
+            image_tokens = "\n".join(["<image>"] * num_frames)
+        
+        formatted_prompt = f"USER: {image_tokens}\n{prompt}\n"
         
         if options:
-            formatted_prompt += "Select the best answer from:\\n"
+            formatted_prompt += "Select the best answer from:\n"
             for i, opt in enumerate(options):
-                formatted_prompt += f"({chr(65+i)}) {opt}\\n"
-            formatted_prompt += "Answer with the option letter directly.\\nASSISTANT:"
+                formatted_prompt += f"({chr(65+i)}) {opt}\n"
+            formatted_prompt += "Answer with the option letter directly.\nASSISTANT:"
         else:
             formatted_prompt += "ASSISTANT:"
         
-        print(f"   💬 Prompt: {formatted_prompt[:100]}...")
+        print(f"   💬 Using {num_frames} <image> tokens for {num_frames} frames")
+        print(f"   💬 Prompt preview: {formatted_prompt[:100]}...")
         
         # 3. 使用Processor处理
-        # ⭐ 关键：对于多帧，使用videos参数而不是images参数
-        try:
-            # Video-LLaVA应该支持videos参数
-            inputs = self.processor(
-                text=formatted_prompt,
-                videos=frames,  # 使用videos参数
-                return_tensors="pt",
-                padding=True
-            )
-            print(f"   ✓ Processor succeeded with 'videos' parameter")
-        except Exception as e:
-            print(f"   ⚠️  'videos' parameter failed: {e}")
-            # 回退：使用images参数（需要调整prompt）
-            try:
-                # 如果使用images，需要在prompt中插入对应数量的<image>
-                image_tokens = "\\n".join(["<image>"] * len(frames))
-                formatted_prompt_multi = formatted_prompt.replace("<image>", image_tokens)
-                
-                inputs = self.processor(
-                    text=formatted_prompt_multi,
-                    images=frames,
-                    return_tensors="pt",
-                    padding=True
-                )
-                print(f"   ✓ Processor succeeded with 'images' parameter (multi-token prompt)")
-            except Exception as e2:
-                print(f"   ❌ Both methods failed: {e}, {e2}")
-                raise e
+        inputs = self.processor(
+            text=formatted_prompt,
+            images=frames,  # 使用images参数，与<image>数量匹配
+            return_tensors="pt",
+            padding=True
+        )
+        print(f"   ✓ Processor succeeded")
         
         # 4. 移到GPU
         inputs = {k: v.to(self.device) for k, v in inputs.items()}
