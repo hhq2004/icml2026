@@ -13,7 +13,7 @@ def load_model(backbone_name):
     模型加载工厂函数
     """
     if backbone_name == "Video-LLaVA-7B":
-        from models.video_llava_7b import VideoLLaVAWrapper
+        from models.video_llava import VideoLLaVAWrapper
         return VideoLLaVAWrapper()
     elif backbone_name == "LLaVA-NeXT-Video-34B":
         # ⭐ 新增：34B模型支持
@@ -48,12 +48,6 @@ def parse_args():
     parser.add_argument("--temperature", type=float, default=1.0,
                         help="Temperature for Gumbel-Max sampling in Q-Frame (default: 1.0)")
     
-    # ⭐ FastV方法的参数
-    parser.add_argument("--fastv_k", type=int, default=2, choices=[0, 2, 3, 5],
-                        help="FastV filtering layer K (default: 2, from paper Table 1)")
-    parser.add_argument("--fastv_r", type=float, default=0.5, choices=[0.5, 0.75, 0.9],
-                        help="FastV filtering ratio R (default: 0.5=50%%, from paper Table 1)")
-    
     # ⭐ 新增：限制样本数（用于快速测试）
     parser.add_argument("--max_samples", type=int, default=None,
                         help="Limit number of samples for quick testing (default: None for all)")
@@ -67,8 +61,13 @@ def main():
     args = parse_args()
     
     # 1. 加载模型 (Backbone)
-    print(f"🚀 [1/4] Loading Backbone: {args.backbone}...")
-    model = load_model(args.backbone) 
+    # ⚠️ 特殊处理：FastV使用独立的model wrapper，不需要主model
+    if args.method == "FastV":
+        print(f"🚀 [1/4] Skipping main model load (FastV uses isolated model)...")
+        model = None  # FastV会在__init__中加载自己的model
+    else:
+        print(f"🚀 [1/4] Loading Backbone: {args.backbone}...")
+        model = load_model(args.backbone)
     
     # 2. 初始化方法 (Method)
     print(f"🛠️ [2/4] Initializing Method: {args.method}...")
