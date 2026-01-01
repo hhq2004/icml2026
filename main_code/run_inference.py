@@ -27,7 +27,7 @@ def parse_args():
     
     # 核心选择参数
     parser.add_argument("--dataset", type=str, required=True, choices=["VideoMME", "LongVideoBench", "MLUV"])
-    parser.add_argument("--method", type=str, required=True, choices=["FastV", "ToMe", "MovieChat", "SceneGraph-Cap", "Q-Frame", "Q-Frame-Clean", "EventGraph-LLM"])
+    parser.add_argument("--method", type=str, required=True, choices=["FastV", "ToMe", "DyCoke", "MovieChat", "SceneGraph-Cap", "Q-Frame", "Q-Frame-Clean", "EventGraph-LLM"])
     parser.add_argument("--backbone", type=str, default="Video-LLaVA-7B", choices=["Video-LLaVA-7B", "LLaVA-NeXT-Video-34B"])
     
     # --- [新增] 调试模式参数 ---
@@ -52,6 +52,15 @@ def parse_args():
     parser.add_argument("--max_samples", type=int, default=None,
                         help="Limit number of samples for quick testing (default: None for all)")
     
+    # === DyCoke专用参数 (独立section) ===
+    parser.add_argument("--dycoke_K", type=float, default=0.5,
+                        help="DyCoke Stage 1 pruning rate (default: 0.5, paper Table 1)")
+    parser.add_argument("--dycoke_L", type=int, default=3,
+                        help="DyCoke Stage 2 attention evaluation layer (default: 3)")
+    parser.add_argument("--dycoke_P", type=float, default=0.7,
+                        help="DyCoke Stage 2 retention rate (default: 0.7, keep top 70%)")
+    # =====================================
+    
     # 输出目录
     parser.add_argument("--output_dir", type=str, default="./result")
     
@@ -61,10 +70,10 @@ def main():
     args = parse_args()
     
     # 1. 加载模型 (Backbone)
-    # ⚠️ 特殊处理：FastV使用独立的model wrapper，不需要主model
-    if args.method == "FastV":
-        print(f"🚀 [1/4] Skipping main model load (FastV uses isolated model)...")
-        model = None  # FastV会在__init__中加载自己的model
+    # ⚠️ 特殊处理：FastV和DyCoke使用独立的model wrapper，不需要主model
+    if args.method in ["FastV", "DyCoke"]:
+        print(f"🚀 [1/4] Skipping main model load ({args.method} uses isolated model)...")
+        model = None  # FastV/DyCoke会在__init__中加载自己的model
     else:
         print(f"🚀 [1/4] Loading Backbone: {args.backbone}...")
         model = load_model(args.backbone)

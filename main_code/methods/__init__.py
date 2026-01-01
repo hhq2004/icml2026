@@ -12,10 +12,14 @@ from .tome import ToMe
 # FastV实现（ECCV 2024 baseline）
 from .fastv import FastV
 
+# DyCoke实现（CVPR 2025 baseline）
+from .DyCoke import DyCoke
+
 # 注册表
 METHOD_REGISTRY = {
     "Q-Frame-Clean": QFrameClean,
     "SceneGraph-Cap": SceneGraphCap,
     "ToMe": ToMe,
-    "FastV": FastV
+    "FastV": FastV,
+    "DyCoke": DyCoke
 }
