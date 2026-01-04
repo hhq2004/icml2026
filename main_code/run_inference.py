@@ -13,7 +13,7 @@ def load_model(backbone_name):
     模型加载工厂函数
     """
     if backbone_name == "Video-LLaVA-7B":
-        from models.video_llava import VideoLLaVAWrapper
+        from models.video_llava_7b import VideoLLaVAWrapper
         return VideoLLaVAWrapper()
     elif backbone_name == "LLaVA-NeXT-Video-34B":
         # ⭐ 新增：34B模型支持
@@ -27,7 +27,7 @@ def parse_args():
     
     # 核心选择参数
     parser.add_argument("--dataset", type=str, required=True, choices=["VideoMME", "LongVideoBench", "MLUV"])
-    parser.add_argument("--method", type=str, required=True, choices=["FastV", "ToMe", "DyCoke", "MovieChat", "SceneGraph-Cap", "Q-Frame", "Q-Frame-Clean", "EventGraph-LLM"])
+    parser.add_argument("--method", type=str, required=True, choices=["FastV", "ToMe", "DyCoke", "MovieChat", "SceneGraph-Cap", "Q-Frame", "Q-Frame-Clean", "EventGraph-LMM"])
     parser.add_argument("--backbone", type=str, default="Video-LLaVA-7B", choices=["Video-LLaVA-7B", "LLaVA-NeXT-Video-34B"])
     
     # --- [新增] 调试模式参数 ---
@@ -61,6 +61,11 @@ def parse_args():
                         help="DyCoke Stage 2 retention rate (default: 0.7, keep top 70%)")
     # =====================================
     
+    # === ToMe专用参数 (独立section) ===
+    parser.add_argument("--use_full_tome", action="store_true",
+                        help="Use FULL ToMe (ViT-layer token merging) instead of simplified version")
+    # =====================================
+    
     # 输出目录
     parser.add_argument("--output_dir", type=str, default="./result")
     
@@ -70,10 +75,20 @@ def main():
     args = parse_args()
     
     # 1. 加载模型 (Backbone)
-    # ⚠️ 特殊处理：FastV和DyCoke使用独立的model wrapper，不需要主model
+    # ⚠️ 特殊处理：FastV、DyCoke、ToMe(完整版)使用独立的model wrapper
     if args.method in ["FastV", "DyCoke"]:
         print(f"🚀 [1/4] Skipping main model load ({args.method} uses isolated model)...")
         model = None  # FastV/DyCoke会在__init__中加载自己的model
+    elif args.method == "ToMe" and args.use_full_tome:
+        # ⭐ ToMe完整版：使用VideoLLaVATomeWrapper
+        print(f"🚀 [1/4] Loading ToMe-patched Backbone: {args.backbone}...")
+        from models.video_llava_7b_tome import VideoLLaVATomeWrapper
+        model = VideoLLaVATomeWrapper(
+            model_path="/root/hhq/models/Video-LLaVA-7B-hf",
+            token_budget=args.token_budget,
+            num_frames=32
+        )
+        print(f"   ✅ VideoLLaVATomeWrapper loaded with token budget={args.token_budget}")
     else:
         print(f"🚀 [1/4] Loading Backbone: {args.backbone}...")
         model = load_model(args.backbone)

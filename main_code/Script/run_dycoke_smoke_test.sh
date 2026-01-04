@@ -1,21 +1,22 @@
 #!/bin/bash
 
 # DyCoke 7B模型 - 4卡数据并行冒烟测试 (50样本)
-# 双阶段token压缩：TTM + Dynamic KV Pruning
+# ⭐ Stage 1 TTM 实现 - 使用 Monkey Patching 方案
+# ⚠️ 注意: 仅实现 Stage 1 TTM, Stage 2 ATM 未实现
 
 echo "========================================================================"
-echo "DyCoke Baseline - 7B模型 4卡数据并行冒烟测试"
+echo "DyCoke Stage 1 TTM - 7B模型 4卡数据并行冒烟测试"
 echo "========================================================================"
 echo "配置："
-echo "  - 模型: Video-LLaVA-7B (备份)"
-echo "  - 方法: DyCoke"
+echo "  - 模型: Video-LLaVA-7B (VideoLlavaForConditionalGeneration)"
+echo "  - 方法: DyCoke (Monkey Patching multi_modal_projector)"
 echo "  - 数据集: VideoMME (50样本)"
-echo "  - Token Budget: 2048"
-echo "  - Stage 1 pruning rate K: 0.5 (论文Table 1)"
-echo "  - Stage 2 eval layer L: 3"
-echo "  - Stage 2 retention rate P: 0.7"
+echo "  - Stage 1 TTM: K=0.5 (100% 官方算法复现)"
+echo "  - ✅ Stage 1: Temporal Token Merging (已实现)"
+echo "  - ❌ Stage 2: Dynamic KV Pruning (需修改transformers,未实现)"
 echo "  - 并行: 4×A100 数据并行"
-echo "  - 预计时间: ~10分钟"
+echo "  - 预期token压缩: 8192 → ~4096 (50%)"
+echo "  - 预计时间: ~15-20分钟"
 echo "========================================================================"
 
 # 设置通用环境变量
@@ -33,7 +34,6 @@ CUDA_VISIBLE_DEVICES=0 python ../run_inference.py \
     --method DyCoke \
     --backbone Video-LLaVA-7B \
     --data_root /root/hhq/dataset \
-    --token_budget 2048 \
     --dycoke_K 0.5 \
     --dycoke_L 3 \
     --dycoke_P 0.7 \
@@ -50,7 +50,6 @@ CUDA_VISIBLE_DEVICES=1 python ../run_inference.py \
     --method DyCoke \
     --backbone Video-LLaVA-7B \
     --data_root /root/hhq/dataset \
-    --token_budget 2048 \
     --dycoke_K 0.5 \
     --dycoke_L 3 \
     --dycoke_P 0.7 \
@@ -67,7 +66,6 @@ CUDA_VISIBLE_DEVICES=2 python ../run_inference.py \
     --method DyCoke \
     --backbone Video-LLaVA-7B \
     --data_root /root/hhq/dataset \
-    --token_budget 2048 \
     --dycoke_K 0.5 \
     --dycoke_L 3 \
     --dycoke_P 0.7 \
@@ -84,7 +82,6 @@ CUDA_VISIBLE_DEVICES=3 python ../run_inference.py \
     --method DyCoke \
     --backbone Video-LLaVA-7B \
     --data_root /root/hhq/dataset \
-    --token_budget 2048 \
     --dycoke_K 0.5 \
     --dycoke_L 3 \
     --dycoke_P 0.7 \
