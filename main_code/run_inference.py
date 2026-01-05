@@ -27,7 +27,7 @@ def parse_args():
     
     # 核心选择参数
     parser.add_argument("--dataset", type=str, required=True, choices=["VideoMME", "LongVideoBench", "MLUV"])
-    parser.add_argument("--method", type=str, required=True, choices=["FastV", "ToMe", "MovieChat", "SceneGraph-Cap", "Q-Frame", "Q-Frame-Clean", "EventGraph-LLM"])
+    parser.add_argument("--method", type=str, required=True, choices=["FastV", "ToMe", "DyCoke", "MovieChat", "SceneGraph-Cap", "Q-Frame", "Q-Frame-Clean", "EventGraph-LMM"])
     parser.add_argument("--backbone", type=str, default="Video-LLaVA-7B", choices=["Video-LLaVA-7B", "LLaVA-NeXT-Video-34B"])
     
     # --- [新增] 调试模式参数 ---
@@ -48,15 +48,30 @@ def parse_args():
     parser.add_argument("--temperature", type=float, default=1.0,
                         help="Temperature for Gumbel-Max sampling in Q-Frame (default: 1.0)")
     
-    # ⭐ FastV方法的参数
-    parser.add_argument("--fastv_k", type=int, default=2, choices=[0, 2, 3, 5],
-                        help="FastV filtering layer K (default: 2, from paper Table 1)")
-    parser.add_argument("--fastv_r", type=float, default=0.5, choices=[0.5, 0.75, 0.9],
-                        help="FastV filtering ratio R (default: 0.5=50%%, from paper Table 1)")
-    
     # ⭐ 新增：限制样本数（用于快速测试）
     parser.add_argument("--max_samples", type=int, default=None,
                         help="Limit number of samples for quick testing (default: None for all)")
+    
+    # === DyCoke专用参数 (独立section) ===
+    parser.add_argument("--dycoke_K", type=float, default=0.5,
+                        help="DyCoke Stage 1 pruning rate (default: 0.5, paper Table 1)")
+    parser.add_argument("--dycoke_L", type=int, default=3,
+                        help="DyCoke Stage 2 attention evaluation layer (default: 3)")
+    parser.add_argument("--dycoke_P", type=float, default=0.7,
+                        help="DyCoke Stage 2 retention rate (default: 0.7, keep top 70%)")
+    # =====================================
+    
+    # === ToMe专用参数 (独立section) ===
+    parser.add_argument("--use_full_tome", action="store_true",
+                        help="Use FULL ToMe (ViT-layer token merging) instead of simplified version")
+    # =====================================
+    
+    # === GNU Parallel批处理模式参数 (可选，向后兼容) ===
+    parser.add_argument("--batch_mode", action="store_true",
+                        help="Enable batch processing mode for GNU Parallel dynamic load balancing")
+    parser.add_argument("--sample_indices", type=str, default=None,
+                        help="Comma-separated sample indices for batch processing (e.g., '0,1,2,3,4')")
+    # =====================================================
     
     # 输出目录
     parser.add_argument("--output_dir", type=str, default="./result")
@@ -67,8 +82,23 @@ def main():
     args = parse_args()
     
     # 1. 加载模型 (Backbone)
-    print(f"🚀 [1/4] Loading Backbone: {args.backbone}...")
-    model = load_model(args.backbone) 
+    # ⚠️ 特殊处理：FastV、DyCoke、ToMe(完整版)使用独立的model wrapper
+    if args.method in ["FastV", "DyCoke"]:
+        print(f"🚀 [1/4] Skipping main model load ({args.method} uses isolated model)...")
+        model = None  # FastV/DyCoke会在__init__中加载自己的model
+    elif args.method == "ToMe" and args.use_full_tome:
+        # ⭐ ToMe完整版：使用VideoLLaVATomeWrapper
+        print(f"🚀 [1/4] Loading ToMe-patched Backbone: {args.backbone}...")
+        from models.video_llava_7b_tome import VideoLLaVATomeWrapper
+        model = VideoLLaVATomeWrapper(
+            model_path="/root/hhq/models/Video-LLaVA-7B-hf",
+            token_budget=args.token_budget,
+            num_frames=32
+        )
+        print(f"   ✅ VideoLLaVATomeWrapper loaded with token budget={args.token_budget}")
+    else:
+        print(f"🚀 [1/4] Loading Backbone: {args.backbone}...")
+        model = load_model(args.backbone)
     
     # 2. 初始化方法 (Method)
     print(f"🛠️ [2/4] Initializing Method: {args.method}...")
@@ -98,8 +128,23 @@ def main():
             print("⚠️ Warning: Dataset does not support max_samples limiting.")
     # ==========================================
     
-    # === [新增] 数据分片逻辑 (用于多卡并行) ===
-    if args.num_chunks > 1:
+    # === [新增] GNU Parallel批处理模式 (优先级高于chunk模式) ===
+    if args.batch_mode and args.sample_indices:
+        # 批处理模式：处理指定的样本索引列表
+        indices = [int(i.strip()) for i in args.sample_indices.split(',') if i.strip()]
+        if hasattr(dataset, 'samples'):
+            total_samples = len(dataset.samples)
+            # 过滤无效索引
+            valid_indices = [i for i in indices if 0 <= i < total_samples]
+            if len(valid_indices) < len(indices):
+                print(f"⚠️ Warning: {len(indices) - len(valid_indices)} invalid indices filtered")
+            
+            dataset.samples = [dataset.samples[i] for i in valid_indices]
+            print(f"🔋 [Batch Mode] Processing {len(valid_indices)} samples: {valid_indices[:5]}...")
+        else:
+            print("⚠️ Warning: Dataset does not support batch mode. Falling back to standard mode.")
+    # === [原有] 数据分片逻辑 (用于多卡并行) ===
+    elif args.num_chunks > 1:
         total_samples = len(dataset)
         chunk_size = total_samples // args.num_chunks
         start_idx = args.chunk_idx * chunk_size

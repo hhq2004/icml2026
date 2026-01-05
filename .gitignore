@@ -4,6 +4,8 @@
 !/main_code/
 !/log/
 !/.gitignore
-# 忽略 main_code 下可能产生的大文件（双重保险）
+!/hold.py
+!/readme.txt
+# 忽略大文件和临时文件
 main_code/result/
 main_code/__pycache__/
