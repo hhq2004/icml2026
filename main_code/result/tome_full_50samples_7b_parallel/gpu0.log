@@ -1,0 +1,713 @@
+`torch_dtype` is deprecated! Use `dtype` instead!
+🚀 [1/4] Loading ToMe-patched Backbone: Video-LLaVA-7B...
+[ToMe] Initializing Video-LLaVA with ToMe...
+🚀 [Model] Initializing from: /root/hhq/models/Video-LLaVA-7B-hf
+   Model Type: video_llava
+   ✓ Processor loaded successfully
+   Transformers version: 4.57.3
+Loading checkpoint shards:   0%|                                                                                                                            | 0/3 [00:00<?, ?it/s]Loading checkpoint shards:  33%|██████████████████████████████████████▋                                                                             | 1/3 [00:03<00:06,  3.31s/it]Loading checkpoint shards:  67%|█████████████████████████████████████████████████████████████████████████████▎                                      | 2/3 [00:06<00:03,  3.18s/it]Loading checkpoint shards: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:09<00:00,  3.11s/it]Loading checkpoint shards: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:09<00:00,  3.14s/it]
+   ✓ Model loaded as VideoLlavaForConditionalGeneration
+   ✓ Model ready
+   Detected model class: VideoLlavaForConditionalGeneration
+   → Using 224x224 for VideoLlavaForConditionalGeneration
+   ✓ Image processor configured to 224x224
+   ⚠️  Vision tower not found
+✅ Model loaded successfully on cuda
+[ToMe] ⚠️ Vision tower not found in parent class, attempting direct access...
+[ToMe] ✓ Found vision tower via model.model.image_tower (ACTUAL tower used!)
+[ToMe] ✓ Vision tower loaded: CLIPVisionModel
+[ToMe] Configuration:
+  - Num frames: 32
+  - Tokens per frame: 256
+  - Initial tokens: 8192
+  - Token budget: 2048
+  - Vision layers: 24
+  - Tokens to merge: 6144
+  - Tokens per layer (r): 256
+[ToMe] Injecting ToMe into Vision Tower...
+  → Using model.model.image_tower (VERIFIED: actual tower used during generation)
+  ✓ Layer  0: CLIPEncoderLayer → ToMeCLIPEncoderLayer
+  ✓ Replaced 24 layers in CLIPVisionModel
+[ToMe] Injection complete
+[ToMe] ✅ Initialization complete
+   ✅ VideoLLaVATomeWrapper loaded with token budget=2048
+🛠️ [2/4] Initializing Method: ToMe...
+[ToMe] ✅ Using FULL ToMe (ViT-layer token merging)
+[ToMe]    Model class: VideoLLaVATomeWrapper
+📂 [3/4] Loading Dataset: VideoMME (Mode: all)...
+[VideoMME] Loading json from /root/hhq/dataset/Video-MME/video_mme.json...
+    -> Indexing videos in /root/hhq/dataset/Video-MME/videos...
+    -> Indexed 911 files.
+🚀 [VideoMME] FORCE LOAD MODE: Loading EVERYTHING found on disk...
+✅ Successfully loaded 2697 samples from 899 videos.
+🔬 [Testing Mode] Limited to 50 samples (Original: 2697)
+🔄 [Parallel] Running Chunk 0/4: Samples 0 to 12 (Total 12)
+▶️ [4/4] Start Inference...
+  📊 Total samples: 12
+  🎯 Method: ToMe
+  💾 Results will be saved to: ../result/tome_full_50samples_7b_parallel
+
+Processing:   0%|                                                                                                                                      | 0/12 [00:00<?, ?sample/s]Token indices sequence length is longer than the specified maximum sequence length for this model (8324 > 4096). Running this sequence through the model will result in indexing errors
+Traceback (most recent call last):
+  File "/root/hhq/main_code/methods/tome.py", line 148, in process_and_inference
+    answer = self.model.generate(frames, question, options)
+  File "/root/hhq/main_code/models/video_llava_7b_tome.py", line 499, in generate
+    return super().generate(video_tensor, prompt, options)
+  File "/root/hhq/main_code/models/video_llava_7b.py", line 729, in generate
+    output_ids = self.model.generate(
+  File "/usr/local/lib/python3.10/dist-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/generation/utils.py", line 2564, in generate
+    result = decoding_method(
+  File "/usr/local/lib/python3.10/dist-packages/transformers/generation/utils.py", line 2784, in _sample
+    outputs = self(**model_inputs, return_dict=True)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/utils/generic.py", line 918, in wrapper
+    output = func(self, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 590, in forward
+    outputs = self.model(
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/utils/generic.py", line 918, in wrapper
+    output = func(self, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 375, in forward
+    special_image_mask, _ = self.get_placeholder_mask(
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 309, in get_placeholder_mask
+    raise ValueError(
+ValueError: Image features and image tokens do not match: tokens: 8192, features 32
+                                                                                                                                                                                  Processing:   0%|                                                                                                                                      | 0/12 [00:03<?, ?sample/s]Processing:   8%|██████████▌                                                                                                                   | 1/12 [00:03<00:42,  3.88s/sample]Traceback (most recent call last):
+  File "/root/hhq/main_code/methods/tome.py", line 148, in process_and_inference
+    answer = self.model.generate(frames, question, options)
+  File "/root/hhq/main_code/models/video_llava_7b_tome.py", line 499, in generate
+    return super().generate(video_tensor, prompt, options)
+  File "/root/hhq/main_code/models/video_llava_7b.py", line 729, in generate
+    output_ids = self.model.generate(
+  File "/usr/local/lib/python3.10/dist-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/generation/utils.py", line 2564, in generate
+    result = decoding_method(
+  File "/usr/local/lib/python3.10/dist-packages/transformers/generation/utils.py", line 2784, in _sample
+    outputs = self(**model_inputs, return_dict=True)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/utils/generic.py", line 918, in wrapper
+    output = func(self, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 590, in forward
+    outputs = self.model(
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/utils/generic.py", line 918, in wrapper
+    output = func(self, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 375, in forward
+    special_image_mask, _ = self.get_placeholder_mask(
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 309, in get_placeholder_mask
+    raise ValueError(
+ValueError: Image features and image tokens do not match: tokens: 8192, features 32
+                                                                                                                                                                                  Processing:   8%|██████████▌                                                                                                                   | 1/12 [00:05<00:42,  3.88s/sample]Processing:  17%|█████████████████████                                                                                                         | 2/12 [00:05<00:23,  2.33s/sample]Traceback (most recent call last):
+  File "/root/hhq/main_code/methods/tome.py", line 148, in process_and_inference
+    answer = self.model.generate(frames, question, options)
+  File "/root/hhq/main_code/models/video_llava_7b_tome.py", line 499, in generate
+    return super().generate(video_tensor, prompt, options)
+  File "/root/hhq/main_code/models/video_llava_7b.py", line 729, in generate
+    output_ids = self.model.generate(
+  File "/usr/local/lib/python3.10/dist-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/generation/utils.py", line 2564, in generate
+    result = decoding_method(
+  File "/usr/local/lib/python3.10/dist-packages/transformers/generation/utils.py", line 2784, in _sample
+    outputs = self(**model_inputs, return_dict=True)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/utils/generic.py", line 918, in wrapper
+    output = func(self, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 590, in forward
+    outputs = self.model(
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/utils/generic.py", line 918, in wrapper
+    output = func(self, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 375, in forward
+    special_image_mask, _ = self.get_placeholder_mask(
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 309, in get_placeholder_mask
+    raise ValueError(
+ValueError: Image features and image tokens do not match: tokens: 8192, features 32
+                                                                                                                                                                                  Processing:  17%|█████████████████████                                                                                                         | 2/12 [00:06<00:23,  2.33s/sample]Processing:  25%|███████████████████████████████▌                                                                                              | 3/12 [00:06<00:16,  1.84s/sample]Traceback (most recent call last):
+  File "/root/hhq/main_code/methods/tome.py", line 148, in process_and_inference
+    answer = self.model.generate(frames, question, options)
+  File "/root/hhq/main_code/models/video_llava_7b_tome.py", line 499, in generate
+    return super().generate(video_tensor, prompt, options)
+  File "/root/hhq/main_code/models/video_llava_7b.py", line 729, in generate
+    output_ids = self.model.generate(
+  File "/usr/local/lib/python3.10/dist-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/generation/utils.py", line 2564, in generate
+    result = decoding_method(
+  File "/usr/local/lib/python3.10/dist-packages/transformers/generation/utils.py", line 2784, in _sample
+    outputs = self(**model_inputs, return_dict=True)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/utils/generic.py", line 918, in wrapper
+    output = func(self, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 590, in forward
+    outputs = self.model(
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/utils/generic.py", line 918, in wrapper
+    output = func(self, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 375, in forward
+    special_image_mask, _ = self.get_placeholder_mask(
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 309, in get_placeholder_mask
+    raise ValueError(
+ValueError: Image features and image tokens do not match: tokens: 8192, features 32
+                                                                                                                                                                                  Processing:  25%|███████████████████████████████▌                                                                                              | 3/12 [00:07<00:16,  1.84s/sample]Processing:  33%|██████████████████████████████████████████                                                                                    | 4/12 [00:07<00:12,  1.55s/sample]Traceback (most recent call last):
+  File "/root/hhq/main_code/methods/tome.py", line 148, in process_and_inference
+    answer = self.model.generate(frames, question, options)
+  File "/root/hhq/main_code/models/video_llava_7b_tome.py", line 499, in generate
+    return super().generate(video_tensor, prompt, options)
+  File "/root/hhq/main_code/models/video_llava_7b.py", line 729, in generate
+    output_ids = self.model.generate(
+  File "/usr/local/lib/python3.10/dist-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/generation/utils.py", line 2564, in generate
+    result = decoding_method(
+  File "/usr/local/lib/python3.10/dist-packages/transformers/generation/utils.py", line 2784, in _sample
+    outputs = self(**model_inputs, return_dict=True)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/utils/generic.py", line 918, in wrapper
+    output = func(self, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 590, in forward
+    outputs = self.model(
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/utils/generic.py", line 918, in wrapper
+    output = func(self, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 375, in forward
+    special_image_mask, _ = self.get_placeholder_mask(
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 309, in get_placeholder_mask
+    raise ValueError(
+ValueError: Image features and image tokens do not match: tokens: 8192, features 32
+                                                                                                                                                                                  Processing:  33%|██████████████████████████████████████████                                                                                    | 4/12 [00:08<00:12,  1.55s/sample]Processing:  42%|████████████████████████████████████████████████████▌                                                                         | 5/12 [00:08<00:09,  1.40s/sample]Traceback (most recent call last):
+  File "/root/hhq/main_code/methods/tome.py", line 148, in process_and_inference
+    answer = self.model.generate(frames, question, options)
+  File "/root/hhq/main_code/models/video_llava_7b_tome.py", line 499, in generate
+    return super().generate(video_tensor, prompt, options)
+  File "/root/hhq/main_code/models/video_llava_7b.py", line 729, in generate
+    output_ids = self.model.generate(
+  File "/usr/local/lib/python3.10/dist-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/generation/utils.py", line 2564, in generate
+    result = decoding_method(
+  File "/usr/local/lib/python3.10/dist-packages/transformers/generation/utils.py", line 2784, in _sample
+    outputs = self(**model_inputs, return_dict=True)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/utils/generic.py", line 918, in wrapper
+    output = func(self, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 590, in forward
+    outputs = self.model(
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/utils/generic.py", line 918, in wrapper
+    output = func(self, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 375, in forward
+    special_image_mask, _ = self.get_placeholder_mask(
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 309, in get_placeholder_mask
+    raise ValueError(
+ValueError: Image features and image tokens do not match: tokens: 8192, features 32
+                                                                                                                                                                                  Processing:  42%|████████████████████████████████████████████████████▌                                                                         | 5/12 [00:09<00:09,  1.40s/sample]Processing:  50%|███████████████████████████████████████████████████████████████                                                               | 6/12 [00:09<00:07,  1.30s/sample]Traceback (most recent call last):
+  File "/root/hhq/main_code/methods/tome.py", line 148, in process_and_inference
+    answer = self.model.generate(frames, question, options)
+  File "/root/hhq/main_code/models/video_llava_7b_tome.py", line 499, in generate
+    return super().generate(video_tensor, prompt, options)
+  File "/root/hhq/main_code/models/video_llava_7b.py", line 729, in generate
+    output_ids = self.model.generate(
+  File "/usr/local/lib/python3.10/dist-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/generation/utils.py", line 2564, in generate
+    result = decoding_method(
+  File "/usr/local/lib/python3.10/dist-packages/transformers/generation/utils.py", line 2784, in _sample
+    outputs = self(**model_inputs, return_dict=True)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/utils/generic.py", line 918, in wrapper
+    output = func(self, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 590, in forward
+    outputs = self.model(
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/utils/generic.py", line 918, in wrapper
+    output = func(self, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 375, in forward
+    special_image_mask, _ = self.get_placeholder_mask(
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 309, in get_placeholder_mask
+    raise ValueError(
+ValueError: Image features and image tokens do not match: tokens: 8192, features 32
+                                                                                                                                                                                  Processing:  50%|███████████████████████████████████████████████████████████████                                                               | 6/12 [00:10<00:07,  1.30s/sample]Processing:  58%|█████████████████████████████████████████████████████████████████████████▌                                                    | 7/12 [00:10<00:06,  1.22s/sample]Traceback (most recent call last):
+  File "/root/hhq/main_code/methods/tome.py", line 148, in process_and_inference
+    answer = self.model.generate(frames, question, options)
+  File "/root/hhq/main_code/models/video_llava_7b_tome.py", line 499, in generate
+    return super().generate(video_tensor, prompt, options)
+  File "/root/hhq/main_code/models/video_llava_7b.py", line 729, in generate
+    output_ids = self.model.generate(
+  File "/usr/local/lib/python3.10/dist-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/generation/utils.py", line 2564, in generate
+    result = decoding_method(
+  File "/usr/local/lib/python3.10/dist-packages/transformers/generation/utils.py", line 2784, in _sample
+    outputs = self(**model_inputs, return_dict=True)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/utils/generic.py", line 918, in wrapper
+    output = func(self, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 590, in forward
+    outputs = self.model(
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/utils/generic.py", line 918, in wrapper
+    output = func(self, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 375, in forward
+    special_image_mask, _ = self.get_placeholder_mask(
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 309, in get_placeholder_mask
+    raise ValueError(
+ValueError: Image features and image tokens do not match: tokens: 8192, features 32
+                                                                                                                                                                                  Processing:  58%|█████████████████████████████████████████████████████████████████████████▌                                                    | 7/12 [00:11<00:06,  1.22s/sample]Processing:  67%|████████████████████████████████████████████████████████████████████████████████████                                          | 8/12 [00:11<00:04,  1.17s/sample]  [ToMe Full] Using 32 frames (merging inside Vision Tower)
+   📊 Processing 32 frames at 224x224
+   💬 Using 32 <image> tokens for 32 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image...
+   ✓ Processor succeeded
+  [ToMe DEBUG] Layer 0: input shape=torch.Size([32, 257, 1024]), r=256
+  [ToMe DEBUG] Layer 0: torch.Size([32, 257, 1024]) → torch.Size([32, 129, 1024]) (merged 256 tokens)
+  [ToMe DEBUG] Layer 5: torch.Size([32, 9, 1024]) → torch.Size([32, 5, 1024]) (merged 256 tokens)
+  [ToMe DEBUG] Layer 11: torch.Size([32, 2, 1024]) → torch.Size([32, 2, 1024]) (merged 256 tokens)
+  [ToMe DEBUG] Layer 23: torch.Size([32, 2, 1024]) → torch.Size([32, 2, 1024]) (merged 256 tokens)
+❌ Error in ToMe processing: Image features and image tokens do not match: tokens: 8192, features 32
+  ✓ Sample 001_001-1: Pred=A | GT=C
+  [ToMe Full] Using 32 frames (merging inside Vision Tower)
+   📊 Processing 32 frames at 224x224
+   💬 Using 32 <image> tokens for 32 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image...
+   ✓ Processor succeeded
+  [ToMe DEBUG] Layer 0: input shape=torch.Size([32, 257, 1024]), r=256
+  [ToMe DEBUG] Layer 0: torch.Size([32, 257, 1024]) → torch.Size([32, 129, 1024]) (merged 256 tokens)
+  [ToMe DEBUG] Layer 5: torch.Size([32, 9, 1024]) → torch.Size([32, 5, 1024]) (merged 256 tokens)
+  [ToMe DEBUG] Layer 11: torch.Size([32, 2, 1024]) → torch.Size([32, 2, 1024]) (merged 256 tokens)
+  [ToMe DEBUG] Layer 23: torch.Size([32, 2, 1024]) → torch.Size([32, 2, 1024]) (merged 256 tokens)
+❌ Error in ToMe processing: Image features and image tokens do not match: tokens: 8192, features 32
+  ✓ Sample 001_001-2: Pred=A | GT=A
+  [ToMe Full] Using 32 frames (merging inside Vision Tower)
+   📊 Processing 32 frames at 224x224
+   💬 Using 32 <image> tokens for 32 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image...
+   ✓ Processor succeeded
+  [ToMe DEBUG] Layer 0: input shape=torch.Size([32, 257, 1024]), r=256
+  [ToMe DEBUG] Layer 0: torch.Size([32, 257, 1024]) → torch.Size([32, 129, 1024]) (merged 256 tokens)
+  [ToMe DEBUG] Layer 5: torch.Size([32, 9, 1024]) → torch.Size([32, 5, 1024]) (merged 256 tokens)
+  [ToMe DEBUG] Layer 11: torch.Size([32, 2, 1024]) → torch.Size([32, 2, 1024]) (merged 256 tokens)
+  [ToMe DEBUG] Layer 23: torch.Size([32, 2, 1024]) → torch.Size([32, 2, 1024]) (merged 256 tokens)
+❌ Error in ToMe processing: Image features and image tokens do not match: tokens: 8192, features 32
+  ✓ Sample 001_001-3: Pred=A | GT=D
+  [ToMe Full] Using 32 frames (merging inside Vision Tower)
+   📊 Processing 32 frames at 224x224
+   💬 Using 32 <image> tokens for 32 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image...
+   ✓ Processor succeeded
+  [ToMe DEBUG] Layer 0: input shape=torch.Size([32, 257, 1024]), r=256
+  [ToMe DEBUG] Layer 0: torch.Size([32, 257, 1024]) → torch.Size([32, 129, 1024]) (merged 256 tokens)
+  [ToMe DEBUG] Layer 5: torch.Size([32, 9, 1024]) → torch.Size([32, 5, 1024]) (merged 256 tokens)
+  [ToMe DEBUG] Layer 11: torch.Size([32, 2, 1024]) → torch.Size([32, 2, 1024]) (merged 256 tokens)
+  [ToMe DEBUG] Layer 23: torch.Size([32, 2, 1024]) → torch.Size([32, 2, 1024]) (merged 256 tokens)
+❌ Error in ToMe processing: Image features and image tokens do not match: tokens: 8192, features 32
+  ✓ Sample 002_002-1: Pred=A | GT=C
+  [ToMe Full] Using 32 frames (merging inside Vision Tower)
+   📊 Processing 32 frames at 224x224
+   💬 Using 32 <image> tokens for 32 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image...
+   ✓ Processor succeeded
+  [ToMe DEBUG] Layer 0: input shape=torch.Size([32, 257, 1024]), r=256
+  [ToMe DEBUG] Layer 0: torch.Size([32, 257, 1024]) → torch.Size([32, 129, 1024]) (merged 256 tokens)
+  [ToMe DEBUG] Layer 5: torch.Size([32, 9, 1024]) → torch.Size([32, 5, 1024]) (merged 256 tokens)
+  [ToMe DEBUG] Layer 11: torch.Size([32, 2, 1024]) → torch.Size([32, 2, 1024]) (merged 256 tokens)
+  [ToMe DEBUG] Layer 23: torch.Size([32, 2, 1024]) → torch.Size([32, 2, 1024]) (merged 256 tokens)
+❌ Error in ToMe processing: Image features and image tokens do not match: tokens: 8192, features 32
+  ✓ Sample 002_002-2: Pred=A | GT=D
+  [ToMe Full] Using 32 frames (merging inside Vision Tower)
+   📊 Processing 32 frames at 224x224
+   💬 Using 32 <image> tokens for 32 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image...
+   ✓ Processor succeeded
+  [ToMe DEBUG] Layer 0: input shape=torch.Size([32, 257, 1024]), r=256
+  [ToMe DEBUG] Layer 0: torch.Size([32, 257, 1024]) → torch.Size([32, 129, 1024]) (merged 256 tokens)
+  [ToMe DEBUG] Layer 5: torch.Size([32, 9, 1024]) → torch.Size([32, 5, 1024]) (merged 256 tokens)
+  [ToMe DEBUG] Layer 11: torch.Size([32, 2, 1024]) → torch.Size([32, 2, 1024]) (merged 256 tokens)
+  [ToMe DEBUG] Layer 23: torch.Size([32, 2, 1024]) → torch.Size([32, 2, 1024]) (merged 256 tokens)
+❌ Error in ToMe processing: Image features and image tokens do not match: tokens: 8192, features 32
+  ✓ Sample 002_002-3: Pred=A | GT=B
+  [ToMe Full] Using 32 frames (merging inside Vision Tower)
+   📊 Processing 32 frames at 224x224
+   💬 Using 32 <image> tokens for 32 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image...
+   ✓ Processor succeeded
+  [ToMe DEBUG] Layer 0: input shape=torch.Size([32, 257, 1024]), r=256
+  [ToMe DEBUG] Layer 0: torch.Size([32, 257, 1024]) → torch.Size([32, 129, 1024]) (merged 256 tokens)
+  [ToMe DEBUG] Layer 5: torch.Size([32, 9, 1024]) → torch.Size([32, 5, 1024]) (merged 256 tokens)
+  [ToMe DEBUG] Layer 11: torch.Size([32, 2, 1024]) → torch.Size([32, 2, 1024]) (merged 256 tokens)
+  [ToMe DEBUG] Layer 23: torch.Size([32, 2, 1024]) → torch.Size([32, 2, 1024]) (merged 256 tokens)
+❌ Error in ToMe processing: Image features and image tokens do not match: tokens: 8192, features 32
+  ✓ Sample 003_003-1: Pred=A | GT=B
+  [ToMe Full] Using 32 frames (merging inside Vision Tower)
+   📊 Processing 32 frames at 224x224
+   💬 Using 32 <image> tokens for 32 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image...
+   ✓ Processor succeeded
+  [ToMe DEBUG] Layer 0: input shape=torch.Size([32, 257, 1024]), r=256
+  [ToMe DEBUG] Layer 0: torch.Size([32, 257, 1024]) → torch.Size([32, 129, 1024]) (merged 256 tokens)
+  [ToMe DEBUG] Layer 5: torch.Size([32, 9, 1024]) → torch.Size([32, 5, 1024]) (merged 256 tokens)
+  [ToMe DEBUG] Layer 11: torch.Size([32, 2, 1024]) → torch.Size([32, 2, 1024]) (merged 256 tokens)
+  [ToMe DEBUG] Layer 23: torch.Size([32, 2, 1024]) → torch.Size([32, 2, 1024]) (merged 256 tokens)
+❌ Error in ToMe processing: Image features and image tokens do not match: tokens: 8192, features 32
+  ✓ Sample 003_003-2: Pred=A | GT=C
+  [ToMe Full] Using 32 frames (merging inside Vision Tower)
+   📊 Processing 32 frames at 224x224
+   💬 Using 32 <image> tokens for 32 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image...
+   ✓ Processor succeeded
+  [ToMe DEBUG] Layer 0: input shape=torch.Size([32, 257, 1024]), r=256
+  [ToMe DEBUG] Layer 0: torch.Size([32, 257, 1024]) → torch.Size([32, 129, 1024]) (merged 256 tokens)
+  [ToMe DEBUG] Layer 5: torch.Size([32, 9, 1024]) → torch.Size([32, 5, 1024]) (merged 256 tokens)
+  [ToMe DEBUG] Layer 11: torch.Size([32, 2, 1024]) → torch.Size([32, 2, 1024]) (merged 256 tokens)
+  [ToMe DEBUG] Layer 23: torch.Size([32, 2, 1024]) → torch.Size([32, 2, 1024]) (merged 256 tokens)
+Traceback (most recent call last):
+  File "/root/hhq/main_code/methods/tome.py", line 148, in process_and_inference
+    answer = self.model.generate(frames, question, options)
+  File "/root/hhq/main_code/models/video_llava_7b_tome.py", line 499, in generate
+    return super().generate(video_tensor, prompt, options)
+  File "/root/hhq/main_code/models/video_llava_7b.py", line 729, in generate
+    output_ids = self.model.generate(
+  File "/usr/local/lib/python3.10/dist-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/generation/utils.py", line 2564, in generate
+    result = decoding_method(
+  File "/usr/local/lib/python3.10/dist-packages/transformers/generation/utils.py", line 2784, in _sample
+    outputs = self(**model_inputs, return_dict=True)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/utils/generic.py", line 918, in wrapper
+    output = func(self, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 590, in forward
+    outputs = self.model(
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/utils/generic.py", line 918, in wrapper
+    output = func(self, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 375, in forward
+    special_image_mask, _ = self.get_placeholder_mask(
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 309, in get_placeholder_mask
+    raise ValueError(
+ValueError: Image features and image tokens do not match: tokens: 8192, features 32
+                                                                                                                                                                                  Processing:  67%|████████████████████████████████████████████████████████████████████████████████████                                          | 8/12 [00:12<00:04,  1.17s/sample]Processing:  75%|██████████████████████████████████████████████████████████████████████████████████████████████▌                               | 9/12 [00:12<00:03,  1.12s/sample]Traceback (most recent call last):
+  File "/root/hhq/main_code/methods/tome.py", line 148, in process_and_inference
+    answer = self.model.generate(frames, question, options)
+  File "/root/hhq/main_code/models/video_llava_7b_tome.py", line 499, in generate
+    return super().generate(video_tensor, prompt, options)
+  File "/root/hhq/main_code/models/video_llava_7b.py", line 729, in generate
+    output_ids = self.model.generate(
+  File "/usr/local/lib/python3.10/dist-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/generation/utils.py", line 2564, in generate
+    result = decoding_method(
+  File "/usr/local/lib/python3.10/dist-packages/transformers/generation/utils.py", line 2784, in _sample
+    outputs = self(**model_inputs, return_dict=True)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/utils/generic.py", line 918, in wrapper
+    output = func(self, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 590, in forward
+    outputs = self.model(
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/utils/generic.py", line 918, in wrapper
+    output = func(self, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 375, in forward
+    special_image_mask, _ = self.get_placeholder_mask(
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 309, in get_placeholder_mask
+    raise ValueError(
+ValueError: Image features and image tokens do not match: tokens: 8192, features 32
+                                                                                                                                                                                  Processing:  75%|██████████████████████████████████████████████████████████████████████████████████████████████▌                               | 9/12 [00:13<00:03,  1.12s/sample]Processing:  83%|████████████████████████████████████████████████████████████████████████████████████████████████████████▏                    | 10/12 [00:13<00:02,  1.03s/sample]Traceback (most recent call last):
+  File "/root/hhq/main_code/methods/tome.py", line 148, in process_and_inference
+    answer = self.model.generate(frames, question, options)
+  File "/root/hhq/main_code/models/video_llava_7b_tome.py", line 499, in generate
+    return super().generate(video_tensor, prompt, options)
+  File "/root/hhq/main_code/models/video_llava_7b.py", line 729, in generate
+    output_ids = self.model.generate(
+  File "/usr/local/lib/python3.10/dist-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/generation/utils.py", line 2564, in generate
+    result = decoding_method(
+  File "/usr/local/lib/python3.10/dist-packages/transformers/generation/utils.py", line 2784, in _sample
+    outputs = self(**model_inputs, return_dict=True)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/utils/generic.py", line 918, in wrapper
+    output = func(self, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 590, in forward
+    outputs = self.model(
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/utils/generic.py", line 918, in wrapper
+    output = func(self, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 375, in forward
+    special_image_mask, _ = self.get_placeholder_mask(
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 309, in get_placeholder_mask
+    raise ValueError(
+ValueError: Image features and image tokens do not match: tokens: 8192, features 32
+Processing:  92%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████▌          | 11/12 [00:14<00:00,  1.05sample/s]Traceback (most recent call last):
+  File "/root/hhq/main_code/methods/tome.py", line 148, in process_and_inference
+    answer = self.model.generate(frames, question, options)
+  File "/root/hhq/main_code/models/video_llava_7b_tome.py", line 499, in generate
+    return super().generate(video_tensor, prompt, options)
+  File "/root/hhq/main_code/models/video_llava_7b.py", line 729, in generate
+    output_ids = self.model.generate(
+  File "/usr/local/lib/python3.10/dist-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/generation/utils.py", line 2564, in generate
+    result = decoding_method(
+  File "/usr/local/lib/python3.10/dist-packages/transformers/generation/utils.py", line 2784, in _sample
+    outputs = self(**model_inputs, return_dict=True)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/utils/generic.py", line 918, in wrapper
+    output = func(self, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 590, in forward
+    outputs = self.model(
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/utils/generic.py", line 918, in wrapper
+    output = func(self, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 375, in forward
+    special_image_mask, _ = self.get_placeholder_mask(
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 309, in get_placeholder_mask
+    raise ValueError(
+ValueError: Image features and image tokens do not match: tokens: 8192, features 32
+Processing: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 12/12 [00:15<00:00,  1.10sample/s]Processing: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 12/12 [00:15<00:00,  1.27s/sample]
+❌ Error in ToMe processing: Image features and image tokens do not match: tokens: 8192, features 32
+  ✓ Sample 003_003-3: Pred=A | GT=D
+  [ToMe Full] Using 32 frames (merging inside Vision Tower)
+   📊 Processing 32 frames at 224x224
+   💬 Using 32 <image> tokens for 32 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image...
+   ✓ Processor succeeded
+  [ToMe DEBUG] Layer 0: input shape=torch.Size([32, 257, 1024]), r=256
+  [ToMe DEBUG] Layer 0: torch.Size([32, 257, 1024]) → torch.Size([32, 129, 1024]) (merged 256 tokens)
+  [ToMe DEBUG] Layer 5: torch.Size([32, 9, 1024]) → torch.Size([32, 5, 1024]) (merged 256 tokens)
+  [ToMe DEBUG] Layer 11: torch.Size([32, 2, 1024]) → torch.Size([32, 2, 1024]) (merged 256 tokens)
+  [ToMe DEBUG] Layer 23: torch.Size([32, 2, 1024]) → torch.Size([32, 2, 1024]) (merged 256 tokens)
+❌ Error in ToMe processing: Image features and image tokens do not match: tokens: 8192, features 32
+  ✓ Sample 004_004-1: Pred=A | GT=B
+  [ToMe Full] Using 32 frames (merging inside Vision Tower)
+   📊 Processing 32 frames at 224x224
+   💬 Using 32 <image> tokens for 32 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image...
+   ✓ Processor succeeded
+  [ToMe DEBUG] Layer 0: input shape=torch.Size([32, 257, 1024]), r=256
+  [ToMe DEBUG] Layer 0: torch.Size([32, 257, 1024]) → torch.Size([32, 129, 1024]) (merged 256 tokens)
+  [ToMe DEBUG] Layer 5: torch.Size([32, 9, 1024]) → torch.Size([32, 5, 1024]) (merged 256 tokens)
+  [ToMe DEBUG] Layer 11: torch.Size([32, 2, 1024]) → torch.Size([32, 2, 1024]) (merged 256 tokens)
+  [ToMe DEBUG] Layer 23: torch.Size([32, 2, 1024]) → torch.Size([32, 2, 1024]) (merged 256 tokens)
+❌ Error in ToMe processing: Image features and image tokens do not match: tokens: 8192, features 32
+  [ToMe Full] Using 32 frames (merging inside Vision Tower)
+   📊 Processing 32 frames at 224x224
+   💬 Using 32 <image> tokens for 32 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image...
+   ✓ Processor succeeded
+  [ToMe DEBUG] Layer 0: input shape=torch.Size([32, 257, 1024]), r=256
+  [ToMe DEBUG] Layer 0: torch.Size([32, 257, 1024]) → torch.Size([32, 129, 1024]) (merged 256 tokens)
+  [ToMe DEBUG] Layer 5: torch.Size([32, 9, 1024]) → torch.Size([32, 5, 1024]) (merged 256 tokens)
+  [ToMe DEBUG] Layer 11: torch.Size([32, 2, 1024]) → torch.Size([32, 2, 1024]) (merged 256 tokens)
+  [ToMe DEBUG] Layer 23: torch.Size([32, 2, 1024]) → torch.Size([32, 2, 1024]) (merged 256 tokens)
+❌ Error in ToMe processing: Image features and image tokens do not match: tokens: 8192, features 32
+
+✅ Done! Results saved to ../result/tome_full_50samples_7b_parallel/VideoMME_ToMe_all_Video-LLaVA-7B_chunk0.json
+📈 Accuracy: 1/12 = 8.33%
+❌ Errors: 0

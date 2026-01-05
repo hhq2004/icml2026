@@ -1,0 +1,319 @@
+`torch_dtype` is deprecated! Use `dtype` instead!
+🚀 [1/4] Loading Backbone: Video-LLaVA-7B...
+🚀 [Model] Initializing from: /root/hhq/models/Video-LLaVA-7B-hf
+   Model Type: video_llava
+   ✓ Processor loaded successfully
+   Transformers version: 4.57.3
+Loading checkpoint shards:   0%|                                                                                                                            | 0/3 [00:00<?, ?it/s]Loading checkpoint shards:  33%|██████████████████████████████████████▋                                                                             | 1/3 [00:03<00:06,  3.19s/it]Loading checkpoint shards:  67%|█████████████████████████████████████████████████████████████████████████████▎                                      | 2/3 [00:06<00:03,  3.07s/it]Loading checkpoint shards: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:09<00:00,  3.02s/it]Loading checkpoint shards: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:09<00:00,  3.05s/it]
+Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.52, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
+   ✓ Model loaded as VideoLlavaForConditionalGeneration
+   ✓ Model ready
+   Detected model class: VideoLlavaForConditionalGeneration
+   → Using 224x224 for VideoLlavaForConditionalGeneration
+   ✓ Image processor configured to 224x224
+   ⚠️  Vision tower not found
+✅ Model loaded successfully on cuda
+🛠️ [2/4] Initializing Method: EventGraph-LMM...
+[EventGraph-LMM] Initializing...
+  - Backbone: Video-LLaVA-7B
+  - τ (temporal threshold) = 30.0s
+  - δ (similarity threshold) = 0.65
+  - α (PageRank restart) = 0.15
+  - λ (trade-off) = 1.0
+  - B (token budget) = 2048
+  - Tokens per frame = 256
+  - Loading CLIP from local: /root/hhq/models/clip-vit-large-patch14
+  ✓ CLIP loaded successfully on cuda
+[EventGraph-LMM] ✅ Initialization complete!
+📂 [3/4] Loading Dataset: VideoMME (Mode: all)...
+[VideoMME] Loading json from /root/hhq/dataset/Video-MME/video_mme.json...
+    -> Indexing videos in /root/hhq/dataset/Video-MME/videos...
+    -> Indexed 911 files.
+🚀 [VideoMME] FORCE LOAD MODE: Loading EVERYTHING found on disk...
+✅ Successfully loaded 2697 samples from 899 videos.
+🔬 [Testing Mode] Limited to 50 samples (Original: 2697)
+🔄 [Parallel] Running Chunk 0/4: Samples 0 to 12 (Total 12)
+▶️ [4/4] Start Inference...
+  📊 Total samples: 12
+  🎯 Method: EventGraph-LMM
+  💾 Results will be saved to: ../result/eventgraph_50samples_7b_parallel
+
+Processing:   0%|                                                                                                                                      | 0/12 [00:00<?, ?sample/s]                                                                                                                                                                                  Processing:   0%|                                                                                                                                      | 0/12 [00:07<?, ?sample/s]Processing:   8%|██████████▌                                                                                                                   | 1/12 [00:07<01:20,  7.31s/sample]                                                                                                                                                                                  Processing:   8%|██████████▌                                                                                                                   | 1/12 [00:11<01:20,  7.31s/sample]Processing:  17%|█████████████████████                                                                                                         | 2/12 [00:11<00:54,  5.41s/sample]                                                                                                                                                                                  Processing:  17%|█████████████████████                                                                                                         | 2/12 [00:15<00:54,  5.41s/sample]Processing:  25%|███████████████████████████████▌                                                                                              | 3/12 [00:15<00:43,  4.84s/sample]                                                                                                                                                                                  Processing:  25%|███████████████████████████████▌                                                                                              | 3/12 [00:20<00:43,  4.84s/sample]Processing:  33%|██████████████████████████████████████████                                                                                    | 4/12 [00:20<00:38,  4.81s/sample]                                                                                                                                                                                  Processing:  33%|██████████████████████████████████████████                                                                                    | 4/12 [00:25<00:38,  4.81s/sample]Processing:  42%|████████████████████████████████████████████████████▌                                                                         | 5/12 [00:25<00:33,  4.78s/sample]                                                                                                                                                                                  Processing:  42%|████████████████████████████████████████████████████▌                                                                         | 5/12 [00:30<00:33,  4.78s/sample]Processing:  50%|███████████████████████████████████████████████████████████████                                                               | 6/12 [00:30<00:29,  4.86s/sample]                                                                                                                                                                                  Processing:  50%|███████████████████████████████████████████████████████████████                                                               | 6/12 [00:35<00:29,  4.86s/sample]Processing:  58%|█████████████████████████████████████████████████████████████████████████▌                                                    | 7/12 [00:35<00:25,  5.15s/sample]                                                                                                                                                                                  Processing:  58%|█████████████████████████████████████████████████████████████████████████▌                                                    | 7/12 [00:41<00:25,  5.15s/sample]Processing:  67%|████████████████████████████████████████████████████████████████████████████████████                                          | 8/12 [00:41<00:21,  5.32s/sample]                                                                                                                                                                                  Processing:  67%|████████████████████████████████████████████████████████████████████████████████████                                          | 8/12 [00:47<00:21,  5.32s/sample]Processing:  75%|██████████████████████████████████████████████████████████████████████████████████████████████▌                               | 9/12 [00:47<00:16,  5.43s/sample]                                                                                                                                                                                  Processing:  75%|██████████████████████████████████████████████████████████████████████████████████████████████▌                               | 9/12 [00:51<00:16,  5.43s/sample]Processing:  83%|████████████████████████████████████████████████████████████████████████████████████████████████████████▏                    | 10/12 [00:51<00:10,  5.03s/sample]Processing:  92%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████▌          | 11/12 [00:55<00:04,  4.63s/sample]Processing: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 12/12 [00:58<00:00,  4.39s/sample]Processing: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 12/12 [00:58<00:00,  4.90s/sample]
+
+[EventGraph] Processing: /root/hhq/dataset/Video-MME/videos/fFjv93ACGo8.mp4
+[Stage 1/3] Graph Construction...
+  - Detected 16 events
+  - Extracted features: Globaltorch.Size([16, 768]), Localtorch.Size([16, 256, 1024])
+  - Graph: torch.Size([16, 16])
+[Stage 2/3] Subgraph Selection...
+  - Selected 8 events: [4, 5, 6, 7, 9, 10, 11, 15]
+[Stage 3/3] Graph-CoT Inference...
+   📊 Processing 8 frames at 224x224
+   💬 Using 8 <image> tokens for 8 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+Question: When demonstrating t...
+   ✓ Processor succeeded
+  - Prediction: A
+  ✓ Sample 001_001-1: Pred=A | GT=C
+
+[EventGraph] Processing: /root/hhq/dataset/Video-MME/videos/fFjv93ACGo8.mp4
+[Stage 1/3] Graph Construction...
+  - Detected 16 events
+  - Extracted features: Globaltorch.Size([16, 768]), Localtorch.Size([16, 256, 1024])
+  - Graph: torch.Size([16, 16])
+[Stage 2/3] Subgraph Selection...
+  - Selected 8 events: [2, 3, 5, 6, 7, 8, 12, 13]
+[Stage 3/3] Graph-CoT Inference...
+   📊 Processing 8 frames at 224x224
+   💬 Using 8 <image> tokens for 8 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+Question: What is the genre of...
+   ✓ Processor succeeded
+  - Prediction: A
+  ✓ Sample 001_001-2: Pred=A | GT=A
+
+[EventGraph] Processing: /root/hhq/dataset/Video-MME/videos/fFjv93ACGo8.mp4
+[Stage 1/3] Graph Construction...
+  - Detected 16 events
+  - Extracted features: Globaltorch.Size([16, 768]), Localtorch.Size([16, 256, 1024])
+  - Graph: torch.Size([16, 16])
+[Stage 2/3] Subgraph Selection...
+  - Selected 8 events: [3, 5, 6, 7, 10, 13, 14, 15]
+[Stage 3/3] Graph-CoT Inference...
+   📊 Processing 8 frames at 224x224
+   💬 Using 8 <image> tokens for 8 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+Question: How many red socks a...
+   ✓ Processor succeeded
+  - Prediction: A
+  ✓ Sample 001_001-3: Pred=A | GT=D
+
+[EventGraph] Processing: /root/hhq/dataset/Video-MME/videos/N1cdUjctpG8.mp4
+[Stage 1/3] Graph Construction...
+  - Detected 18 events
+  - Extracted features: Globaltorch.Size([18, 768]), Localtorch.Size([18, 256, 1024])
+  - Graph: torch.Size([18, 18])
+[Stage 2/3] Subgraph Selection...
+  - Selected 8 events: [4, 5, 6, 7, 8, 9, 10, 11]
+[Stage 3/3] Graph-CoT Inference...
+   📊 Processing 8 frames at 224x224
+   💬 Using 8 <image> tokens for 8 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+Question: Which of the followi...
+   ✓ Processor succeeded
+  - Prediction: A
+  ✓ Sample 002_002-1: Pred=A | GT=C
+
+[EventGraph] Processing: /root/hhq/dataset/Video-MME/videos/N1cdUjctpG8.mp4
+[Stage 1/3] Graph Construction...
+  - Detected 18 events
+  - Extracted features: Globaltorch.Size([18, 768]), Localtorch.Size([18, 256, 1024])
+  - Graph: torch.Size([18, 18])
+[Stage 2/3] Subgraph Selection...
+  - Selected 8 events: [0, 1, 2, 3, 6, 7, 10, 11]
+[Stage 3/3] Graph-CoT Inference...
+   📊 Processing 8 frames at 224x224
+   💬 Using 8 <image> tokens for 8 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+Question: Which of the followi...
+   ✓ Processor succeeded
+  - Prediction: A
+  ✓ Sample 002_002-2: Pred=A | GT=D
+
+[EventGraph] Processing: /root/hhq/dataset/Video-MME/videos/N1cdUjctpG8.mp4
+[Stage 1/3] Graph Construction...
+  - Detected 18 events
+  - Extracted features: Globaltorch.Size([18, 768]), Localtorch.Size([18, 256, 1024])
+  - Graph: torch.Size([18, 18])
+[Stage 2/3] Subgraph Selection...
+  - Selected 8 events: [0, 1, 2, 3, 7, 12, 14, 16]
+[Stage 3/3] Graph-CoT Inference...
+   📊 Processing 8 frames at 224x224
+   💬 Using 8 <image> tokens for 8 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+Question: How many porcelain j...
+   ✓ Processor succeeded
+  - Prediction: A
+  ✓ Sample 002_002-3: Pred=A | GT=B
+
+[EventGraph] Processing: /root/hhq/dataset/Video-MME/videos/HIjX8OPuf-w.mp4
+[Stage 1/3] Graph Construction...
+  - Detected 40 events
+  - Extracted features: Globaltorch.Size([40, 768]), Localtorch.Size([40, 256, 1024])
+  - Graph: torch.Size([40, 40])
+[Stage 2/3] Subgraph Selection...
+  - Selected 8 events: [9, 10, 11, 12, 13, 15, 22, 23]
+[Stage 3/3] Graph-CoT Inference...
+   📊 Processing 8 frames at 224x224
+   💬 Using 8 <image> tokens for 8 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+Question: How many national fl...
+   ✓ Processor succeeded
+  - Prediction: A
+  ✓ Sample 003_003-1: Pred=A | GT=B
+
+[EventGraph] Processing: /root/hhq/dataset/Video-MME/videos/HIjX8OPuf-w.mp4
+[Stage 1/3] Graph Construction...
+  - Detected 40 events
+  - Extracted features: Globaltorch.Size([40, 768]), Localtorch.Size([40, 256, 1024])
+  - Graph: torch.Size([40, 40])
+[Stage 2/3] Subgraph Selection...
+  - Selected 8 events: [0, 1, 7, 23, 24, 30, 34, 38]
+[Stage 3/3] Graph-CoT Inference...
+   📊 Processing 8 frames at 224x224
+   💬 Using 8 <image> tokens for 8 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+Question: What is the video te...
+   ✓ Processor succeeded
+  - Prediction: D
+  ✓ Sample 003_003-2: Pred=D | GT=C
+
+[EventGraph] Processing: /root/hhq/dataset/Video-MME/videos/HIjX8OPuf-w.mp4
+[Stage 1/3] Graph Construction...
+  - Detected 40 events
+  - Extracted features: Globaltorch.Size([40, 768]), Localtorch.Size([40, 256, 1024])
+  - Graph: torch.Size([40, 40])
+[Stage 2/3] Subgraph Selection...
+  - Selected 8 events: [11, 12, 13, 16, 19, 21, 22, 23]
+[Stage 3/3] Graph-CoT Inference...
+   📊 Processing 8 frames at 224x224
+   💬 Using 8 <image> tokens for 8 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+Question: In which country is ...
+   ✓ Processor succeeded
+  - Prediction: D
+  ✓ Sample 003_003-3: Pred=D | GT=D
+
+[EventGraph] Processing: /root/hhq/dataset/Video-MME/videos/HwnB8aCn8yE.mp4
+[Stage 1/3] Graph Construction...
+  - Detected 15 events
+  - Extracted features: Globaltorch.Size([15, 768]), Localtorch.Size([15, 256, 1024])
+  - Graph: torch.Size([15, 15])
+[Stage 2/3] Subgraph Selection...
+  - Selected 8 events: [0, 2, 7, 8, 9, 10, 13, 14]
+[Stage 3/3] Graph-CoT Inference...
+   📊 Processing 8 frames at 224x224
+   💬 Using 8 <image> tokens for 8 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+Question: According to the vid...
+   ✓ Processor succeeded
+  - Prediction: A
+  ✓ Sample 004_004-1: Pred=A | GT=B
+
+[EventGraph] Processing: /root/hhq/dataset/Video-MME/videos/HwnB8aCn8yE.mp4
+[Stage 1/3] Graph Construction...
+  - Detected 15 events
+  - Extracted features: Globaltorch.Size([15, 768]), Localtorch.Size([15, 256, 1024])
+  - Graph: torch.Size([15, 15])
+[Stage 2/3] Subgraph Selection...
+  - Selected 8 events: [0, 7, 8, 9, 11, 12, 13, 14]
+[Stage 3/3] Graph-CoT Inference...
+   📊 Processing 8 frames at 224x224
+   💬 Using 8 <image> tokens for 8 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+Question: According to the vid...
+   ✓ Processor succeeded
+  - Prediction: C
+
+[EventGraph] Processing: /root/hhq/dataset/Video-MME/videos/HwnB8aCn8yE.mp4
+[Stage 1/3] Graph Construction...
+  - Detected 15 events
+  - Extracted features: Globaltorch.Size([15, 768]), Localtorch.Size([15, 256, 1024])
+  - Graph: torch.Size([15, 15])
+[Stage 2/3] Subgraph Selection...
+  - Selected 8 events: [3, 5, 7, 8, 9, 10, 13, 14]
+[Stage 3/3] Graph-CoT Inference...
+   📊 Processing 8 frames at 224x224
+   💬 Using 8 <image> tokens for 8 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+Question: Given the informatio...
+   ✓ Processor succeeded
+  - Prediction: A
+
+✅ Done! Results saved to ../result/eventgraph_50samples_7b_parallel/VideoMME_EventGraph-LMM_all_Video-LLaVA-7B_chunk0.json
+📈 Accuracy: 2/12 = 16.67%
+❌ Errors: 0

@@ -1,0 +1,442 @@
+`torch_dtype` is deprecated! Use `dtype` instead!
+🚀 [1/4] Skipping main model load (DyCoke uses isolated model)...
+🛠️ [2/4] Initializing Method: DyCoke...
+======================================================================
+[DyCoke] Initializing DyCoke Method
+======================================================================
+  Backbone: Video-LLaVA-7B
+  ✅ Stage 1 TTM: K=0.5 (100% official code)
+  ❌ Stage 2 ATM: L=3, P=0.7 (NOT IMPLEMENTED)
+  Num frames: 32
+  Tokens per frame: 256
+  Token budget: 2048
+======================================================================
+[DyCoke] Stage 1 TTM Implementation (Monkey Patching)
+======================================================================
+  Model: /root/hhq/models/Video-LLaVA-7B-hf-copy
+  K = 0.5 (keep 50% tokens after merging)
+  Num frames = 32
+  Loading VideoLlavaForConditionalGeneration...
+Loading checkpoint shards:   0%|                                                                                                                            | 0/3 [00:00<?, ?it/s]Loading checkpoint shards:  33%|██████████████████████████████████████▋                                                                             | 1/3 [00:03<00:06,  3.37s/it]Loading checkpoint shards:  67%|█████████████████████████████████████████████████████████████████████████████▎                                      | 2/3 [00:06<00:03,  3.24s/it]Loading checkpoint shards: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:09<00:00,  3.13s/it]Loading checkpoint shards: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:09<00:00,  3.17s/it]
+  ✓ Model loaded successfully
+  Applying TTM patch to multi_modal_projector...
+  ✓ TTM patch applied
+======================================================================
+[DyCoke] ✅ Initialization complete
+  Expected compression: 8192 → ~4096 tokens
+======================================================================
+[DyCoke] ✅ Initialization complete
+======================================================================
+📂 [3/4] Loading Dataset: VideoMME (Mode: all)...
+[VideoMME] Loading json from /root/hhq/dataset/Video-MME/video_mme.json...
+    -> Indexing videos in /root/hhq/dataset/Video-MME/videos...
+    -> Indexed 911 files.
+🚀 [VideoMME] FORCE LOAD MODE: Loading EVERYTHING found on disk...
+✅ Successfully loaded 2697 samples from 899 videos.
+🔬 [Testing Mode] Limited to 50 samples (Original: 2697)
+🔄 [Parallel] Running Chunk 2/4: Samples 24 to 36 (Total 12)
+▶️ [4/4] Start Inference...
+  📊 Total samples: 12
+  🎯 Method: DyCoke
+  💾 Results will be saved to: ../result/dycoke_smoke_test
+
+Processing:   0%|                                                                                                                                      | 0/12 [00:00<?, ?sample/s]Token indices sequence length is longer than the specified maximum sequence length for this model (8298 > 4096). Running this sequence through the model will result in indexing errors
+Traceback (most recent call last):
+  File "/root/hhq/main_code/models/video_llava_7b_dycoke.py", line 394, in generate
+    output_ids = self.model.generate(
+  File "/usr/local/lib/python3.10/dist-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/generation/utils.py", line 2564, in generate
+    result = decoding_method(
+  File "/usr/local/lib/python3.10/dist-packages/transformers/generation/utils.py", line 2784, in _sample
+    outputs = self(**model_inputs, return_dict=True)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/utils/generic.py", line 918, in wrapper
+    output = func(self, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 590, in forward
+    outputs = self.model(
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/utils/generic.py", line 918, in wrapper
+    output = func(self, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 385, in forward
+    _, special_video_mask = self.get_placeholder_mask(
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 316, in get_placeholder_mask
+    raise ValueError(
+ValueError: Videos features and image tokens do not match: tokens: 8224, features 21532672
+                                                                                                                                                                                  Processing:   0%|                                                                                                                                      | 0/12 [00:03<?, ?sample/s]Processing:   8%|██████████▌                                                                                                                   | 1/12 [00:03<00:43,  3.96s/sample]Traceback (most recent call last):
+  File "/root/hhq/main_code/models/video_llava_7b_dycoke.py", line 394, in generate
+    output_ids = self.model.generate(
+  File "/usr/local/lib/python3.10/dist-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/generation/utils.py", line 2564, in generate
+    result = decoding_method(
+  File "/usr/local/lib/python3.10/dist-packages/transformers/generation/utils.py", line 2784, in _sample
+    outputs = self(**model_inputs, return_dict=True)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/utils/generic.py", line 918, in wrapper
+    output = func(self, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 590, in forward
+    outputs = self.model(
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/utils/generic.py", line 918, in wrapper
+    output = func(self, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 385, in forward
+    _, special_video_mask = self.get_placeholder_mask(
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 316, in get_placeholder_mask
+    raise ValueError(
+ValueError: Videos features and image tokens do not match: tokens: 8224, features 21532672
+                                                                                                                                                                                  Processing:   8%|██████████▌                                                                                                                   | 1/12 [00:05<00:43,  3.96s/sample]Processing:  17%|█████████████████████                                                                                                         | 2/12 [00:05<00:23,  2.32s/sample]Traceback (most recent call last):
+  File "/root/hhq/main_code/models/video_llava_7b_dycoke.py", line 394, in generate
+    output_ids = self.model.generate(
+  File "/usr/local/lib/python3.10/dist-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/generation/utils.py", line 2564, in generate
+    result = decoding_method(
+  File "/usr/local/lib/python3.10/dist-packages/transformers/generation/utils.py", line 2784, in _sample
+    outputs = self(**model_inputs, return_dict=True)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/utils/generic.py", line 918, in wrapper
+    output = func(self, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 590, in forward
+    outputs = self.model(
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/utils/generic.py", line 918, in wrapper
+    output = func(self, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 385, in forward
+    _, special_video_mask = self.get_placeholder_mask(
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 316, in get_placeholder_mask
+    raise ValueError(
+ValueError: Videos features and image tokens do not match: tokens: 8224, features 21532672
+                                                                                                                                                                                  Processing:  17%|█████████████████████                                                                                                         | 2/12 [00:06<00:23,  2.32s/sample]Processing:  25%|███████████████████████████████▌                                                                                              | 3/12 [00:06<00:15,  1.77s/sample]Traceback (most recent call last):
+  File "/root/hhq/main_code/models/video_llava_7b_dycoke.py", line 394, in generate
+    output_ids = self.model.generate(
+  File "/usr/local/lib/python3.10/dist-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/generation/utils.py", line 2564, in generate
+    result = decoding_method(
+  File "/usr/local/lib/python3.10/dist-packages/transformers/generation/utils.py", line 2784, in _sample
+    outputs = self(**model_inputs, return_dict=True)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/utils/generic.py", line 918, in wrapper
+    output = func(self, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 590, in forward
+    outputs = self.model(
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/utils/generic.py", line 918, in wrapper
+    output = func(self, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 385, in forward
+    _, special_video_mask = self.get_placeholder_mask(
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 316, in get_placeholder_mask
+    raise ValueError(
+ValueError: Videos features and image tokens do not match: tokens: 8224, features 21532672
+                                                                                                                                                                                  Processing:  25%|███████████████████████████████▌                                                                                              | 3/12 [00:07<00:15,  1.77s/sample]Processing:  33%|██████████████████████████████████████████                                                                                    | 4/12 [00:07<00:12,  1.57s/sample]Traceback (most recent call last):
+  File "/root/hhq/main_code/models/video_llava_7b_dycoke.py", line 394, in generate
+    output_ids = self.model.generate(
+  File "/usr/local/lib/python3.10/dist-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/generation/utils.py", line 2564, in generate
+    result = decoding_method(
+  File "/usr/local/lib/python3.10/dist-packages/transformers/generation/utils.py", line 2784, in _sample
+    outputs = self(**model_inputs, return_dict=True)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/utils/generic.py", line 918, in wrapper
+    output = func(self, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 590, in forward
+    outputs = self.model(
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/utils/generic.py", line 918, in wrapper
+    output = func(self, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 385, in forward
+    _, special_video_mask = self.get_placeholder_mask(
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 316, in get_placeholder_mask
+    raise ValueError(
+ValueError: Videos features and image tokens do not match: tokens: 8224, features 21532672
+                                                                                                                                                                                  Processing:  33%|██████████████████████████████████████████                                                                                    | 4/12 [00:08<00:12,  1.57s/sample]Processing:  42%|████████████████████████████████████████████████████▌                                                                         | 5/12 [00:08<00:10,  1.49s/sample]Traceback (most recent call last):
+  File "/root/hhq/main_code/models/video_llava_7b_dycoke.py", line 394, in generate
+    output_ids = self.model.generate(
+  File "/usr/local/lib/python3.10/dist-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/generation/utils.py", line 2564, in generate
+    result = decoding_method(
+  File "/usr/local/lib/python3.10/dist-packages/transformers/generation/utils.py", line 2784, in _sample
+    outputs = self(**model_inputs, return_dict=True)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/utils/generic.py", line 918, in wrapper
+    output = func(self, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 590, in forward
+    outputs = self.model(
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/utils/generic.py", line 918, in wrapper
+    output = func(self, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 385, in forward
+    _, special_video_mask = self.get_placeholder_mask(
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 316, in get_placeholder_mask
+    raise ValueError(
+ValueError: Videos features and image tokens do not match: tokens: 8224, features 21532672
+                                                                                                                                                                                  Processing:  42%|████████████████████████████████████████████████████▌                                                                         | 5/12 [00:10<00:10,  1.49s/sample]Processing:  50%|███████████████████████████████████████████████████████████████                                                               | 6/12 [00:10<00:08,  1.39s/sample]Traceback (most recent call last):
+  File "/root/hhq/main_code/models/video_llava_7b_dycoke.py", line 394, in generate
+    output_ids = self.model.generate(
+  File "/usr/local/lib/python3.10/dist-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/generation/utils.py", line 2564, in generate
+    result = decoding_method(
+  File "/usr/local/lib/python3.10/dist-packages/transformers/generation/utils.py", line 2784, in _sample
+    outputs = self(**model_inputs, return_dict=True)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/utils/generic.py", line 918, in wrapper
+    output = func(self, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 590, in forward
+    outputs = self.model(
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/utils/generic.py", line 918, in wrapper
+    output = func(self, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 385, in forward
+    _, special_video_mask = self.get_placeholder_mask(
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 316, in get_placeholder_mask
+    raise ValueError(
+ValueError: Videos features and image tokens do not match: tokens: 8224, features 21532672
+                                                                                                                                                                                  Processing:  50%|███████████████████████████████████████████████████████████████                                                               | 6/12 [00:11<00:08,  1.39s/sample]Processing:  58%|█████████████████████████████████████████████████████████████████████████▌                                                    | 7/12 [00:11<00:06,  1.26s/sample]Traceback (most recent call last):
+  File "/root/hhq/main_code/models/video_llava_7b_dycoke.py", line 394, in generate
+    output_ids = self.model.generate(
+  File "/usr/local/lib/python3.10/dist-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/generation/utils.py", line 2564, in generate
+    result = decoding_method(
+  File "/usr/local/lib/python3.10/dist-packages/transformers/generation/utils.py", line 2784, in _sample
+    outputs = self(**model_inputs, return_dict=True)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/utils/generic.py", line 918, in wrapper
+    output = func(self, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 590, in forward
+    outputs = self.model(
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/utils/generic.py", line 918, in wrapper
+    output = func(self, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 385, in forward
+    _, special_video_mask = self.get_placeholder_mask(
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 316, in get_placeholder_mask
+    raise ValueError(
+ValueError: Videos features and image tokens do not match: tokens: 8224, features 21532672
+                                                                                                                                                                                  Processing:  58%|█████████████████████████████████████████████████████████████████████████▌                                                    | 7/12 [00:12<00:06,  1.26s/sample]Processing:  67%|████████████████████████████████████████████████████████████████████████████████████                                          | 8/12 [00:12<00:04,  1.19s/sample]Traceback (most recent call last):
+  File "/root/hhq/main_code/models/video_llava_7b_dycoke.py", line 394, in generate
+    output_ids = self.model.generate(
+  File "/usr/local/lib/python3.10/dist-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/generation/utils.py", line 2564, in generate
+    result = decoding_method(
+  File "/usr/local/lib/python3.10/dist-packages/transformers/generation/utils.py", line 2784, in _sample
+    outputs = self(**model_inputs, return_dict=True)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/utils/generic.py", line 918, in wrapper
+    output = func(self, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 590, in forward
+    outputs = self.model(
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/utils/generic.py", line 918, in wrapper
+    output = func(self, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 385, in forward
+    _, special_video_mask = self.get_placeholder_mask(
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 316, in get_placeholder_mask
+    raise ValueError(
+ValueError: Videos features and image tokens do not match: tokens: 8224, features 21532672
+                                                                                                                                                                                  Processing:  67%|████████████████████████████████████████████████████████████████████████████████████                                          | 8/12 [00:13<00:04,  1.19s/sample]Processing:  75%|██████████████████████████████████████████████████████████████████████████████████████████████▌                               | 9/12 [00:13<00:03,  1.14s/sample]Traceback (most recent call last):
+  File "/root/hhq/main_code/models/video_llava_7b_dycoke.py", line 394, in generate
+    output_ids = self.model.generate(
+  File "/usr/local/lib/python3.10/dist-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/generation/utils.py", line 2564, in generate
+    result = decoding_method(
+  File "/usr/local/lib/python3.10/dist-packages/transformers/generation/utils.py", line 2784, in _sample
+    outputs = self(**model_inputs, return_dict=True)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/utils/generic.py", line 918, in wrapper
+    output = func(self, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 590, in forward
+    outputs = self.model(
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/utils/generic.py", line 918, in wrapper
+    output = func(self, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 385, in forward
+    _, special_video_mask = self.get_placeholder_mask(
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 316, in get_placeholder_mask
+    raise ValueError(
+ValueError: Videos features and image tokens do not match: tokens: 8224, features 21532672
+                                                                                                                                                                                  Processing:  75%|██████████████████████████████████████████████████████████████████████████████████████████████▌                               | 9/12 [00:13<00:03,  1.14s/sample]Processing:  83%|████████████████████████████████████████████████████████████████████████████████████████████████████████▏                    | 10/12 [00:13<00:01,  1.00sample/s]Traceback (most recent call last):
+  File "/root/hhq/main_code/models/video_llava_7b_dycoke.py", line 394, in generate
+    output_ids = self.model.generate(
+  File "/usr/local/lib/python3.10/dist-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/generation/utils.py", line 2564, in generate
+    result = decoding_method(
+  File "/usr/local/lib/python3.10/dist-packages/transformers/generation/utils.py", line 2784, in _sample
+    outputs = self(**model_inputs, return_dict=True)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/utils/generic.py", line 918, in wrapper
+    output = func(self, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 590, in forward
+    outputs = self.model(
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/utils/generic.py", line 918, in wrapper
+    output = func(self, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 385, in forward
+    _, special_video_mask = self.get_placeholder_mask(
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 316, in get_placeholder_mask
+    raise ValueError(
+ValueError: Videos features and image tokens do not match: tokens: 8224, features 21532672
+Processing:  92%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████▌          | 11/12 [00:14<00:00,  1.11sample/s]Traceback (most recent call last):
+  File "/root/hhq/main_code/models/video_llava_7b_dycoke.py", line 394, in generate
+    output_ids = self.model.generate(
+  File "/usr/local/lib/python3.10/dist-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/generation/utils.py", line 2564, in generate
+    result = decoding_method(
+  File "/usr/local/lib/python3.10/dist-packages/transformers/generation/utils.py", line 2784, in _sample
+    outputs = self(**model_inputs, return_dict=True)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/utils/generic.py", line 918, in wrapper
+    output = func(self, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 590, in forward
+    outputs = self.model(
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/utils/generic.py", line 918, in wrapper
+    output = func(self, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 385, in forward
+    _, special_video_mask = self.get_placeholder_mask(
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/video_llava/modeling_video_llava.py", line 316, in get_placeholder_mask
+    raise ValueError(
+ValueError: Videos features and image tokens do not match: tokens: 8224, features 21532672
+Processing: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 12/12 [00:15<00:00,  1.20sample/s]Processing: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 12/12 [00:15<00:00,  1.26s/sample]
+
+[DyCoke] Processing 32 frames...
+[DyCoke TTM] 8224 → 5257 tokens (compression: 63.9%)
+❌ [DyCoke] Error: Videos features and image tokens do not match: tokens: 8224, features 21532672
+  ✓ Sample 009_009-1: Pred=A | GT=A
+
+[DyCoke] Processing 32 frames...
+[DyCoke TTM] 8224 → 5257 tokens (compression: 63.9%)
+❌ [DyCoke] Error: Videos features and image tokens do not match: tokens: 8224, features 21532672
+  ✓ Sample 009_009-2: Pred=A | GT=B
+
+[DyCoke] Processing 32 frames...
+[DyCoke TTM] 8224 → 5257 tokens (compression: 63.9%)
+❌ [DyCoke] Error: Videos features and image tokens do not match: tokens: 8224, features 21532672
+  ✓ Sample 009_009-3: Pred=A | GT=C
+
+[DyCoke] Processing 32 frames...
+[DyCoke TTM] 8224 → 5257 tokens (compression: 63.9%)
+❌ [DyCoke] Error: Videos features and image tokens do not match: tokens: 8224, features 21532672
+  ✓ Sample 010_010-1: Pred=A | GT=C
+
+[DyCoke] Processing 32 frames...
+[DyCoke TTM] 8224 → 5257 tokens (compression: 63.9%)
+❌ [DyCoke] Error: Videos features and image tokens do not match: tokens: 8224, features 21532672
+  ✓ Sample 010_010-2: Pred=A | GT=A
+
+[DyCoke] Processing 32 frames...
+[DyCoke TTM] 8224 → 5257 tokens (compression: 63.9%)
+❌ [DyCoke] Error: Videos features and image tokens do not match: tokens: 8224, features 21532672
+  ✓ Sample 010_010-3: Pred=A | GT=B
+
+[DyCoke] Processing 32 frames...
+[DyCoke TTM] 8224 → 5257 tokens (compression: 63.9%)
+❌ [DyCoke] Error: Videos features and image tokens do not match: tokens: 8224, features 21532672
+  ✓ Sample 011_011-1: Pred=A | GT=C
+
+[DyCoke] Processing 32 frames...
+[DyCoke TTM] 8224 → 5257 tokens (compression: 63.9%)
+❌ [DyCoke] Error: Videos features and image tokens do not match: tokens: 8224, features 21532672
+  ✓ Sample 011_011-2: Pred=A | GT=B
+
+[DyCoke] Processing 32 frames...
+[DyCoke TTM] 8224 → 5257 tokens (compression: 63.9%)
+❌ [DyCoke] Error: Videos features and image tokens do not match: tokens: 8224, features 21532672
+  ✓ Sample 011_011-3: Pred=A | GT=A
+
+[DyCoke] Processing 32 frames...
+[DyCoke TTM] 8224 → 5257 tokens (compression: 63.9%)
+❌ [DyCoke] Error: Videos features and image tokens do not match: tokens: 8224, features 21532672
+  ✓ Sample 012_012-1: Pred=A | GT=B
+
+[DyCoke] Processing 32 frames...
+[DyCoke TTM] 8224 → 5257 tokens (compression: 63.9%)
+❌ [DyCoke] Error: Videos features and image tokens do not match: tokens: 8224, features 21532672
+
+[DyCoke] Processing 32 frames...
+[DyCoke TTM] 8224 → 5257 tokens (compression: 63.9%)
+❌ [DyCoke] Error: Videos features and image tokens do not match: tokens: 8224, features 21532672
+
+✅ Done! Results saved to ../result/dycoke_smoke_test/VideoMME_DyCoke_all_Video-LLaVA-7B_chunk2.json
+📈 Accuracy: 3/12 = 25.00%
+❌ Errors: 0

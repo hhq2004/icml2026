@@ -6,6 +6,7 @@
 !/.gitignore
 !/hold.py
 !/readme.txt
-# 忽略大文件和临时文件
-main_code/result/
+# 忽略临时文件和缓存
+__pycache__/
+*.pyc
 main_code/__pycache__/

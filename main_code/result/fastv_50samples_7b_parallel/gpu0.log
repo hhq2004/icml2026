@@ -1,0 +1,640 @@
+`torch_dtype` is deprecated! Use `dtype` instead!
+🚀 [1/4] Skipping main model load (FastV uses isolated model)...
+🛠️ [2/4] Initializing Method: FastV...
+[FastV] Initializing...
+  - Backbone: Video-LLaVA-7B
+  - Filtering layer K = 2
+  - Filtering ratio R = 50%
+  - Num frames = 8
+  - Tokens per frame = 256
+
+  🔒 [Double Insurance] Loading isolated FastV model wrapper...
+🚀 [FastV Model] Initializing from BACKUP model: /root/hhq/models/Video-LLaVA-7B-hf-copy
+   ⚠️  This is an ISOLATED instance for FastV only
+   Model Type: video_llava
+   ✓ Processor loaded
+Loading checkpoint shards:   0%|                                                                                                                            | 0/3 [00:00<?, ?it/s]Loading checkpoint shards:  33%|██████████████████████████████████████▋                                                                             | 1/3 [00:03<00:06,  3.17s/it]Loading checkpoint shards:  67%|█████████████████████████████████████████████████████████████████████████████▎                                      | 2/3 [00:05<00:02,  2.96s/it]Loading checkpoint shards: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:08<00:00,  2.84s/it]Loading checkpoint shards: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:08<00:00,  2.90s/it]
+   ✓ Model loaded as VideoLlavaForConditionalGeneration
+✅ FastV Model loaded successfully on cuda
+   - FilteringLayer K = 2
+   - Filtering Ratio R = 0.5
+   - Tokens per frame = 256
+  ✓ FastV initialized with ISOLATED model
+  ✓ Other baselines use: DummyModel
+  ✓ FastV uses: VideoLLaVA7BForFastV (independent instance)
+📂 [3/4] Loading Dataset: VideoMME (Mode: all)...
+[VideoMME] Loading json from /root/hhq/dataset/Video-MME/video_mme.json...
+    -> Indexing videos in /root/hhq/dataset/Video-MME/videos...
+    -> Indexed 911 files.
+🚀 [VideoMME] FORCE LOAD MODE: Loading EVERYTHING found on disk...
+✅ Successfully loaded 2697 samples from 899 videos.
+🔬 [Testing Mode] Limited to 50 samples (Original: 2697)
+🔄 [Parallel] Running Chunk 0/4: Samples 0 to 12 (Total 12)
+▶️ [4/4] Start Inference...
+  📊 Total samples: 12
+  🎯 Method: FastV
+  💾 Results will be saved to: ../result/fastv_50samples_7b_parallel
+
+Processing:   0%|                                                                                                                                      | 0/12 [00:00<?, ?sample/s]                                                                                                                                                                                  Processing:   0%|                                                                                                                                      | 0/12 [00:04<?, ?sample/s]Processing:   8%|██████████▌                                                                                                                   | 1/12 [00:04<00:45,  4.15s/sample]                                                                                                                                                                                  Processing:   8%|██████████▌                                                                                                                   | 1/12 [00:05<00:45,  4.15s/sample]Processing:  17%|█████████████████████                                                                                                         | 2/12 [00:05<00:25,  2.52s/sample]                                                                                                                                                                                  Processing:  17%|█████████████████████                                                                                                         | 2/12 [00:06<00:25,  2.52s/sample]Processing:  25%|███████████████████████████████▌                                                                                              | 3/12 [00:06<00:17,  1.93s/sample]                                                                                                                                                                                  Processing:  25%|███████████████████████████████▌                                                                                              | 3/12 [00:08<00:17,  1.93s/sample]Processing:  33%|██████████████████████████████████████████                                                                                    | 4/12 [00:08<00:14,  1.81s/sample]
+================================================================================
+[FastV] Processing video: /root/hhq/dataset/Video-MME/videos/fFjv93ACGo8.mp4
+================================================================================
+[FastV] Step 1: Sampling 8 frames...
+  ✓ Sampled 8 frames at indices: [0, 318, 636, 954, 1272]...
+[FastV] Step 2: Calling FastV model with K=2, R=0.5...
+  - Question: When demonstrating the Germany modern Christmas tree is initially decorated with apples, candles and...
+  - Options: ['A. Apples.', 'B. Candles.', 'C. Berries.', 'D. The three kinds are of the same number.']
+
+[FastV K=2] TRUE Token-Level Pruning (Original Paper Algorithm)
+  - Prune layer K = 2
+  - Prune ratio R = 0.5
+  - Input frames = 8
+
+[FastV] Step 1: Preparing inputs...
+  ✓ Resized 8 frames to 224x224
+  ✓ Prompt constructed with 8 <image> tokens
+  - Calling processor...
+  ✓ Processor succeeded
+  ✓ Inputs moved to cuda
+
+[FastV] Step 2: Forward through first K=2 layers...
+  ✓ Got attentions from 32 layers
+
+[FastV] Step 3: Computing token-level attention scores...
+  ✓ Computed attention scores: shape torch.Size([1, 2156])
+  ✓ Cleaned intermediate results
+
+[FastV] Step 4: Token-level pruning...
+  - Visual tokens region: 0 to 1078
+  - Total sequence length: 2156
+  ✓ Token-level pruning: 1078 → 539 tokens
+  ✓ Pruning ratio: 50.0%
+  ✓ Top 3 attention scores: [1.0, 1.0, 1.0]
+  ✓ Final sequence: 539 visual + 1078 text = 1617 tokens
+
+[FastV] Step 5: Creating pruned attention mask...
+  ✓ Created pruned attention mask
+  ✓ Active tokens: 1617 / 2156
+
+[FastV] Step 6: Generating with pruned tokens...
+  ✓ Generation completed
+
+[FastV] Step 7: Decoding response...
+  ✓ Decoded response: B
+  ✓ Model returned: B
+================================================================================
+
+  ✓ Sample 001_001-1: Pred=B | GT=C
+
+================================================================================
+[FastV] Processing video: /root/hhq/dataset/Video-MME/videos/fFjv93ACGo8.mp4
+================================================================================
+[FastV] Step 1: Sampling 8 frames...
+  ✓ Sampled 8 frames at indices: [0, 318, 636, 954, 1272]...
+[FastV] Step 2: Calling FastV model with K=2, R=0.5...
+  - Question: What is the genre of this video?...
+  - Options: ['A. It is a news report that introduces the history behind Christmas decorations.', 'B. It is a documentary on the evolution of Christmas holiday recipes.', 'C. It is a travel vlog exploring Christmas markets around the world.', 'D. It is a tutorial on DIY Christmas ornament crafting.']
+
+[FastV K=2] TRUE Token-Level Pruning (Original Paper Algorithm)
+  - Prune layer K = 2
+  - Prune ratio R = 0.5
+  - Input frames = 8
+
+[FastV] Step 1: Preparing inputs...
+  ✓ Resized 8 frames to 224x224
+  ✓ Prompt constructed with 8 <image> tokens
+  - Calling processor...
+  ✓ Processor succeeded
+  ✓ Inputs moved to cuda
+
+[FastV] Step 2: Forward through first K=2 layers...
+  ✓ Got attentions from 32 layers
+
+[FastV] Step 3: Computing token-level attention scores...
+  ✓ Computed attention scores: shape torch.Size([1, 2171])
+  ✓ Cleaned intermediate results
+
+[FastV] Step 4: Token-level pruning...
+  - Visual tokens region: 0 to 1085
+  - Total sequence length: 2171
+  ✓ Token-level pruning: 1085 → 542 tokens
+  ✓ Pruning ratio: 50.0%
+  ✓ Top 3 attention scores: [1.0, 1.0, 1.0]
+  ✓ Final sequence: 542 visual + 1086 text = 1628 tokens
+
+[FastV] Step 5: Creating pruned attention mask...
+  ✓ Created pruned attention mask
+  ✓ Active tokens: 1628 / 2171
+
+[FastV] Step 6: Generating with pruned tokens...
+  ✓ Generation completed
+
+[FastV] Step 7: Decoding response...
+  ✓ Decoded response: A
+  ✓ Model returned: A
+================================================================================
+
+  ✓ Sample 001_001-2: Pred=A | GT=A
+
+================================================================================
+[FastV] Processing video: /root/hhq/dataset/Video-MME/videos/fFjv93ACGo8.mp4
+================================================================================
+[FastV] Step 1: Sampling 8 frames...
+  ✓ Sampled 8 frames at indices: [0, 318, 636, 954, 1272]...
+[FastV] Step 2: Calling FastV model with K=2, R=0.5...
+  - Question: How many red socks are above the fireplace at the end of this video?...
+  - Options: ['A. 1.', 'B. 4.', 'C. 2.', 'D. 3.']
+
+[FastV K=2] TRUE Token-Level Pruning (Original Paper Algorithm)
+  - Prune layer K = 2
+  - Prune ratio R = 0.5
+  - Input frames = 8
+
+[FastV] Step 1: Preparing inputs...
+  ✓ Resized 8 frames to 224x224
+  ✓ Prompt constructed with 8 <image> tokens
+  - Calling processor...
+  ✓ Processor succeeded
+  ✓ Inputs moved to cuda
+
+[FastV] Step 2: Forward through first K=2 layers...
+  ✓ Got attentions from 32 layers
+
+[FastV] Step 3: Computing token-level attention scores...
+  ✓ Computed attention scores: shape torch.Size([1, 2134])
+  ✓ Cleaned intermediate results
+
+[FastV] Step 4: Token-level pruning...
+  - Visual tokens region: 0 to 1067
+  - Total sequence length: 2134
+  ✓ Token-level pruning: 1067 → 533 tokens
+  ✓ Pruning ratio: 50.0%
+  ✓ Top 3 attention scores: [1.0, 1.0, 1.0]
+  ✓ Final sequence: 533 visual + 1067 text = 1600 tokens
+
+[FastV] Step 5: Creating pruned attention mask...
+  ✓ Created pruned attention mask
+  ✓ Active tokens: 1600 / 2134
+
+[FastV] Step 6: Generating with pruned tokens...
+  ✓ Generation completed
+
+[FastV] Step 7: Decoding response...
+  ✓ Decoded response: D
+  ✓ Model returned: D
+================================================================================
+
+  ✓ Sample 001_001-3: Pred=D | GT=D
+
+================================================================================
+[FastV] Processing video: /root/hhq/dataset/Video-MME/videos/N1cdUjctpG8.mp4
+================================================================================
+[FastV] Step 1: Sampling 8 frames...
+  ✓ Sampled 8 frames at indices: [0, 369, 739, 1109, 1479]...
+[FastV] Step 2: Calling FastV model with K=2, R=0.5...
+  - Question: Which of the following features/items is not discussed in the video in relation to the tomb?...
+  - Options: ['A. Inkstone.', 'B. Niche.', 'C. Jade.', 'D. Sacrificial table.']
+
+[FastV K=2] TRUE Token-Level Pruning (Original Paper Algorithm)
+  - Prune layer K = 2
+  - Prune ratio R = 0.5
+  - Input frames = 8
+
+[FastV] Step 1: Preparing inputs...
+  ✓ Resized 8 frames to 224x224
+  ✓ Prompt constructed with 8 <image> tokens
+  - Calling processor...
+  ✓ Processor succeeded
+  ✓ Inputs moved to cuda
+
+[FastV] Step 2: Forward through first K=2 layers...
+  ✓ Got attentions from 32 layers
+
+[FastV] Step 3: Computing token-level attention scores...
+  ✓ Computed attention scores: shape torch.Size([1, 2141])
+  ✓ Cleaned intermediate results
+
+[FastV] Step 4: Token-level pruning...
+  - Visual tokens region: 0 to 1070
+  - Total sequence length: 2141
+  ✓ Token-level pruning: 1070 → 535 tokens
+  ✓ Pruning ratio: 50.0%
+  ✓ Top 3 attention scores: [1.0, 1.0, 1.0]
+  ✓ Final sequence: 535 visual + 1071 text = 1606 tokens
+
+[FastV] Step 5: Creating pruned attention mask...
+  ✓ Created pruned attention mask
+  ✓ Active tokens: 1606 / 2141
+
+[FastV] Step 6: Generating with pruned tokens...
+  ✓ Generation completed
+
+[FastV] Step 7: Decoding response...
+  ✓ Decoded response: (A) A. Inkstone.
+  ✓ Model returned: (A) A. Inkstone.
+================================================================================
+
+  ✓ Sample 002_002-1: Pred=(A) A. Inkstone. | GT=C
+
+================================================================================
+[FastV] Processing video: /root/hhq/dataset/Video-MME/videos/N1cdUjctpG8.mp4
+================================================================================
+[FastV] Step 1: Sampling 8 frames...
+  ✓ Sampled 8 frames at indices: [0, 369, 739, 1109, 1479]...
+[FastV] Step 2: Calling FastV model with K=2, R=0.5...
+  - Question: Which of the following reasons motivated the archaeologists to excavate the tomb?...
+                                                                                                                                                                                  Processing:  33%|██████████████████████████████████████████                                                                                    | 4/12 [00:09<00:14,  1.81s/sample]Processing:  42%|████████████████████████████████████████████████████▌                                                                         | 5/12 [00:09<00:11,  1.64s/sample]                                                                                                                                                                                  Processing:  42%|████████████████████████████████████████████████████▌                                                                         | 5/12 [00:11<00:11,  1.64s/sample]Processing:  50%|███████████████████████████████████████████████████████████████                                                               | 6/12 [00:11<00:09,  1.53s/sample]                                                                                                                                                                                  Processing:  50%|███████████████████████████████████████████████████████████████                                                               | 6/12 [00:12<00:09,  1.53s/sample]Processing:  58%|█████████████████████████████████████████████████████████████████████████▌                                                    | 7/12 [00:12<00:06,  1.39s/sample]                                                                                                                                                                                  Processing:  58%|█████████████████████████████████████████████████████████████████████████▌                                                    | 7/12 [00:13<00:06,  1.39s/sample]Processing:  67%|████████████████████████████████████████████████████████████████████████████████████                                          | 8/12 [00:13<00:05,  1.31s/sample]  - Options: ["A. Because it's from Ming Dynasty and of specific archaeological significance.", 'B. Because a new railway line will be built nearby.', 'C. Because there were treasures inside the tomb.', 'D. Highway realignment.']
+
+[FastV K=2] TRUE Token-Level Pruning (Original Paper Algorithm)
+  - Prune layer K = 2
+  - Prune ratio R = 0.5
+  - Input frames = 8
+
+[FastV] Step 1: Preparing inputs...
+  ✓ Resized 8 frames to 224x224
+  ✓ Prompt constructed with 8 <image> tokens
+  - Calling processor...
+  ✓ Processor succeeded
+  ✓ Inputs moved to cuda
+
+[FastV] Step 2: Forward through first K=2 layers...
+  ✓ Got attentions from 32 layers
+
+[FastV] Step 3: Computing token-level attention scores...
+  ✓ Computed attention scores: shape torch.Size([1, 2166])
+  ✓ Cleaned intermediate results
+
+[FastV] Step 4: Token-level pruning...
+  - Visual tokens region: 0 to 1083
+  - Total sequence length: 2166
+  ✓ Token-level pruning: 1083 → 541 tokens
+  ✓ Pruning ratio: 50.0%
+  ✓ Top 3 attention scores: [1.0, 1.0, 1.0]
+  ✓ Final sequence: 541 visual + 1083 text = 1624 tokens
+
+[FastV] Step 5: Creating pruned attention mask...
+  ✓ Created pruned attention mask
+  ✓ Active tokens: 1624 / 2166
+
+[FastV] Step 6: Generating with pruned tokens...
+  ✓ Generation completed
+
+[FastV] Step 7: Decoding response...
+  ✓ Decoded response: A
+  ✓ Model returned: A
+================================================================================
+
+  ✓ Sample 002_002-2: Pred=A | GT=D
+
+================================================================================
+[FastV] Processing video: /root/hhq/dataset/Video-MME/videos/N1cdUjctpG8.mp4
+================================================================================
+[FastV] Step 1: Sampling 8 frames...
+  ✓ Sampled 8 frames at indices: [0, 369, 739, 1109, 1479]...
+[FastV] Step 2: Calling FastV model with K=2, R=0.5...
+  - Question: How many porcelain jars were discovered in the niches located in the primary chamber of the tomb?...
+  - Options: ['A. 4.', 'B. 9.', 'C. 5.', 'D. 13.']
+
+[FastV K=2] TRUE Token-Level Pruning (Original Paper Algorithm)
+  - Prune layer K = 2
+  - Prune ratio R = 0.5
+  - Input frames = 8
+
+[FastV] Step 1: Preparing inputs...
+  ✓ Resized 8 frames to 224x224
+  ✓ Prompt constructed with 8 <image> tokens
+  - Calling processor...
+  ✓ Processor succeeded
+  ✓ Inputs moved to cuda
+
+[FastV] Step 2: Forward through first K=2 layers...
+  ✓ Got attentions from 32 layers
+
+[FastV] Step 3: Computing token-level attention scores...
+  ✓ Computed attention scores: shape torch.Size([1, 2140])
+  ✓ Cleaned intermediate results
+
+[FastV] Step 4: Token-level pruning...
+  - Visual tokens region: 0 to 1070
+  - Total sequence length: 2140
+  ✓ Token-level pruning: 1070 → 535 tokens
+  ✓ Pruning ratio: 50.0%
+  ✓ Top 3 attention scores: [1.0, 1.0, 1.0]
+  ✓ Final sequence: 535 visual + 1070 text = 1605 tokens
+
+[FastV] Step 5: Creating pruned attention mask...
+  ✓ Created pruned attention mask
+  ✓ Active tokens: 1605 / 2140
+
+[FastV] Step 6: Generating with pruned tokens...
+  ✓ Generation completed
+
+[FastV] Step 7: Decoding response...
+  ✓ Decoded response: A
+  ✓ Model returned: A
+================================================================================
+
+  ✓ Sample 002_002-3: Pred=A | GT=B
+
+================================================================================
+[FastV] Processing video: /root/hhq/dataset/Video-MME/videos/HIjX8OPuf-w.mp4
+================================================================================
+[FastV] Step 1: Sampling 8 frames...
+  ✓ Sampled 8 frames at indices: [0, 387, 774, 1161, 1549]...
+[FastV] Step 2: Calling FastV model with K=2, R=0.5...
+  - Question: How many national flags appear in the video?...
+  - Options: ['A. 3.', 'B. 4.', 'C. 2.', 'D. 5.']
+
+[FastV K=2] TRUE Token-Level Pruning (Original Paper Algorithm)
+  - Prune layer K = 2
+  - Prune ratio R = 0.5
+  - Input frames = 8
+
+[FastV] Step 1: Preparing inputs...
+  ✓ Resized 8 frames to 224x224
+  ✓ Prompt constructed with 8 <image> tokens
+  - Calling processor...
+  ✓ Processor succeeded
+  ✓ Inputs moved to cuda
+
+[FastV] Step 2: Forward through first K=2 layers...
+  ✓ Got attentions from 32 layers
+
+[FastV] Step 3: Computing token-level attention scores...
+  ✓ Computed attention scores: shape torch.Size([1, 2126])
+  ✓ Cleaned intermediate results
+
+[FastV] Step 4: Token-level pruning...
+  - Visual tokens region: 0 to 1063
+  - Total sequence length: 2126
+  ✓ Token-level pruning: 1063 → 531 tokens
+  ✓ Pruning ratio: 50.0%
+  ✓ Top 3 attention scores: [1.0, 1.0, 1.0]
+  ✓ Final sequence: 531 visual + 1063 text = 1594 tokens
+
+[FastV] Step 5: Creating pruned attention mask...
+  ✓ Created pruned attention mask
+  ✓ Active tokens: 1594 / 2126
+
+[FastV] Step 6: Generating with pruned tokens...
+  ✓ Generation completed
+
+[FastV] Step 7: Decoding response...
+  ✓ Decoded response: C
+  ✓ Model returned: C
+================================================================================
+
+  ✓ Sample 003_003-1: Pred=C | GT=B
+
+================================================================================
+[FastV] Processing video: /root/hhq/dataset/Video-MME/videos/HIjX8OPuf-w.mp4
+================================================================================
+[FastV] Step 1: Sampling 8 frames...
+  ✓ Sampled 8 frames at indices: [0, 387, 774, 1161, 1549]...
+[FastV] Step 2: Calling FastV model with K=2, R=0.5...
+  - Question: What is the video telling when the burger placed in the upper right corner at the end of the video f...
+  - Options: ['A. Beef with spices came from Russia to Germany.', 'B. The steak began to be sandwiched between two pieces of bread.', 'C. Steak burgers spread throughout the United States.', 'D. The standardization of hamburgers.']
+
+[FastV K=2] TRUE Token-Level Pruning (Original Paper Algorithm)
+  - Prune layer K = 2
+  - Prune ratio R = 0.5
+  - Input frames = 8
+
+[FastV] Step 1: Preparing inputs...
+  ✓ Resized 8 frames to 224x224
+  ✓ Prompt constructed with 8 <image> tokens
+  - Calling processor...
+  ✓ Processor succeeded
+  ✓ Inputs moved to cuda
+
+[FastV] Step 2: Forward through first K=2 layers...
+  ✓ Got attentions from 32 layers
+
+[FastV] Step 3: Computing token-level attention scores...
+  ✓ Computed attention scores: shape torch.Size([1, 2174])
+  ✓ Cleaned intermediate results
+
+[FastV] Step 4: Token-level pruning...
+  - Visual tokens region: 0 to 1087
+  - Total sequence length: 2174
+  ✓ Token-level pruning: 1087 → 543 tokens
+  ✓ Pruning ratio: 50.0%
+  ✓ Top 3 attention scores: [1.0, 1.0, 1.0]
+  ✓ Final sequence: 543 visual + 1087 text = 1630 tokens
+
+[FastV] Step 5: Creating pruned attention mask...
+  ✓ Created pruned attention mask
+  ✓ Active tokens: 1630 / 2174
+
+[FastV] Step 6: Generating with pruned tokens...
+  ✓ Generation completed
+
+[FastV] Step 7: Decoding response...
+  ✓ Decoded response: D
+  ✓ Model returned: D
+================================================================================
+
+  ✓ Sample 003_003-2: Pred=D | GT=C
+
+================================================================================
+[FastV] Processing video: /root/hhq/dataset/Video-MME/videos/HIjX8OPuf-w.mp4
+================================================================================
+[FastV] Step 1: Sampling 8 frames...
+  ✓ Sampled 8 frames at indices: [0, 387, 774, 1161, 1549]...
+[FastV] Step 2: Calling FastV model with K=2, R=0.5...
+  - Question: In which country is the food featured in the video recognized worldwide?...
+  - Options: ['A. Mongolia.', 'B. Russia.', 'C. Germany.', 'D. United States.']
+
+[FastV K=2] TRUE Token-Level Pruning (Original Paper Algorithm)
+  - Prune layer K = 2
+  - Prune ratio R = 0.5
+  - Input frames = 8
+
+[FastV] Step 1: Preparing inputs...
+  ✓ Resized 8 frames to 224x224
+  ✓ Prompt constructed with 8 <image> tokens
+  - Calling processor...
+  ✓ Processor succeeded
+  ✓ Inputs moved to cuda
+
+[FastV] Step 2: Forward through first K=2 layers...
+  ✓ Got attentions from 32 layers
+
+[FastV] Step 3: Computing token-level attention scores...
+                                                                                                                                                                                  Processing:  67%|████████████████████████████████████████████████████████████████████████████████████                                          | 8/12 [00:14<00:05,  1.31s/sample]Processing:  75%|██████████████████████████████████████████████████████████████████████████████████████████████▌                               | 9/12 [00:14<00:03,  1.27s/sample]                                                                                                                                                                                  Processing:  75%|██████████████████████████████████████████████████████████████████████████████████████████████▌                               | 9/12 [00:15<00:03,  1.27s/sample]Processing:  83%|████████████████████████████████████████████████████████████████████████████████████████████████████████▏                    | 10/12 [00:15<00:02,  1.25s/sample]Processing:  92%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████▌          | 11/12 [00:16<00:01,  1.24s/sample]Processing: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 12/12 [00:18<00:00,  1.22s/sample]Processing: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 12/12 [00:18<00:00,  1.50s/sample]
+  ✓ Computed attention scores: shape torch.Size([1, 2129])
+  ✓ Cleaned intermediate results
+
+[FastV] Step 4: Token-level pruning...
+  - Visual tokens region: 0 to 1064
+  - Total sequence length: 2129
+  ✓ Token-level pruning: 1064 → 532 tokens
+  ✓ Pruning ratio: 50.0%
+  ✓ Top 3 attention scores: [1.0, 1.0, 1.0]
+  ✓ Final sequence: 532 visual + 1065 text = 1597 tokens
+
+[FastV] Step 5: Creating pruned attention mask...
+  ✓ Created pruned attention mask
+  ✓ Active tokens: 1597 / 2129
+
+[FastV] Step 6: Generating with pruned tokens...
+  ✓ Generation completed
+
+[FastV] Step 7: Decoding response...
+  ✓ Decoded response: D
+  ✓ Model returned: D
+================================================================================
+
+  ✓ Sample 003_003-3: Pred=D | GT=D
+
+================================================================================
+[FastV] Processing video: /root/hhq/dataset/Video-MME/videos/HwnB8aCn8yE.mp4
+================================================================================
+[FastV] Step 1: Sampling 8 frames...
+  ✓ Sampled 8 frames at indices: [0, 346, 693, 1040, 1386]...
+[FastV] Step 2: Calling FastV model with K=2, R=0.5...
+  - Question: According to the video, which of the following is considered the earliest stage of human evolution?...
+  - Options: ['A. Ramapithecus.', 'B. Dryopithecus.', 'C. Ardipithecus Ramidus.', 'D. Homo Sapiens.']
+
+[FastV K=2] TRUE Token-Level Pruning (Original Paper Algorithm)
+  - Prune layer K = 2
+  - Prune ratio R = 0.5
+  - Input frames = 8
+
+[FastV] Step 1: Preparing inputs...
+  ✓ Resized 8 frames to 224x224
+  ✓ Prompt constructed with 8 <image> tokens
+  - Calling processor...
+  ✓ Processor succeeded
+  ✓ Inputs moved to cuda
+
+[FastV] Step 2: Forward through first K=2 layers...
+  ✓ Got attentions from 32 layers
+
+[FastV] Step 3: Computing token-level attention scores...
+  ✓ Computed attention scores: shape torch.Size([1, 2153])
+  ✓ Cleaned intermediate results
+
+[FastV] Step 4: Token-level pruning...
+  - Visual tokens region: 0 to 1076
+  - Total sequence length: 2153
+  ✓ Token-level pruning: 1076 → 538 tokens
+  ✓ Pruning ratio: 50.0%
+  ✓ Top 3 attention scores: [1.0, 1.0, 1.0]
+  ✓ Final sequence: 538 visual + 1077 text = 1615 tokens
+
+[FastV] Step 5: Creating pruned attention mask...
+  ✓ Created pruned attention mask
+  ✓ Active tokens: 1615 / 2153
+
+[FastV] Step 6: Generating with pruned tokens...
+  ✓ Generation completed
+
+[FastV] Step 7: Decoding response...
+  ✓ Decoded response: C
+  ✓ Model returned: C
+================================================================================
+
+  ✓ Sample 004_004-1: Pred=C | GT=B
+
+================================================================================
+[FastV] Processing video: /root/hhq/dataset/Video-MME/videos/HwnB8aCn8yE.mp4
+================================================================================
+[FastV] Step 1: Sampling 8 frames...
+  ✓ Sampled 8 frames at indices: [0, 346, 693, 1040, 1386]...
+[FastV] Step 2: Calling FastV model with K=2, R=0.5...
+  - Question: According to the video, in which state did human's ancestors first begin to walk on two legs?...
+  - Options: ['A. Dryopithecus.', 'B. Ramapithecus.', 'C. Ardipithecus Ramidus.', 'D. Homo Habilis.']
+
+[FastV K=2] TRUE Token-Level Pruning (Original Paper Algorithm)
+  - Prune layer K = 2
+  - Prune ratio R = 0.5
+  - Input frames = 8
+
+[FastV] Step 1: Preparing inputs...
+  ✓ Resized 8 frames to 224x224
+  ✓ Prompt constructed with 8 <image> tokens
+  - Calling processor...
+  ✓ Processor succeeded
+  ✓ Inputs moved to cuda
+
+[FastV] Step 2: Forward through first K=2 layers...
+  ✓ Got attentions from 32 layers
+
+[FastV] Step 3: Computing token-level attention scores...
+  ✓ Computed attention scores: shape torch.Size([1, 2157])
+  ✓ Cleaned intermediate results
+
+[FastV] Step 4: Token-level pruning...
+  - Visual tokens region: 0 to 1078
+  - Total sequence length: 2157
+  ✓ Token-level pruning: 1078 → 539 tokens
+  ✓ Pruning ratio: 50.0%
+  ✓ Top 3 attention scores: [1.0, 1.0, 1.0]
+  ✓ Final sequence: 539 visual + 1079 text = 1618 tokens
+
+[FastV] Step 5: Creating pruned attention mask...
+  ✓ Created pruned attention mask
+  ✓ Active tokens: 1618 / 2157
+
+[FastV] Step 6: Generating with pruned tokens...
+  ✓ Generation completed
+
+[FastV] Step 7: Decoding response...
+  ✓ Decoded response: C
+  ✓ Model returned: C
+================================================================================
+
+
+================================================================================
+[FastV] Processing video: /root/hhq/dataset/Video-MME/videos/HwnB8aCn8yE.mp4
+================================================================================
+[FastV] Step 1: Sampling 8 frames...
+  ✓ Sampled 8 frames at indices: [0, 346, 693, 1040, 1386]...
+[FastV] Step 2: Calling FastV model with K=2, R=0.5...
+  - Question: Given the information provided by the video, during which stage of human evolution did the regressio...
+  - Options: ['A. Dryopithecus.', 'B. Homo Sapiens.', 'C. Ardipithecus Ramidus.', 'D. Homo Sapiens Neanderthalensi.']
+
+[FastV K=2] TRUE Token-Level Pruning (Original Paper Algorithm)
+  - Prune layer K = 2
+  - Prune ratio R = 0.5
+  - Input frames = 8
+
+[FastV] Step 1: Preparing inputs...
+  ✓ Resized 8 frames to 224x224
+  ✓ Prompt constructed with 8 <image> tokens
+  - Calling processor...
+  ✓ Processor succeeded
+  ✓ Inputs moved to cuda
+
+[FastV] Step 2: Forward through first K=2 layers...
+  ✓ Got attentions from 32 layers
+
+[FastV] Step 3: Computing token-level attention scores...
+  ✓ Computed attention scores: shape torch.Size([1, 2164])
+  ✓ Cleaned intermediate results
+
+[FastV] Step 4: Token-level pruning...
+  - Visual tokens region: 0 to 1082
+  - Total sequence length: 2164
+  ✓ Token-level pruning: 1082 → 541 tokens
+  ✓ Pruning ratio: 50.0%
+  ✓ Top 3 attention scores: [1.0, 1.0, 1.0]
+  ✓ Final sequence: 541 visual + 1082 text = 1623 tokens
+
+[FastV] Step 5: Creating pruned attention mask...
+  ✓ Created pruned attention mask
+  ✓ Active tokens: 1623 / 2164
+
+[FastV] Step 6: Generating with pruned tokens...
+  ✓ Generation completed
+
+[FastV] Step 7: Decoding response...
+  ✓ Decoded response: B
+  ✓ Model returned: B
+================================================================================
+
+
+✅ Done! Results saved to ../result/fastv_50samples_7b_parallel/VideoMME_FastV_all_Video-LLaVA-7B_chunk0.json
+📈 Accuracy: 3/12 = 25.00%
+❌ Errors: 0

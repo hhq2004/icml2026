@@ -1,0 +1,649 @@
+Seq	Host	Starttime	JobRuntime	Send	Receive	Exitval	Signal	Command
+4	:	1767544842.912	   121.094	0	70	0	0	
+        chunk_idx=3
+        gpu_id=$(((4 - 1)))
+        
+        echo "🔄 [Chunk 3/24] GPU ${gpu_id} 开始处理..."
+        
+        CUDA_VISIBLE_DEVICES=${gpu_id} python ../run_inference.py \
+            --dataset VideoMME \
+            --method EventGraph-LMM \
+            --backbone Video-LLaVA-7B \
+            --data_root /root/hhq/dataset \
+            --token_budget 2048 \
+            --duration_mode all \
+            --max_samples 600 \
+            --num_chunks 24 \
+            --chunk_idx ${chunk_idx} \
+            --output_dir ../result/eventgraph_test \
+            > ../result/eventgraph_test/chunk${chunk_idx}.log 2>&1
+        
+        exit_code=$?
+        if [ ${exit_code} -eq 0 ]; then
+            echo "✅ [Chunk 3/24] GPU ${gpu_id} 完成"
+        else
+            echo "❌ [Chunk 3/24] GPU ${gpu_id} 失败 (exit code: ${exit_code})"
+            exit 1
+        fi
+        
+2	:	1767544842.908	   127.499	0	70	0	0	
+        chunk_idx=1
+        gpu_id=$(((2 - 1)))
+        
+        echo "🔄 [Chunk 1/24] GPU ${gpu_id} 开始处理..."
+        
+        CUDA_VISIBLE_DEVICES=${gpu_id} python ../run_inference.py \
+            --dataset VideoMME \
+            --method EventGraph-LMM \
+            --backbone Video-LLaVA-7B \
+            --data_root /root/hhq/dataset \
+            --token_budget 2048 \
+            --duration_mode all \
+            --max_samples 600 \
+            --num_chunks 24 \
+            --chunk_idx ${chunk_idx} \
+            --output_dir ../result/eventgraph_test \
+            > ../result/eventgraph_test/chunk${chunk_idx}.log 2>&1
+        
+        exit_code=$?
+        if [ ${exit_code} -eq 0 ]; then
+            echo "✅ [Chunk 1/24] GPU ${gpu_id} 完成"
+        else
+            echo "❌ [Chunk 1/24] GPU ${gpu_id} 失败 (exit code: ${exit_code})"
+            exit 1
+        fi
+        
+3	:	1767544842.910	   132.174	0	70	0	0	
+        chunk_idx=2
+        gpu_id=$(((3 - 1)))
+        
+        echo "🔄 [Chunk 2/24] GPU ${gpu_id} 开始处理..."
+        
+        CUDA_VISIBLE_DEVICES=${gpu_id} python ../run_inference.py \
+            --dataset VideoMME \
+            --method EventGraph-LMM \
+            --backbone Video-LLaVA-7B \
+            --data_root /root/hhq/dataset \
+            --token_budget 2048 \
+            --duration_mode all \
+            --max_samples 600 \
+            --num_chunks 24 \
+            --chunk_idx ${chunk_idx} \
+            --output_dir ../result/eventgraph_test \
+            > ../result/eventgraph_test/chunk${chunk_idx}.log 2>&1
+        
+        exit_code=$?
+        if [ ${exit_code} -eq 0 ]; then
+            echo "✅ [Chunk 2/24] GPU ${gpu_id} 完成"
+        else
+            echo "❌ [Chunk 2/24] GPU ${gpu_id} 失败 (exit code: ${exit_code})"
+            exit 1
+        fi
+        
+1	:	1767544842.905	   142.858	0	70	0	0	
+        chunk_idx=0
+        gpu_id=$(((1 - 1)))
+        
+        echo "🔄 [Chunk 0/24] GPU ${gpu_id} 开始处理..."
+        
+        CUDA_VISIBLE_DEVICES=${gpu_id} python ../run_inference.py \
+            --dataset VideoMME \
+            --method EventGraph-LMM \
+            --backbone Video-LLaVA-7B \
+            --data_root /root/hhq/dataset \
+            --token_budget 2048 \
+            --duration_mode all \
+            --max_samples 600 \
+            --num_chunks 24 \
+            --chunk_idx ${chunk_idx} \
+            --output_dir ../result/eventgraph_test \
+            > ../result/eventgraph_test/chunk${chunk_idx}.log 2>&1
+        
+        exit_code=$?
+        if [ ${exit_code} -eq 0 ]; then
+            echo "✅ [Chunk 0/24] GPU ${gpu_id} 完成"
+        else
+            echo "❌ [Chunk 0/24] GPU ${gpu_id} 失败 (exit code: ${exit_code})"
+            exit 1
+        fi
+        
+5	:	1767544964.008	   122.108	0	70	0	0	
+        chunk_idx=4
+        gpu_id=$(((4 - 1)))
+        
+        echo "🔄 [Chunk 4/24] GPU ${gpu_id} 开始处理..."
+        
+        CUDA_VISIBLE_DEVICES=${gpu_id} python ../run_inference.py \
+            --dataset VideoMME \
+            --method EventGraph-LMM \
+            --backbone Video-LLaVA-7B \
+            --data_root /root/hhq/dataset \
+            --token_budget 2048 \
+            --duration_mode all \
+            --max_samples 600 \
+            --num_chunks 24 \
+            --chunk_idx ${chunk_idx} \
+            --output_dir ../result/eventgraph_test \
+            > ../result/eventgraph_test/chunk${chunk_idx}.log 2>&1
+        
+        exit_code=$?
+        if [ ${exit_code} -eq 0 ]; then
+            echo "✅ [Chunk 4/24] GPU ${gpu_id} 完成"
+        else
+            echo "❌ [Chunk 4/24] GPU ${gpu_id} 失败 (exit code: ${exit_code})"
+            exit 1
+        fi
+        
+6	:	1767544970.410	   117.866	0	70	0	0	
+        chunk_idx=5
+        gpu_id=$(((2 - 1)))
+        
+        echo "🔄 [Chunk 5/24] GPU ${gpu_id} 开始处理..."
+        
+        CUDA_VISIBLE_DEVICES=${gpu_id} python ../run_inference.py \
+            --dataset VideoMME \
+            --method EventGraph-LMM \
+            --backbone Video-LLaVA-7B \
+            --data_root /root/hhq/dataset \
+            --token_budget 2048 \
+            --duration_mode all \
+            --max_samples 600 \
+            --num_chunks 24 \
+            --chunk_idx ${chunk_idx} \
+            --output_dir ../result/eventgraph_test \
+            > ../result/eventgraph_test/chunk${chunk_idx}.log 2>&1
+        
+        exit_code=$?
+        if [ ${exit_code} -eq 0 ]; then
+            echo "✅ [Chunk 5/24] GPU ${gpu_id} 完成"
+        else
+            echo "❌ [Chunk 5/24] GPU ${gpu_id} 失败 (exit code: ${exit_code})"
+            exit 1
+        fi
+        
+7	:	1767544975.088	   121.644	0	70	0	0	
+        chunk_idx=6
+        gpu_id=$(((3 - 1)))
+        
+        echo "🔄 [Chunk 6/24] GPU ${gpu_id} 开始处理..."
+        
+        CUDA_VISIBLE_DEVICES=${gpu_id} python ../run_inference.py \
+            --dataset VideoMME \
+            --method EventGraph-LMM \
+            --backbone Video-LLaVA-7B \
+            --data_root /root/hhq/dataset \
+            --token_budget 2048 \
+            --duration_mode all \
+            --max_samples 600 \
+            --num_chunks 24 \
+            --chunk_idx ${chunk_idx} \
+            --output_dir ../result/eventgraph_test \
+            > ../result/eventgraph_test/chunk${chunk_idx}.log 2>&1
+        
+        exit_code=$?
+        if [ ${exit_code} -eq 0 ]; then
+            echo "✅ [Chunk 6/24] GPU ${gpu_id} 完成"
+        else
+            echo "❌ [Chunk 6/24] GPU ${gpu_id} 失败 (exit code: ${exit_code})"
+            exit 1
+        fi
+        
+8	:	1767544985.767	   124.499	0	70	0	0	
+        chunk_idx=7
+        gpu_id=$(((1 - 1)))
+        
+        echo "🔄 [Chunk 7/24] GPU ${gpu_id} 开始处理..."
+        
+        CUDA_VISIBLE_DEVICES=${gpu_id} python ../run_inference.py \
+            --dataset VideoMME \
+            --method EventGraph-LMM \
+            --backbone Video-LLaVA-7B \
+            --data_root /root/hhq/dataset \
+            --token_budget 2048 \
+            --duration_mode all \
+            --max_samples 600 \
+            --num_chunks 24 \
+            --chunk_idx ${chunk_idx} \
+            --output_dir ../result/eventgraph_test \
+            > ../result/eventgraph_test/chunk${chunk_idx}.log 2>&1
+        
+        exit_code=$?
+        if [ ${exit_code} -eq 0 ]; then
+            echo "✅ [Chunk 7/24] GPU ${gpu_id} 完成"
+        else
+            echo "❌ [Chunk 7/24] GPU ${gpu_id} 失败 (exit code: ${exit_code})"
+            exit 1
+        fi
+        
+12	:	1767545110.269	    81.559	0	72	0	0	
+        chunk_idx=11
+        gpu_id=$(((1 - 1)))
+        
+        echo "🔄 [Chunk 11/24] GPU ${gpu_id} 开始处理..."
+        
+        CUDA_VISIBLE_DEVICES=${gpu_id} python ../run_inference.py \
+            --dataset VideoMME \
+            --method EventGraph-LMM \
+            --backbone Video-LLaVA-7B \
+            --data_root /root/hhq/dataset \
+            --token_budget 2048 \
+            --duration_mode all \
+            --max_samples 600 \
+            --num_chunks 24 \
+            --chunk_idx ${chunk_idx} \
+            --output_dir ../result/eventgraph_test \
+            > ../result/eventgraph_test/chunk${chunk_idx}.log 2>&1
+        
+        exit_code=$?
+        if [ ${exit_code} -eq 0 ]; then
+            echo "✅ [Chunk 11/24] GPU ${gpu_id} 完成"
+        else
+            echo "❌ [Chunk 11/24] GPU ${gpu_id} 失败 (exit code: ${exit_code})"
+            exit 1
+        fi
+        
+9	:	1767545086.120	   110.141	0	70	0	0	
+        chunk_idx=8
+        gpu_id=$(((4 - 1)))
+        
+        echo "🔄 [Chunk 8/24] GPU ${gpu_id} 开始处理..."
+        
+        CUDA_VISIBLE_DEVICES=${gpu_id} python ../run_inference.py \
+            --dataset VideoMME \
+            --method EventGraph-LMM \
+            --backbone Video-LLaVA-7B \
+            --data_root /root/hhq/dataset \
+            --token_budget 2048 \
+            --duration_mode all \
+            --max_samples 600 \
+            --num_chunks 24 \
+            --chunk_idx ${chunk_idx} \
+            --output_dir ../result/eventgraph_test \
+            > ../result/eventgraph_test/chunk${chunk_idx}.log 2>&1
+        
+        exit_code=$?
+        if [ ${exit_code} -eq 0 ]; then
+            echo "✅ [Chunk 8/24] GPU ${gpu_id} 完成"
+        else
+            echo "❌ [Chunk 8/24] GPU ${gpu_id} 失败 (exit code: ${exit_code})"
+            exit 1
+        fi
+        
+10	:	1767545088.280	   116.390	0	70	0	0	
+        chunk_idx=9
+        gpu_id=$(((2 - 1)))
+        
+        echo "🔄 [Chunk 9/24] GPU ${gpu_id} 开始处理..."
+        
+        CUDA_VISIBLE_DEVICES=${gpu_id} python ../run_inference.py \
+            --dataset VideoMME \
+            --method EventGraph-LMM \
+            --backbone Video-LLaVA-7B \
+            --data_root /root/hhq/dataset \
+            --token_budget 2048 \
+            --duration_mode all \
+            --max_samples 600 \
+            --num_chunks 24 \
+            --chunk_idx ${chunk_idx} \
+            --output_dir ../result/eventgraph_test \
+            > ../result/eventgraph_test/chunk${chunk_idx}.log 2>&1
+        
+        exit_code=$?
+        if [ ${exit_code} -eq 0 ]; then
+            echo "✅ [Chunk 9/24] GPU ${gpu_id} 完成"
+        else
+            echo "❌ [Chunk 9/24] GPU ${gpu_id} 失败 (exit code: ${exit_code})"
+            exit 1
+        fi
+        
+11	:	1767545096.735	   116.965	0	72	0	0	
+        chunk_idx=10
+        gpu_id=$(((3 - 1)))
+        
+        echo "🔄 [Chunk 10/24] GPU ${gpu_id} 开始处理..."
+        
+        CUDA_VISIBLE_DEVICES=${gpu_id} python ../run_inference.py \
+            --dataset VideoMME \
+            --method EventGraph-LMM \
+            --backbone Video-LLaVA-7B \
+            --data_root /root/hhq/dataset \
+            --token_budget 2048 \
+            --duration_mode all \
+            --max_samples 600 \
+            --num_chunks 24 \
+            --chunk_idx ${chunk_idx} \
+            --output_dir ../result/eventgraph_test \
+            > ../result/eventgraph_test/chunk${chunk_idx}.log 2>&1
+        
+        exit_code=$?
+        if [ ${exit_code} -eq 0 ]; then
+            echo "✅ [Chunk 10/24] GPU ${gpu_id} 完成"
+        else
+            echo "❌ [Chunk 10/24] GPU ${gpu_id} 失败 (exit code: ${exit_code})"
+            exit 1
+        fi
+        
+13	:	1767545191.831	   113.888	0	72	0	0	
+        chunk_idx=12
+        gpu_id=$(((1 - 1)))
+        
+        echo "🔄 [Chunk 12/24] GPU ${gpu_id} 开始处理..."
+        
+        CUDA_VISIBLE_DEVICES=${gpu_id} python ../run_inference.py \
+            --dataset VideoMME \
+            --method EventGraph-LMM \
+            --backbone Video-LLaVA-7B \
+            --data_root /root/hhq/dataset \
+            --token_budget 2048 \
+            --duration_mode all \
+            --max_samples 600 \
+            --num_chunks 24 \
+            --chunk_idx ${chunk_idx} \
+            --output_dir ../result/eventgraph_test \
+            > ../result/eventgraph_test/chunk${chunk_idx}.log 2>&1
+        
+        exit_code=$?
+        if [ ${exit_code} -eq 0 ]; then
+            echo "✅ [Chunk 12/24] GPU ${gpu_id} 完成"
+        else
+            echo "❌ [Chunk 12/24] GPU ${gpu_id} 失败 (exit code: ${exit_code})"
+            exit 1
+        fi
+        
+16	:	1767545213.703	   101.884	0	72	0	0	
+        chunk_idx=15
+        gpu_id=$(((3 - 1)))
+        
+        echo "🔄 [Chunk 15/24] GPU ${gpu_id} 开始处理..."
+        
+        CUDA_VISIBLE_DEVICES=${gpu_id} python ../run_inference.py \
+            --dataset VideoMME \
+            --method EventGraph-LMM \
+            --backbone Video-LLaVA-7B \
+            --data_root /root/hhq/dataset \
+            --token_budget 2048 \
+            --duration_mode all \
+            --max_samples 600 \
+            --num_chunks 24 \
+            --chunk_idx ${chunk_idx} \
+            --output_dir ../result/eventgraph_test \
+            > ../result/eventgraph_test/chunk${chunk_idx}.log 2>&1
+        
+        exit_code=$?
+        if [ ${exit_code} -eq 0 ]; then
+            echo "✅ [Chunk 15/24] GPU ${gpu_id} 完成"
+        else
+            echo "❌ [Chunk 15/24] GPU ${gpu_id} 失败 (exit code: ${exit_code})"
+            exit 1
+        fi
+        
+14	:	1767545196.264	   124.525	0	72	0	0	
+        chunk_idx=13
+        gpu_id=$(((4 - 1)))
+        
+        echo "🔄 [Chunk 13/24] GPU ${gpu_id} 开始处理..."
+        
+        CUDA_VISIBLE_DEVICES=${gpu_id} python ../run_inference.py \
+            --dataset VideoMME \
+            --method EventGraph-LMM \
+            --backbone Video-LLaVA-7B \
+            --data_root /root/hhq/dataset \
+            --token_budget 2048 \
+            --duration_mode all \
+            --max_samples 600 \
+            --num_chunks 24 \
+            --chunk_idx ${chunk_idx} \
+            --output_dir ../result/eventgraph_test \
+            > ../result/eventgraph_test/chunk${chunk_idx}.log 2>&1
+        
+        exit_code=$?
+        if [ ${exit_code} -eq 0 ]; then
+            echo "✅ [Chunk 13/24] GPU ${gpu_id} 完成"
+        else
+            echo "❌ [Chunk 13/24] GPU ${gpu_id} 失败 (exit code: ${exit_code})"
+            exit 1
+        fi
+        
+15	:	1767545204.672	   119.639	0	72	0	0	
+        chunk_idx=14
+        gpu_id=$(((2 - 1)))
+        
+        echo "🔄 [Chunk 14/24] GPU ${gpu_id} 开始处理..."
+        
+        CUDA_VISIBLE_DEVICES=${gpu_id} python ../run_inference.py \
+            --dataset VideoMME \
+            --method EventGraph-LMM \
+            --backbone Video-LLaVA-7B \
+            --data_root /root/hhq/dataset \
+            --token_budget 2048 \
+            --duration_mode all \
+            --max_samples 600 \
+            --num_chunks 24 \
+            --chunk_idx ${chunk_idx} \
+            --output_dir ../result/eventgraph_test \
+            > ../result/eventgraph_test/chunk${chunk_idx}.log 2>&1
+        
+        exit_code=$?
+        if [ ${exit_code} -eq 0 ]; then
+            echo "✅ [Chunk 14/24] GPU ${gpu_id} 完成"
+        else
+            echo "❌ [Chunk 14/24] GPU ${gpu_id} 失败 (exit code: ${exit_code})"
+            exit 1
+        fi
+        
+17	:	1767545305.724	    81.170	0	72	0	0	
+        chunk_idx=16
+        gpu_id=$(((1 - 1)))
+        
+        echo "🔄 [Chunk 16/24] GPU ${gpu_id} 开始处理..."
+        
+        CUDA_VISIBLE_DEVICES=${gpu_id} python ../run_inference.py \
+            --dataset VideoMME \
+            --method EventGraph-LMM \
+            --backbone Video-LLaVA-7B \
+            --data_root /root/hhq/dataset \
+            --token_budget 2048 \
+            --duration_mode all \
+            --max_samples 600 \
+            --num_chunks 24 \
+            --chunk_idx ${chunk_idx} \
+            --output_dir ../result/eventgraph_test \
+            > ../result/eventgraph_test/chunk${chunk_idx}.log 2>&1
+        
+        exit_code=$?
+        if [ ${exit_code} -eq 0 ]; then
+            echo "✅ [Chunk 16/24] GPU ${gpu_id} 完成"
+        else
+            echo "❌ [Chunk 16/24] GPU ${gpu_id} 失败 (exit code: ${exit_code})"
+            exit 1
+        fi
+        
+20	:	1767545324.314	   107.513	0	72	0	0	
+        chunk_idx=19
+        gpu_id=$(((2 - 1)))
+        
+        echo "🔄 [Chunk 19/24] GPU ${gpu_id} 开始处理..."
+        
+        CUDA_VISIBLE_DEVICES=${gpu_id} python ../run_inference.py \
+            --dataset VideoMME \
+            --method EventGraph-LMM \
+            --backbone Video-LLaVA-7B \
+            --data_root /root/hhq/dataset \
+            --token_budget 2048 \
+            --duration_mode all \
+            --max_samples 600 \
+            --num_chunks 24 \
+            --chunk_idx ${chunk_idx} \
+            --output_dir ../result/eventgraph_test \
+            > ../result/eventgraph_test/chunk${chunk_idx}.log 2>&1
+        
+        exit_code=$?
+        if [ ${exit_code} -eq 0 ]; then
+            echo "✅ [Chunk 19/24] GPU ${gpu_id} 完成"
+        else
+            echo "❌ [Chunk 19/24] GPU ${gpu_id} 失败 (exit code: ${exit_code})"
+            exit 1
+        fi
+        
+18	:	1767545315.590	   119.707	0	72	0	0	
+        chunk_idx=17
+        gpu_id=$(((3 - 1)))
+        
+        echo "🔄 [Chunk 17/24] GPU ${gpu_id} 开始处理..."
+        
+        CUDA_VISIBLE_DEVICES=${gpu_id} python ../run_inference.py \
+            --dataset VideoMME \
+            --method EventGraph-LMM \
+            --backbone Video-LLaVA-7B \
+            --data_root /root/hhq/dataset \
+            --token_budget 2048 \
+            --duration_mode all \
+            --max_samples 600 \
+            --num_chunks 24 \
+            --chunk_idx ${chunk_idx} \
+            --output_dir ../result/eventgraph_test \
+            > ../result/eventgraph_test/chunk${chunk_idx}.log 2>&1
+        
+        exit_code=$?
+        if [ ${exit_code} -eq 0 ]; then
+            echo "✅ [Chunk 17/24] GPU ${gpu_id} 完成"
+        else
+            echo "❌ [Chunk 17/24] GPU ${gpu_id} 失败 (exit code: ${exit_code})"
+            exit 1
+        fi
+        
+19	:	1767545320.792	   120.546	0	72	0	0	
+        chunk_idx=18
+        gpu_id=$(((4 - 1)))
+        
+        echo "🔄 [Chunk 18/24] GPU ${gpu_id} 开始处理..."
+        
+        CUDA_VISIBLE_DEVICES=${gpu_id} python ../run_inference.py \
+            --dataset VideoMME \
+            --method EventGraph-LMM \
+            --backbone Video-LLaVA-7B \
+            --data_root /root/hhq/dataset \
+            --token_budget 2048 \
+            --duration_mode all \
+            --max_samples 600 \
+            --num_chunks 24 \
+            --chunk_idx ${chunk_idx} \
+            --output_dir ../result/eventgraph_test \
+            > ../result/eventgraph_test/chunk${chunk_idx}.log 2>&1
+        
+        exit_code=$?
+        if [ ${exit_code} -eq 0 ]; then
+            echo "✅ [Chunk 18/24] GPU ${gpu_id} 完成"
+        else
+            echo "❌ [Chunk 18/24] GPU ${gpu_id} 失败 (exit code: ${exit_code})"
+            exit 1
+        fi
+        
+21	:	1767545386.897	   101.839	0	72	0	0	
+        chunk_idx=20
+        gpu_id=$(((1 - 1)))
+        
+        echo "🔄 [Chunk 20/24] GPU ${gpu_id} 开始处理..."
+        
+        CUDA_VISIBLE_DEVICES=${gpu_id} python ../run_inference.py \
+            --dataset VideoMME \
+            --method EventGraph-LMM \
+            --backbone Video-LLaVA-7B \
+            --data_root /root/hhq/dataset \
+            --token_budget 2048 \
+            --duration_mode all \
+            --max_samples 600 \
+            --num_chunks 24 \
+            --chunk_idx ${chunk_idx} \
+            --output_dir ../result/eventgraph_test \
+            > ../result/eventgraph_test/chunk${chunk_idx}.log 2>&1
+        
+        exit_code=$?
+        if [ ${exit_code} -eq 0 ]; then
+            echo "✅ [Chunk 20/24] GPU ${gpu_id} 完成"
+        else
+            echo "❌ [Chunk 20/24] GPU ${gpu_id} 失败 (exit code: ${exit_code})"
+            exit 1
+        fi
+        
+22	:	1767545431.830	    95.021	0	72	0	0	
+        chunk_idx=21
+        gpu_id=$(((2 - 1)))
+        
+        echo "🔄 [Chunk 21/24] GPU ${gpu_id} 开始处理..."
+        
+        CUDA_VISIBLE_DEVICES=${gpu_id} python ../run_inference.py \
+            --dataset VideoMME \
+            --method EventGraph-LMM \
+            --backbone Video-LLaVA-7B \
+            --data_root /root/hhq/dataset \
+            --token_budget 2048 \
+            --duration_mode all \
+            --max_samples 600 \
+            --num_chunks 24 \
+            --chunk_idx ${chunk_idx} \
+            --output_dir ../result/eventgraph_test \
+            > ../result/eventgraph_test/chunk${chunk_idx}.log 2>&1
+        
+        exit_code=$?
+        if [ ${exit_code} -eq 0 ]; then
+            echo "✅ [Chunk 21/24] GPU ${gpu_id} 完成"
+        else
+            echo "❌ [Chunk 21/24] GPU ${gpu_id} 失败 (exit code: ${exit_code})"
+            exit 1
+        fi
+        
+23	:	1767545435.299	    91.691	0	72	0	0	
+        chunk_idx=22
+        gpu_id=$(((3 - 1)))
+        
+        echo "🔄 [Chunk 22/24] GPU ${gpu_id} 开始处理..."
+        
+        CUDA_VISIBLE_DEVICES=${gpu_id} python ../run_inference.py \
+            --dataset VideoMME \
+            --method EventGraph-LMM \
+            --backbone Video-LLaVA-7B \
+            --data_root /root/hhq/dataset \
+            --token_budget 2048 \
+            --duration_mode all \
+            --max_samples 600 \
+            --num_chunks 24 \
+            --chunk_idx ${chunk_idx} \
+            --output_dir ../result/eventgraph_test \
+            > ../result/eventgraph_test/chunk${chunk_idx}.log 2>&1
+        
+        exit_code=$?
+        if [ ${exit_code} -eq 0 ]; then
+            echo "✅ [Chunk 22/24] GPU ${gpu_id} 完成"
+        else
+            echo "❌ [Chunk 22/24] GPU ${gpu_id} 失败 (exit code: ${exit_code})"
+            exit 1
+        fi
+        
+24	:	1767545441.341	   131.954	0	72	0	0	
+        chunk_idx=23
+        gpu_id=$(((4 - 1)))
+        
+        echo "🔄 [Chunk 23/24] GPU ${gpu_id} 开始处理..."
+        
+        CUDA_VISIBLE_DEVICES=${gpu_id} python ../run_inference.py \
+            --dataset VideoMME \
+            --method EventGraph-LMM \
+            --backbone Video-LLaVA-7B \
+            --data_root /root/hhq/dataset \
+            --token_budget 2048 \
+            --duration_mode all \
+            --max_samples 600 \
+            --num_chunks 24 \
+            --chunk_idx ${chunk_idx} \
+            --output_dir ../result/eventgraph_test \
+            > ../result/eventgraph_test/chunk${chunk_idx}.log 2>&1
+        
+        exit_code=$?
+        if [ ${exit_code} -eq 0 ]; then
+            echo "✅ [Chunk 23/24] GPU ${gpu_id} 完成"
+        else
+            echo "❌ [Chunk 23/24] GPU ${gpu_id} 失败 (exit code: ${exit_code})"
+            exit 1
+        fi
+        
