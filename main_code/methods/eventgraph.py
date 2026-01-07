@@ -59,6 +59,10 @@ class EventGraphLMM(BaseMethod):
         print(f"  - B (token budget) = {self.token_budget}")
         print(f"  - Tokens per frame = {self.tokens_per_frame}")
         
+        # === 设备配置 ===
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        print(f"  - Device: {self.device}")
+        
         # === 加载CLIP模型 (用于Graph Construction) ===
         self._load_clip_model()
         
@@ -92,136 +96,85 @@ class EventGraphLMM(BaseMethod):
     
     def _detect_shot_boundaries(self, video_path):
         """
-        论文Section 3.2: Event Nodes
-        使用shot boundary detection切分视频为事件单元
+        论文Section 3.2 (Lines 606-608): Event Nodes
+        "We first decompose the long video into a sequence of N variable-length visual segments, 
+         V = {v1, v2, . . . , vN}, using a standard event-based shot boundary detection algorithm 
+         (Soucek & Lokoc, 2024)."
         
-        实现: 基于颜色直方图的shot detection + 自适应阈值
-        (参考标准方法,如PySceneDetect的原理,但避免额外依赖)
+        实现: TransNet V2 - 论文引用的专业shot detection算法
+        - 论文: TransNet V2: An effective deep network architecture for fast shot transition detection
+        - 作者: Tomáš Souček & Jakub Lokoč (2020)
+        - 特性: 检测abrupt和gradual transitions，输出variable-length segments
+        
+        Returns:
+            events: List[(start_sec, end_sec), ...] - N个variable-length视频片段
+        """
+        try:
+            from utils.shot_detector import TransNetV2Detector, TRANSNET_AVAILABLE
+            
+            if not TRANSNET_AVAILABLE:
+                # Fallback: 使用PySceneDetect或固定窗口
+                print("  ⚠️  TransNet V2 not available, using fallback")
+                return self._detect_shot_boundaries_fallback(video_path)
+            
+            # 使用TransNet V2进行shot detection
+            detector = TransNetV2Detector(device=self.device)
+            events = detector.detect_shots(video_path, threshold=0.5)
+            
+            # 后处理：合并过短的片段（<0.5秒）
+            # 这有助于避免过度碎片化，保证事件的语义完整性
+            events = detector.merge_short_segments(events, min_duration=0.5)
+            
+            # 论文没有明确限制事件数量，但实践中限制在合理范围（3-100个）
+            if len(events) > 100:
+                print(f"  ⚠️  Too many shots ({len(events)}), sampling to 100")
+                step = len(events) // 100
+                events = events[::step][:100]
+            elif len(events) < 3:
+                print(f"  ⚠️  Too few shots ({len(events)}), using fallback")
+                return self._detect_shot_boundaries_fallback(video_path)
+            
+            print(f"  ✓ Detected {len(events)} variable-length events")
+            return events
+            
+        except Exception as e:
+            print(f"  ❌ TransNet V2 failed: {e}")
+            print("  → Using fallback shot detection")
+            return self._detect_shot_boundaries_fallback(video_path)
+    
+    def _detect_shot_boundaries_fallback(self, video_path):
+        """
+        Fallback shot detection（当TransNet V2不可用时）
+        
+        注意：这不是论文引用的方法，仅作为备用方案
+        使用固定时间窗口（2秒）进行切分
         
         Returns:
             events: List[(start_sec, end_sec), ...]
         """
-        cap = cv2.VideoCapture(video_path)
-        fps = cap.get(cv2.CAP_PROP_FPS)
-        frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
-        
-        if fps == 0 or frame_count == 0:
+        # 获取视频时长
+        try:
+            from decord import VideoReader, cpu
+            vr = VideoReader(video_path, ctx=cpu(0))
+            duration = len(vr) / vr.get_avg_fps()
+        except:
+            # 如果decord失败，使用opencv
+            cap = cv2.VideoCapture(video_path)
+            fps = cap.get(cv2.CAP_PROP_FPS)
+            frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
             cap.release()
-            return []
-        
-        duration = frame_count / fps
-        
-        # 采样帧进行分析 (避免处理所有帧,加速)
-        sample_interval = max(1, int(fps / 2))  # 每秒采样2帧
-        
-        # 读取采样帧并计算直方图差异
-        prev_hist = None
-        hist_diffs = []
-        sampled_frame_indices = []
-        
-        frame_idx = 0
-        while True:
-            ret, frame = cap.read()
-            if not ret:
-                break
             
-            # 只处理采样帧
-            if frame_idx % sample_interval == 0:
-                # 转换到HSV空间 (对光照变化更鲁棒)
-                hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
-                hsv = cv2.resize(hsv, (160, 120))  # 减小尺寸加速
-                
-                # 计算颜色直方图 (H和S通道)
-                hist_h = cv2.calcHist([hsv], [0], None, [50], [0, 180])
-                hist_s = cv2.calcHist([hsv], [1], None, [60], [0, 256])
-                
-                # 归一化
-                hist_h = cv2.normalize(hist_h, hist_h).flatten()
-                hist_s = cv2.normalize(hist_s, hist_s).flatten()
-                
-                if prev_hist is not None:
-                    # 使用直方图交叉度量相似性
-                    diff_h = 1 - cv2.compareHist(prev_hist[0], hist_h, cv2.HISTCMP_CORREL)
-                    diff_s = 1 - cv2.compareHist(prev_hist[1], hist_s, cv2.HISTCMP_CORREL)
-                    
-                    # 综合两个通道的差异
-                    diff = 0.7 * diff_h + 0.3 * diff_s
-                    hist_diffs.append(diff)
-                    sampled_frame_indices.append(frame_idx)
-                
-                prev_hist = (hist_h, hist_s)
-            
-            frame_idx += 1
+            if fps == 0 or frame_count == 0:
+                return [(0, 10)]  # 默认10秒
+            duration = frame_count / fps
         
-        cap.release()
-        
-        if len(hist_diffs) == 0:
-            # Fallback: 固定时间切分
-            print("  [Shot Detection] No frames analyzed, using fallback (2s segments)")
-            events = []
-            for t in np.arange(0, duration, 2.0):
-                events.append((t, min(t + 2.0, duration)))
-            return events
-        
-        # 自适应阈值检测shot boundary
-        hist_diffs = np.array(hist_diffs)
-        
-        # 使用中位数绝对偏差 (MAD) 估计阈值 (更鲁棒)
-        median = np.median(hist_diffs)
-        mad = np.median(np.abs(hist_diffs - median))
-        threshold = median + 3.0 * mad  # 3-sigma规则
-        
-        # 如果MAD太小(视频变化很小),使用percentile
-        if mad < 0.01:
-            threshold = np.percentile(hist_diffs, 90)
-        
-        # 检测boundary (峰值检测)
-        boundaries = [0]
-        for i in range(1, len(hist_diffs) - 1):
-            # 局部最大值 + 超过阈值
-            if (hist_diffs[i] > hist_diffs[i-1] and 
-                hist_diffs[i] > hist_diffs[i+1] and 
-                hist_diffs[i] > threshold):
-                boundaries.append(sampled_frame_indices[i])
-        boundaries.append(frame_idx - 1)
-        
-        # 转换为时间段
+        # 固定2秒窗口切分
         events = []
-        for i in range(len(boundaries) - 1):
-            start_sec = boundaries[i] / fps
-            end_sec = boundaries[i + 1] / fps
-            events.append((start_sec, end_sec))
+        for t in np.arange(0, duration, 2.0):
+            events.append((t, min(t + 2.0, duration)))
         
-        # 合并过短的片段 (< 0.5秒)
-        merged_events = []
-        if events:
-            current_event = events[0]
-            
-            for i in range(1, len(events)):
-                duration_current = current_event[1] - current_event[0]
-                if duration_current < 0.5:
-                    # 合并到下一个
-                    current_event = (current_event[0], events[i][1])
-                else:
-                    merged_events.append(current_event)
-                    current_event = events[i]
-            
-            # 添加最后一个
-            if current_event[1] - current_event[0] >= 0.5:
-                merged_events.append(current_event)
-        
-        # 防止events过多(限制最多50个)或过少
-        if len(merged_events) > 50:
-            # 按时长合并,保留最重要的50个
-            step = len(merged_events) // 50
-            merged_events = merged_events[::step][:50]
-        elif len(merged_events) < 3:
-            # 太少,使用fallback
-            merged_events = []
-            for t in np.arange(0, duration, duration / 5):
-                merged_events.append((t, min(t + duration / 5, duration)))
-        
-        return merged_events if merged_events else events
+        print(f"  ⚠️  Fallback: Fixed 2s window, {len(events)} segments")
+        return events
     
     def _extract_event_features(self, video_path, events):
         """

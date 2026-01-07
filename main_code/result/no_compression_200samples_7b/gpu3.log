@@ -1,0 +1,651 @@
+`torch_dtype` is deprecated! Use `dtype` instead!
+🚀 [1/4] Loading Backbone: Video-LLaVA-7B...
+🚀 [Model] Initializing from: /root/hhq/models/Video-LLaVA-7B-hf
+   Model Type: video_llava
+   ✓ Processor loaded successfully
+   Transformers version: 4.57.3
+Loading checkpoint shards:   0%|                                                                                                                            | 0/3 [00:00<?, ?it/s]Loading checkpoint shards:  33%|██████████████████████████████████████▋                                                                             | 1/3 [00:03<00:06,  3.23s/it]Loading checkpoint shards:  67%|█████████████████████████████████████████████████████████████████████████████▎                                      | 2/3 [00:06<00:03,  3.15s/it]Loading checkpoint shards: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:09<00:00,  3.10s/it]Loading checkpoint shards: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:09<00:00,  3.12s/it]
+   ✓ Model loaded as VideoLlavaForConditionalGeneration
+   ✓ Model ready
+   Detected model class: VideoLlavaForConditionalGeneration
+   → Using 224x224 for VideoLlavaForConditionalGeneration
+   ✓ Image processor configured to 224x224
+   ⚠️  Vision tower not found
+✅ Model loaded successfully on cuda
+🛠️ [2/4] Initializing Method: No-Compression...
+[No-Compression] Initializing...
+  - Backbone: Video-LLaVA-7B
+  - Token budget B = 2048
+  - Tokens per frame = 256
+  - Sampled frames K = 8
+  - Estimated tokens = 2048
+  - Method: Uniform sampling (NO query-aware selection)
+  - Purpose: Performance upper-bound baseline
+📂 [3/4] Loading Dataset: VideoMME (Mode: all)...
+[VideoMME] Loading json from /root/hhq/dataset/Video-MME/video_mme.json...
+    -> Indexing videos in /root/hhq/dataset/Video-MME/videos...
+    -> Indexed 911 files.
+🚀 [VideoMME] FORCE LOAD MODE: Loading EVERYTHING found on disk...
+✅ Successfully loaded 2697 samples from 899 videos.
+🔬 [Testing Mode] Limited to 200 samples (Original: 2697)
+🔄 [Parallel] Running Chunk 3/4: Samples 150 to 200 (Size: 50)
+▶️ [4/4] Start Inference...
+  📊 Total samples: 50
+  🎯 Method: No-Compression
+  💾 Results will be saved to: ../result/no_compression_200samples_7b
+
+Processing:   0%|                                                                                                                                      | 0/50 [00:00<?, ?sample/s]                                                                                                                                                                                  Processing:   0%|                                                                                                                                      | 0/50 [00:03<?, ?sample/s]Processing:   2%|██▌                                                                                                                           | 1/50 [00:03<02:48,  3.44s/sample]                                                                                                                                                                                  Processing:   2%|██▌                                                                                                                           | 1/50 [00:04<02:48,  3.44s/sample]Processing:   4%|█████                                                                                                                         | 2/50 [00:04<01:25,  1.78s/sample]                                                                                                                                                                                  Processing:   4%|█████                                                                                                                         | 2/50 [00:04<01:25,  1.78s/sample]Processing:   6%|███████▌                                                                                                                      | 3/50 [00:04<00:58,  1.24s/sample]                                                                                                                                                                                  Processing:   6%|███████▌                                                                                                                      | 3/50 [00:05<00:58,  1.24s/sample]Processing:   8%|██████████                                                                                                                    | 4/50 [00:05<00:43,  1.05sample/s]                                                                                                                                                                                  Processing:   8%|██████████                                                                                                                    | 4/50 [00:05<00:43,  1.05sample/s]Processing:  10%|████████████▌                                                                                                                 | 5/50 [00:05<00:35,  1.26sample/s]                                                                                                                                                                                  Processing:  10%|████████████▌                                                                                                                 | 5/50 [00:06<00:35,  1.26sample/s]Processing:  12%|███████████████                                                                                                               | 6/50 [00:06<00:30,  1.44sample/s]                                                                                                                                                                                  Processing:  12%|███████████████                                                                                                               | 6/50 [00:06<00:30,  1.44sample/s]Processing:  14%|█████████████████▋                                                                                                            | 7/50 [00:06<00:27,  1.56sample/s]                                                                                                                                                                                  Processing:  14%|█████████████████▋                                                                                                            | 7/50 [00:07<00:27,  1.56sample/s]Processing:  16%|████████████████████▏                                                                                                         | 8/50 [00:07<00:25,  1.64sample/s]                                                                                                                                                                                  Processing:  16%|████████████████████▏                                                                                                         | 8/50 [00:07<00:25,  1.64sample/s]Processing:  18%|██████████████████████▋                                                                                                       | 9/50 [00:07<00:24,  1.69sample/s]                                                                                                                                                                                  Processing:  18%|██████████████████████▋                                                                                                       | 9/50 [00:08<00:24,  1.69sample/s]Processing:  20%|█████████████████████████                                                                                                    | 10/50 [00:08<00:27,  1.46sample/s]Processing:  22%|███████████████████████████▌                                                                                                 | 11/50 [00:09<00:24,  1.58sample/s]Processing:  24%|██████████████████████████████                                                                                               | 12/50 [00:09<00:23,  1.64sample/s]Processing:  26%|████████████████████████████████▌                                                                                            | 13/50 [00:10<00:19,  1.87sample/s]Processing:  28%|███████████████████████████████████                                                                                          | 14/50 [00:10<00:17,  2.06sample/s]Processing:  30%|█████████████████████████████████████▌                                                                                       | 15/50 [00:10<00:15,  2.22sample/s]Processing:  32%|████████████████████████████████████████                                                                                     | 16/50 [00:11<00:17,  1.96sample/s]Processing:  34%|██████████████████████████████████████████▌                                                                                  | 17/50 [00:12<00:18,  1.80sample/s]Processing:  36%|█████████████████████████████████████████████                                                                                | 18/50 [00:12<00:18,  1.73sample/s]Processing:  38%|███████████████████████████████████████████████▌                                                                             | 19/50 [00:13<00:17,  1.79sample/s]Processing:  40%|██████████████████████████████████████████████████                                                                           | 20/50 [00:13<00:16,  1.81sample/s]Processing:  42%|████████████████████████████████████████████████████▌                                                                        | 21/50 [00:14<00:15,  1.84sample/s]Processing:  44%|███████████████████████████████████████████████████████                                                                      | 22/50 [00:14<00:13,  2.03sample/s]Processing:  46%|█████████████████████████████████████████████████████████▌                                                                   | 23/50 [00:15<00:12,  2.19sample/s]Processing:  48%|████████████████████████████████████████████████████████████                                                                 | 24/50 [00:15<00:11,  2.33sample/s]Processing:  50%|██████████████████████████████████████████████████████████████▌                                                              | 25/50 [00:16<00:12,  1.94sample/s]Processing:  52%|█████████████████████████████████████████████████████████████████                                                            | 26/50 [00:16<00:13,  1.81sample/s]Processing:  54%|███████████████████████████████████████████████████████████████████▌                                                         | 27/50 [00:17<00:13,  1.68sample/s]Processing:  56%|██████████████████████████████████████████████████████████████████████                                                       | 28/50 [00:18<00:12,  1.76sample/s]Processing:  58%|████████████████████████████████████████████████████████████████████████▌                                                    | 29/50 [00:18<00:11,  1.80sample/s]Processing:  60%|███████████████████████████████████████████████████████████████████████████                                                  | 30/50 [00:19<00:11,  1.81sample/s]Processing:  62%|█████████████████████████████████████████████████████████████████████████████▌                                               | 31/50 [00:19<00:10,  1.84sample/s]Processing:  64%|████████████████████████████████████████████████████████████████████████████████                                             | 32/50 [00:20<00:09,  1.86sample/s]   📊 Processing 8 frames at 224x224
+   💬 Using 8 <image> tokens for 8 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+How many bridges can be spotte...
+   ✓ Processor succeeded
+  ✓ Sample 051_051-1: Pred=D | GT=B
+   📊 Processing 8 frames at 224x224
+   💬 Using 8 <image> tokens for 8 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+What do the scenes shot on Ind...
+   ✓ Processor succeeded
+  ✓ Sample 051_051-2: Pred=A | GT=A
+   📊 Processing 8 frames at 224x224
+   💬 Using 8 <image> tokens for 8 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+In which river's bank is it po...
+   ✓ Processor succeeded
+  ✓ Sample 051_051-3: Pred=C | GT=C
+   📊 Processing 8 frames at 224x224
+   💬 Using 8 <image> tokens for 8 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+According to the video, which ...
+   ✓ Processor succeeded
+  ✓ Sample 052_052-1: Pred=D | GT=D
+   📊 Processing 8 frames at 224x224
+   💬 Using 8 <image> tokens for 8 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+How many climbers are there in...
+   ✓ Processor succeeded
+  ✓ Sample 052_052-2: Pred=C | GT=A
+   📊 Processing 8 frames at 224x224
+   💬 Using 8 <image> tokens for 8 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+What color of clothing is the ...
+   ✓ Processor succeeded
+  ✓ Sample 052_052-3: Pred=A | GT=A
+   📊 Processing 8 frames at 224x224
+   💬 Using 8 <image> tokens for 8 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+How does the color of lava cha...
+   ✓ Processor succeeded
+  ✓ Sample 053_053-1: Pred=B | GT=C
+   📊 Processing 8 frames at 224x224
+   💬 Using 8 <image> tokens for 8 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+According to the video, how do...
+   ✓ Processor succeeded
+  ✓ Sample 053_053-2: Pred=D | GT=B
+   📊 Processing 8 frames at 224x224
+   💬 Using 8 <image> tokens for 8 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+How do the geologists cool the...
+   ✓ Processor succeeded
+  ✓ Sample 053_053-3: Pred=C | GT=C
+   📊 Processing 8 frames at 224x224
+   💬 Using 8 <image> tokens for 8 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+Which of the following stateme...
+   ✓ Processor succeeded
+  ✓ Sample 054_054-1: Pred=(C) C. El Niño usually shows up in winter. | GT=B
+   📊 Processing 8 frames at 224x224
+   💬 Using 8 <image> tokens for 8 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+Which of the following is cons...
+   ✓ Processor succeeded
+   📊 Processing 8 frames at 224x224
+   💬 Using 8 <image> tokens for 8 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+How is cold water formed on th...
+   ✓ Processor succeeded
+   📊 Processing 8 frames at 224x224
+   💬 Using 8 <image> tokens for 8 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+How many circles can be observ...
+   ✓ Processor succeeded
+   📊 Processing 8 frames at 224x224
+   💬 Using 8 <image> tokens for 8 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+Based on the information provi...
+   ✓ Processor succeeded
+   📊 Processing 8 frames at 224x224
+   💬 Using 8 <image> tokens for 8 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+What is the red color in the c...
+   ✓ Processor succeeded
+   📊 Processing 8 frames at 224x224
+   💬 Using 8 <image> tokens for 8 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+What does "you" in the video r...
+   ✓ Processor succeeded
+   📊 Processing 8 frames at 224x224
+   💬 Using 8 <image> tokens for 8 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+Which of the following element...
+   ✓ Processor succeeded
+   📊 Processing 8 frames at 224x224
+   💬 Using 8 <image> tokens for 8 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+According to the video, what i...
+   ✓ Processor succeeded
+   📊 Processing 8 frames at 224x224
+   💬 Using 8 <image> tokens for 8 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+According to the video, what d...
+   ✓ Processor succeeded
+   📊 Processing 8 frames at 224x224
+   💬 Using 8 <image> tokens for 8 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+What is the correct sequence o...
+   ✓ Processor succeeded
+   📊 Processing 8 frames at 224x224
+   💬 Using 8 <image> tokens for 8 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+Which of the following stateme...
+   ✓ Processor succeeded
+   📊 Processing 8 frames at 224x224
+   💬 Using 8 <image> tokens for 8 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+Based on the information provi...
+   ✓ Processor succeeded
+   📊 Processing 8 frames at 224x224
+   💬 Using 8 <image> tokens for 8 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+Which color are the mountains ...
+   ✓ Processor succeeded
+   📊 Processing 8 frames at 224x224
+   💬 Using 8 <image> tokens for 8 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+What is one of the causes of w...
+   ✓ Processor succeeded
+   📊 Processing 8 frames at 224x224
+   💬 Using 8 <image> tokens for 8 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+Which ocean do the thunderstor...
+   ✓ Processor succeeded
+   📊 Processing 8 frames at 224x224
+   💬 Using 8 <image> tokens for 8 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+What does the speaker in the v...
+   ✓ Processor succeeded
+   📊 Processing 8 frames at 224x224
+   💬 Using 8 <image> tokens for 8 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+Which of the following stateme...
+   ✓ Processor succeeded
+   📊 Processing 8 frames at 224x224
+   💬 Using 8 <image> tokens for 8 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+Which element doesn't show up ...
+   ✓ Processor succeeded
+   📊 Processing 8 frames at 224x224
+   💬 Using 8 <image> tokens for 8 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+According to the video, which ...
+   ✓ Processor succeeded
+   📊 Processing 8 frames at 224x224
+   💬 Using 8 <image> tokens for 8 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+Which of the following facts i...
+   ✓ Processor succeeded
+   📊 Processing 8 frames at 224x224
+   💬 Using 8 <image> tokens for 8 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+How many red flags appear in t...
+   ✓ Processor succeeded
+   📊 Processing 8 frames at 224x224
+   💬 Using 8 <image> tokens for 8 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+Which item was not featured in...
+   ✓ Processor succeeded
+   📊 Processing 8 frames at 224x224
+   💬 Using 8 <image> tokens for 8 frames
+Processing:  66%|██████████████████████████████████████████████████████████████████████████████████▌                                          | 33/50 [00:20<00:09,  1.87sample/s]Processing:  68%|█████████████████████████████████████████████████████████████████████████████████████                                        | 34/50 [00:21<00:09,  1.62sample/s]Processing:  70%|███████████████████████████████████████████████████████████████████████████████████████▌                                     | 35/50 [00:22<00:09,  1.52sample/s]Processing:  72%|██████████████████████████████████████████████████████████████████████████████████████████                                   | 36/50 [00:22<00:08,  1.60sample/s]Processing:  74%|████████████████████████████████████████████████████████████████████████████████████████████▌                                | 37/50 [00:23<00:07,  1.71sample/s]Processing:  76%|███████████████████████████████████████████████████████████████████████████████████████████████                              | 38/50 [00:23<00:06,  1.75sample/s]Processing:  78%|█████████████████████████████████████████████████████████████████████████████████████████████████▌                           | 39/50 [00:24<00:06,  1.79sample/s]Processing:  80%|████████████████████████████████████████████████████████████████████████████████████████████████████                         | 40/50 [00:24<00:05,  1.81sample/s]Processing:  82%|██████████████████████████████████████████████████████████████████████████████████████████████████████▌                      | 41/50 [00:25<00:05,  1.78sample/s]Processing:  84%|█████████████████████████████████████████████████████████████████████████████████████████████████████████                    | 42/50 [00:26<00:04,  1.79sample/s]Processing:  86%|███████████████████████████████████████████████████████████████████████████████████████████████████████████▌                 | 43/50 [00:26<00:03,  1.84sample/s]Processing:  88%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████               | 44/50 [00:27<00:03,  1.88sample/s]Processing:  90%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████▌            | 45/50 [00:27<00:02,  1.93sample/s]Processing:  92%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████          | 46/50 [00:28<00:02,  1.70sample/s]Processing:  94%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▌       | 47/50 [00:29<00:01,  1.59sample/s]Processing:  96%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████     | 48/50 [00:29<00:01,  1.53sample/s]Processing:  98%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▌  | 49/50 [00:30<00:00,  1.75sample/s]Processing: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 50/50 [00:30<00:00,  1.94sample/s]Processing: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 50/50 [00:30<00:00,  1.64sample/s]
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+What is the website that appea...
+   ✓ Processor succeeded
+   📊 Processing 8 frames at 224x224
+   💬 Using 8 <image> tokens for 8 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+In what order did the movement...
+   ✓ Processor succeeded
+   📊 Processing 8 frames at 224x224
+   💬 Using 8 <image> tokens for 8 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+Which of the following keyword...
+   ✓ Processor succeeded
+   📊 Processing 8 frames at 224x224
+   💬 Using 8 <image> tokens for 8 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+What information is shown in t...
+   ✓ Processor succeeded
+   📊 Processing 8 frames at 224x224
+   💬 Using 8 <image> tokens for 8 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+How many individuals are visib...
+   ✓ Processor succeeded
+   📊 Processing 8 frames at 224x224
+   💬 Using 8 <image> tokens for 8 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+What is the fate of the double...
+   ✓ Processor succeeded
+   📊 Processing 8 frames at 224x224
+   💬 Using 8 <image> tokens for 8 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+What does this video introduce...
+   ✓ Processor succeeded
+   📊 Processing 8 frames at 224x224
+   💬 Using 8 <image> tokens for 8 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+Which option best represents t...
+   ✓ Processor succeeded
+   📊 Processing 8 frames at 224x224
+   💬 Using 8 <image> tokens for 8 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+What are the people wearing a ...
+   ✓ Processor succeeded
+   📊 Processing 8 frames at 224x224
+   💬 Using 8 <image> tokens for 8 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+What is the identity of the in...
+   ✓ Processor succeeded
+   📊 Processing 8 frames at 224x224
+   💬 Using 8 <image> tokens for 8 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+What topic is introduced in th...
+   ✓ Processor succeeded
+   📊 Processing 8 frames at 224x224
+   💬 Using 8 <image> tokens for 8 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+What is the role of the woman ...
+   ✓ Processor succeeded
+   📊 Processing 8 frames at 224x224
+   💬 Using 8 <image> tokens for 8 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+How many people can be seen ho...
+   ✓ Processor succeeded
+   📊 Processing 8 frames at 224x224
+   💬 Using 8 <image> tokens for 8 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+What are the colors of the thr...
+   ✓ Processor succeeded
+   📊 Processing 8 frames at 224x224
+   💬 Using 8 <image> tokens for 8 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+What is the man doing at the b...
+   ✓ Processor succeeded
+   📊 Processing 8 frames at 224x224
+   💬 Using 8 <image> tokens for 8 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+What is the object that appear...
+   ✓ Processor succeeded
+   📊 Processing 8 frames at 224x224
+   💬 Using 8 <image> tokens for 8 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+What is the name of the island...
+   ✓ Processor succeeded
+   📊 Processing 8 frames at 224x224
+   💬 Using 8 <image> tokens for 8 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+<image>
+What is the color of the penci...
+   ✓ Processor succeeded
+
+✅ Done! Results saved to ../result/no_compression_200samples_7b/VideoMME_No-Compression_all_Video-LLaVA-7B_chunk3.json
+📈 Accuracy: 19/50 = 38.00%
+❌ Errors: 0

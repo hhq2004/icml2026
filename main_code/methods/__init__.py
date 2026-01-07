@@ -18,6 +18,9 @@ from .DyCoke import DyCokeMethod
 # EventGraph-LMM实现（Ours - ICML 2026）
 from .eventgraph import EventGraphLMM
 
+# No-Compression Baseline（诊断用基准）
+from .no_compression import NoCompression
+
 # 别名导出 (兼容性)
 DyCoke = DyCokeMethod  # ← 添加别名
 
@@ -28,5 +31,6 @@ METHOD_REGISTRY = {
     "ToMe": ToMe,
     "FastV": FastV,
     "DyCoke": DyCokeMethod,  # 使用完整TTM版本
-    "EventGraph-LMM": EventGraphLMM  # 主方法
+    "EventGraph-LMM": EventGraphLMM,  # 主方法
+    "No-Compression": NoCompression  # 诊断基准
 }

@@ -4,7 +4,7 @@
    Model Type: video_llava
    ✓ Processor loaded successfully
    Transformers version: 4.57.3
-Loading checkpoint shards:   0%|                                                                                                                            | 0/3 [00:00<?, ?it/s]Loading checkpoint shards:  33%|██████████████████████████████████████▋                                                                             | 1/3 [00:03<00:06,  3.19s/it]Loading checkpoint shards:  67%|█████████████████████████████████████████████████████████████████████████████▎                                      | 2/3 [00:06<00:03,  3.08s/it]Loading checkpoint shards: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:09<00:00,  2.98s/it]Loading checkpoint shards: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:09<00:00,  3.02s/it]
+Loading checkpoint shards:   0%|                                                                                                                            | 0/3 [00:00<?, ?it/s]Loading checkpoint shards:  33%|██████████████████████████████████████▋                                                                             | 1/3 [00:03<00:06,  3.18s/it]Loading checkpoint shards:  67%|█████████████████████████████████████████████████████████████████████████████▎                                      | 2/3 [00:06<00:03,  3.11s/it]Loading checkpoint shards: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:09<00:00,  3.05s/it]Loading checkpoint shards: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:09<00:00,  3.07s/it]
 Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.52, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
    ✓ Model loaded as VideoLlavaForConditionalGeneration
    ✓ Model ready
@@ -22,6 +22,7 @@ Using a slow image processor as `use_fast` is unset and a slow processor was sav
   - λ (trade-off) = 1.0
   - B (token budget) = 2048
   - Tokens per frame = 256
+  - Device: cuda
   - Loading CLIP from local: /root/hhq/models/clip-vit-large-patch14
   ✓ CLIP loaded successfully on cuda
 [EventGraph-LMM] ✅ Initialization complete!
@@ -38,198 +39,298 @@ Using a slow image processor as `use_fast` is unset and a slow processor was sav
   🎯 Method: EventGraph-LMM
   💾 Results will be saved to: ../result/eventgraph_200samples_7b_parallel
 
-Processing:   0%|                                                                                                                                      | 0/50 [00:00<?, ?sample/s]                                                                                                                                                                                  Processing:   0%|                                                                                                                                      | 0/50 [00:07<?, ?sample/s]Processing:   2%|██▌                                                                                                                           | 1/50 [00:07<05:44,  7.02s/sample]                                                                                                                                                                                  Processing:   2%|██▌                                                                                                                           | 1/50 [00:10<05:44,  7.02s/sample]Processing:   4%|█████                                                                                                                         | 2/50 [00:10<04:05,  5.11s/sample]                                                                                                                                                                                  Processing:   4%|█████                                                                                                                         | 2/50 [00:14<04:05,  5.11s/sample]Processing:   6%|███████▌                                                                                                                      | 3/50 [00:14<03:30,  4.47s/sample]                                                                                                                                                                                  Processing:   6%|███████▌                                                                                                                      | 3/50 [00:18<03:30,  4.47s/sample]Processing:   8%|██████████                                                                                                                    | 4/50 [00:18<03:10,  4.14s/sample]                                                                                                                                                                                  Processing:   8%|██████████                                                                                                                    | 4/50 [00:21<03:10,  4.14s/sample]Processing:  10%|████████████▌                                                                                                                 | 5/50 [00:21<03:00,  4.01s/sample]                                                                                                                                                                                  Processing:  10%|████████████▌                                                                                                                 | 5/50 [00:25<03:00,  4.01s/sample]Processing:  12%|███████████████                                                                                                               | 6/50 [00:25<02:56,  4.02s/sample]                                                                                                                                                                                  Processing:  12%|███████████████                                                                                                               | 6/50 [00:29<02:56,  4.02s/sample]Processing:  14%|█████████████████▋                                                                                                            | 7/50 [00:29<02:52,  4.01s/sample]                                                                                                                                                                                  Processing:  14%|█████████████████▋                                                                                                            | 7/50 [00:34<02:52,  4.01s/sample]Processing:  16%|████████████████████▏                                                                                                         | 8/50 [00:34<02:51,  4.08s/sample]                                                                                                                                                                                  Processing:  16%|████████████████████▏                                                                                                         | 8/50 [00:38<02:51,  4.08s/sample]Processing:  18%|██████████████████████▋                                                                                                       | 9/50 [00:38<02:54,  4.27s/sample]                                                                                                                                                                                  Processing:  18%|██████████████████████▋                                                                                                       | 9/50 [00:43<02:54,  4.27s/sample]Processing:  20%|█████████████████████████                                                                                                    | 10/50 [00:43<02:58,  4.45s/sample]Processing:  22%|███████████████████████████▌                                                                                                 | 11/50 [00:48<02:56,  4.51s/sample]Processing:  24%|██████████████████████████████                                                                                               | 12/50 [00:51<02:30,  3.96s/sample]
+Processing:   0%|                                                                                                                                      | 0/50 [00:00<?, ?sample/s]/usr/local/lib/python3.10/dist-packages/torch/nn/modules/conv.py:720: UserWarning: Deterministic behavior was enabled with either `torch.use_deterministic_algorithms(True)` or `at::Context::setDeterministicAlgorithms(true)`, but this operation is not deterministic because it uses CuBLAS and you have CUDA >= 10.2. To enable deterministic behavior in this case, you must set an environment variable before running your PyTorch application: CUBLAS_WORKSPACE_CONFIG=:4096:8 or CUBLAS_WORKSPACE_CONFIG=:16:8. For more information, go to https://docs.nvidia.com/cuda/cublas/index.html#results-reproducibility (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:217.)
+  return F.conv3d(
+/usr/local/lib/python3.10/dist-packages/torch/nn/modules/linear.py:125: UserWarning: Deterministic behavior was enabled with either `torch.use_deterministic_algorithms(True)` or `at::Context::setDeterministicAlgorithms(true)`, but this operation is not deterministic because it uses CuBLAS and you have CUDA >= 10.2. To enable deterministic behavior in this case, you must set an environment variable before running your PyTorch application: CUBLAS_WORKSPACE_CONFIG=:4096:8 or CUBLAS_WORKSPACE_CONFIG=:16:8. For more information, go to https://docs.nvidia.com/cuda/cublas/index.html#results-reproducibility (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:217.)
+  return F.linear(input, self.weight, self.bias)
+/usr/local/lib/python3.10/dist-packages/transnetv2_pytorch/transnetv2_pytorch.py:706: UserWarning: Deterministic behavior was enabled with either `torch.use_deterministic_algorithms(True)` or `at::Context::setDeterministicAlgorithms(true)`, but this operation is not deterministic because it uses CuBLAS and you have CUDA >= 10.2. To enable deterministic behavior in this case, you must set an environment variable before running your PyTorch application: CUBLAS_WORKSPACE_CONFIG=:4096:8 or CUBLAS_WORKSPACE_CONFIG=:16:8. For more information, go to https://docs.nvidia.com/cuda/cublas/index.html#results-reproducibility (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:217.)
+  similarities = torch.bmm(x, x.transpose(1, 2))  # [batch_size, time_window, time_window]
+/usr/local/lib/python3.10/dist-packages/transnetv2_pytorch/transnetv2_pytorch.py:760: UserWarning: Deterministic behavior was enabled with either `torch.use_deterministic_algorithms(True)` or `at::Context::setDeterministicAlgorithms(true)`, but this operation is not deterministic because it uses CuBLAS and you have CUDA >= 10.2. To enable deterministic behavior in this case, you must set an environment variable before running your PyTorch application: CUBLAS_WORKSPACE_CONFIG=:4096:8 or CUBLAS_WORKSPACE_CONFIG=:16:8. For more information, go to https://docs.nvidia.com/cuda/cublas/index.html#results-reproducibility (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:217.)
+  similarities = torch.bmm(x, x.transpose(1, 2))  # [batch_size, time_window, time_window]
+/root/hhq/main_code/utils/graph_builder.py:21: UserWarning: Deterministic behavior was enabled with either `torch.use_deterministic_algorithms(True)` or `at::Context::setDeterministicAlgorithms(true)`, but this operation is not deterministic because it uses CuBLAS and you have CUDA >= 10.2. To enable deterministic behavior in this case, you must set an environment variable before running your PyTorch application: CUBLAS_WORKSPACE_CONFIG=:4096:8 or CUBLAS_WORKSPACE_CONFIG=:16:8. For more information, go to https://docs.nvidia.com/cuda/cublas/index.html#results-reproducibility (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:217.)
+  sim_global = torch.mm(g_norm, g_norm.t()) # (N, N)
+/root/hhq/main_code/utils/graph_builder.py:48: UserWarning: Deterministic behavior was enabled with either `torch.use_deterministic_algorithms(True)` or `at::Context::setDeterministicAlgorithms(true)`, but this operation is not deterministic because it uses CuBLAS and you have CUDA >= 10.2. To enable deterministic behavior in this case, you must set an environment variable before running your PyTorch application: CUBLAS_WORKSPACE_CONFIG=:4096:8 or CUBLAS_WORKSPACE_CONFIG=:16:8. For more information, go to https://docs.nvidia.com/cuda/cublas/index.html#results-reproducibility (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:217.)
+  pair_sim = torch.matmul(q_chunk, tgt.transpose(1, 2))
+/root/hhq/main_code/methods/eventgraph.py:267: UserWarning: Deterministic behavior was enabled with either `torch.use_deterministic_algorithms(True)` or `at::Context::setDeterministicAlgorithms(true)`, but this operation is not deterministic because it uses CuBLAS and you have CUDA >= 10.2. To enable deterministic behavior in this case, you must set an environment variable before running your PyTorch application: CUBLAS_WORKSPACE_CONFIG=:4096:8 or CUBLAS_WORKSPACE_CONFIG=:16:8. For more information, go to https://docs.nvidia.com/cuda/cublas/index.html#results-reproducibility (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:217.)
+  rel = torch.mm(event_feats_norm, query_feats_norm.t()).squeeze()
+/usr/local/lib/python3.10/dist-packages/transformers/models/llama/modeling_llama.py:101: UserWarning: Deterministic behavior was enabled with either `torch.use_deterministic_algorithms(True)` or `at::Context::setDeterministicAlgorithms(true)`, but this operation is not deterministic because it uses CuBLAS and you have CUDA >= 10.2. To enable deterministic behavior in this case, you must set an environment variable before running your PyTorch application: CUBLAS_WORKSPACE_CONFIG=:4096:8 or CUBLAS_WORKSPACE_CONFIG=:16:8. For more information, go to https://docs.nvidia.com/cuda/cublas/index.html#results-reproducibility (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:217.)
+  freqs = (inv_freq_expanded.float() @ position_ids_expanded.float()).transpose(1, 2)
+                                                                                                                                                                                  Processing:   0%|                                                                                                                                      | 0/50 [00:29<?, ?sample/s]Processing:   2%|██▌                                                                                                                           | 1/50 [00:29<23:47, 29.14s/sample]                                                                                                                                                                                  Processing:   2%|██▌                                                                                                                           | 1/50 [00:54<23:47, 29.14s/sample]Processing:   4%|█████                                                                                                                         | 2/50 [00:54<21:35, 26.99s/sample]                                                                                                                                                                                  Processing:   4%|█████                                                                                                                         | 2/50 [01:17<21:35, 26.99s/sample]Processing:   6%|███████▌                                                                                                                      | 3/50 [01:17<19:31, 24.92s/sample]                                                                                                                                                                                  Processing:   6%|███████▌                                                                                                                      | 3/50 [01:38<19:31, 24.92s/sample]Processing:   8%|██████████                                                                                                                    | 4/50 [01:38<18:00, 23.50s/sample]                                                                                                                                                                                  Processing:   8%|██████████                                                                                                                    | 4/50 [01:59<18:00, 23.50s/sample]Processing:  10%|████████████▌                                                                                                                 | 5/50 [01:59<16:58, 22.64s/sample]                                                                                                                                                                                  Processing:  10%|████████████▌                                                                                                                 | 5/50 [02:23<16:58, 22.64s/sample]Processing:  12%|███████████████                                                                                                               | 6/50 [02:23<16:58, 23.14s/sample]                                                                                                                                                                                  Processing:  12%|███████████████                                                                                                               | 6/50 [02:47<16:58, 23.14s/sample]Processing:  14%|█████████████████▋                                                                                                            | 7/50 [02:47<16:50, 23.50s/sample]
 [EventGraph] Processing: /root/hhq/dataset/Video-MME/videos/blSnLEZe-sI.mp4
 [Stage 1/3] Graph Construction...
-  - Detected 14 events
-  - Extracted features: Globaltorch.Size([14, 768]), Localtorch.Size([14, 256, 1024])
-  - Graph: torch.Size([14, 14])
+[TransNet V2] Loading pretrained model...
+  ✓ TransNet V2 loaded on cuda
+[TransNet V2] Detecting shots in: blSnLEZe-sI.mp4
+  Video info: 2606 frames, 25.00 fps
+  Processing video in chunks of 500 frames...
+    Processed 1000/2606 frames
+    Processed 2000/2606 frames
+    Processed 2606/2606 frames
+  Prediction stats: min=-12.982, max=0.791, mean=-6.616
+  NMS: 4 candidates → 3 boundaries
+  ✓ Detected 4 shots
+  ✓ Detected 4 variable-length events
+  - Detected 4 events
+  - Extracted features: Globaltorch.Size([4, 768]), Localtorch.Size([4, 256, 1024])
+  - Graph: torch.Size([4, 4])
 [Stage 2/3] Subgraph Selection...
-  - Selected 8 events: [0, 1, 2, 4, 5, 10, 11, 13]
+  - Selected 4 events: [0, 1, 2, 3]
 [Stage 3/3] Graph-CoT Inference...
-   📊 Processing 8 frames at 224x224
-   💬 Using 8 <image> tokens for 8 frames
+   📊 Processing 4 frames at 224x224
+   💬 Using 4 <image> tokens for 4 frames
    💬 Prompt preview: USER: <image>
 <image>
 <image>
 <image>
-<image>
-<image>
-<image>
-<image>
-Question: According to the vid...
+Question: According to the video, which statement is correct?
+...
    ✓ Processor succeeded
   - Prediction: A
   ✓ Sample 034_034-2: Pred=A | GT=A
 
 [EventGraph] Processing: /root/hhq/dataset/Video-MME/videos/blSnLEZe-sI.mp4
 [Stage 1/3] Graph Construction...
-  - Detected 14 events
-  - Extracted features: Globaltorch.Size([14, 768]), Localtorch.Size([14, 256, 1024])
-  - Graph: torch.Size([14, 14])
+[TransNet V2] Loading pretrained model...
+  ✓ TransNet V2 loaded on cuda
+[TransNet V2] Detecting shots in: blSnLEZe-sI.mp4
+  Video info: 2606 frames, 25.00 fps
+  Processing video in chunks of 500 frames...
+    Processed 1000/2606 frames
+    Processed 2000/2606 frames
+    Processed 2606/2606 frames
+  Prediction stats: min=-12.982, max=0.791, mean=-6.616
+  NMS: 4 candidates → 3 boundaries
+  ✓ Detected 4 shots
+  ✓ Detected 4 variable-length events
+  - Detected 4 events
+  - Extracted features: Globaltorch.Size([4, 768]), Localtorch.Size([4, 256, 1024])
+  - Graph: torch.Size([4, 4])
 [Stage 2/3] Subgraph Selection...
-  - Selected 8 events: [0, 2, 3, 4, 5, 6, 10, 13]
+  - Selected 4 events: [0, 1, 2, 3]
 [Stage 3/3] Graph-CoT Inference...
-   📊 Processing 8 frames at 224x224
-   💬 Using 8 <image> tokens for 8 frames
+   📊 Processing 4 frames at 224x224
+   💬 Using 4 <image> tokens for 4 frames
    💬 Prompt preview: USER: <image>
 <image>
 <image>
 <image>
-<image>
-<image>
-<image>
-<image>
-Question: What does the combin...
+Question: What does the combination of a bond certificate and ...
    ✓ Processor succeeded
   - Prediction: D
   ✓ Sample 034_034-3: Pred=D | GT=B
 
 [EventGraph] Processing: /root/hhq/dataset/Video-MME/videos/Gh_GtYtQoVI.mp4
 [Stage 1/3] Graph Construction...
-  - Detected 17 events
-  - Extracted features: Globaltorch.Size([17, 768]), Localtorch.Size([17, 256, 1024])
-  - Graph: torch.Size([17, 17])
+[TransNet V2] Loading pretrained model...
+  ✓ TransNet V2 loaded on cuda
+[TransNet V2] Detecting shots in: Gh_GtYtQoVI.mp4
+  Video info: 2146 frames, 25.00 fps
+  Processing video in chunks of 500 frames...
+    Processed 1000/2146 frames
+    Processed 2000/2146 frames
+    Processed 2146/2146 frames
+  Prediction stats: min=-12.842, max=5.690, mean=-6.141
+  NMS: 5 candidates → 5 boundaries
+  ✓ Detected 6 shots
+  ✓ Detected 6 variable-length events
+  - Detected 6 events
+  - Extracted features: Globaltorch.Size([6, 768]), Localtorch.Size([6, 256, 1024])
+  - Graph: torch.Size([6, 6])
 [Stage 2/3] Subgraph Selection...
-  - Selected 8 events: [1, 2, 4, 5, 6, 7, 14, 15]
+  - Selected 6 events: [0, 1, 2, 3, 4, 5]
 [Stage 3/3] Graph-CoT Inference...
-   📊 Processing 8 frames at 224x224
-   💬 Using 8 <image> tokens for 8 frames
+   📊 Processing 6 frames at 224x224
+   💬 Using 6 <image> tokens for 6 frames
    💬 Prompt preview: USER: <image>
 <image>
 <image>
 <image>
 <image>
 <image>
-<image>
-<image>
-Question: What is the function...
+Question: What is the function of the stopwatc...
    ✓ Processor succeeded
   - Prediction: A
   ✓ Sample 035_035-1: Pred=A | GT=B
 
 [EventGraph] Processing: /root/hhq/dataset/Video-MME/videos/Gh_GtYtQoVI.mp4
 [Stage 1/3] Graph Construction...
-  - Detected 17 events
-  - Extracted features: Globaltorch.Size([17, 768]), Localtorch.Size([17, 256, 1024])
-  - Graph: torch.Size([17, 17])
+[TransNet V2] Loading pretrained model...
+  ✓ TransNet V2 loaded on cuda
+[TransNet V2] Detecting shots in: Gh_GtYtQoVI.mp4
+  Video info: 2146 frames, 25.00 fps
+  Processing video in chunks of 500 frames...
+    Processed 1000/2146 frames
+    Processed 2000/2146 frames
+    Processed 2146/2146 frames
+  Prediction stats: min=-12.842, max=5.690, mean=-6.141
+  NMS: 5 candidates → 5 boundaries
+  ✓ Detected 6 shots
+  ✓ Detected 6 variable-length events
+  - Detected 6 events
+  - Extracted features: Globaltorch.Size([6, 768]), Localtorch.Size([6, 256, 1024])
+  - Graph: torch.Size([6, 6])
 [Stage 2/3] Subgraph Selection...
-  - Selected 8 events: [5, 6, 8, 9, 10, 11, 12, 13]
+  - Selected 6 events: [0, 1, 2, 3, 4, 5]
 [Stage 3/3] Graph-CoT Inference...
-   📊 Processing 8 frames at 224x224
-   💬 Using 8 <image> tokens for 8 frames
+   📊 Processing 6 frames at 224x224
+   💬 Using 6 <image> tokens for 6 frames
    💬 Prompt preview: USER: <image>
 <image>
 <image>
 <image>
 <image>
 <image>
-<image>
-<image>
-Question: In what direction do...
+Question: In what direction does the video aut...
    ✓ Processor succeeded
   - Prediction: A
   ✓ Sample 035_035-2: Pred=A | GT=D
 
 [EventGraph] Processing: /root/hhq/dataset/Video-MME/videos/Gh_GtYtQoVI.mp4
 [Stage 1/3] Graph Construction...
-  - Detected 17 events
-  - Extracted features: Globaltorch.Size([17, 768]), Localtorch.Size([17, 256, 1024])
-  - Graph: torch.Size([17, 17])
+[TransNet V2] Loading pretrained model...
+  ✓ TransNet V2 loaded on cuda
+[TransNet V2] Detecting shots in: Gh_GtYtQoVI.mp4
+  Video info: 2146 frames, 25.00 fps
+  Processing video in chunks of 500 frames...
+    Processed 1000/2146 frames
+    Processed 2000/2146 frames
+    Processed 2146/2146 frames
+  Prediction stats: min=-12.842, max=5.690, mean=-6.141
+  NMS: 5 candidates → 5 boundaries
+  ✓ Detected 6 shots
+  ✓ Detected 6 variable-length events
+  - Detected 6 events
+  - Extracted features: Globaltorch.Size([6, 768]), Localtorch.Size([6, 256, 1024])
+  - Graph: torch.Size([6, 6])
 [Stage 2/3] Subgraph Selection...
-  - Selected 8 events: [5, 6, 8, 9, 10, 11, 12, 13]
+  - Selected 6 events: [0, 1, 2, 3, 4, 5]
 [Stage 3/3] Graph-CoT Inference...
-   📊 Processing 8 frames at 224x224
-   💬 Using 8 <image> tokens for 8 frames
+   📊 Processing 6 frames at 224x224
+   💬 Using 6 <image> tokens for 6 frames
    💬 Prompt preview: USER: <image>
 <image>
 <image>
 <image>
 <image>
 <image>
-<image>
-<image>
-Question: From which aspect do...
+Question: From which aspect does the video des...
    ✓ Processor succeeded
   - Prediction: A
   ✓ Sample 035_035-3: Pred=A | GT=A
 
 [EventGraph] Processing: /root/hhq/dataset/Video-MME/videos/MXKDvuEkSF0.mp4
 [Stage 1/3] Graph Construction...
-  - Detected 16 events
-  - Extracted features: Globaltorch.Size([16, 768]), Localtorch.Size([16, 256, 1024])
-  - Graph: torch.Size([16, 16])
+[TransNet V2] Loading pretrained model...
+  ✓ TransNet V2 loaded on cuda
+[TransNet V2] Detecting shots in: MXKDvuEkSF0.mp4
+  Video info: 2433 frames, 23.98 fps
+  Processing video in chunks of 500 frames...
+    Processed 1000/2433 frames
+    Processed 2000/2433 frames
+    Processed 2433/2433 frames
+  Prediction stats: min=-10.263, max=2.019, mean=-4.868
+  NMS: 3 candidates → 3 boundaries
+  ✓ Detected 4 shots
+  ✓ Detected 4 variable-length events
+  - Detected 4 events
+  - Extracted features: Globaltorch.Size([4, 768]), Localtorch.Size([4, 256, 1024])
+  - Graph: torch.Size([4, 4])
 [Stage 2/3] Subgraph Selection...
-  - Selected 8 events: [1, 3, 4, 5, 9, 10, 14, 15]
+  - Selected 4 events: [0, 1, 2, 3]
 [Stage 3/3] Graph-CoT Inference...
-   📊 Processing 8 frames at 224x224
-   💬 Using 8 <image> tokens for 8 frames
+   📊 Processing 4 frames at 224x224
+   💬 Using 4 <image> tokens for 4 frames
    💬 Prompt preview: USER: <image>
 <image>
 <image>
 <image>
-<image>
-<image>
-<image>
-<image>
-Question: How many new adverti...
+Question: How many new advertising situations are introduced i...
    ✓ Processor succeeded
   - Prediction: A
   ✓ Sample 036_036-1: Pred=A | GT=A
 
 [EventGraph] Processing: /root/hhq/dataset/Video-MME/videos/MXKDvuEkSF0.mp4
 [Stage 1/3] Graph Construction...
-  - Detected 16 events
-  - Extracted features: Globaltorch.Size([16, 768]), Localtorch.Size([16, 256, 1024])
-  - Graph: torch.Size([16, 16])
+[TransNet V2] Loading pretrained model...
+  ✓ TransNet V2 loaded on cuda
+[TransNet V2] Detecting shots in: MXKDvuEkSF0.mp4
+  Video info: 2433 frames, 23.98 fps
+  Processing video in chunks of 500 frames...
+    Processed 1000/2433 frames
+    Processed 2000/2433 frames
+    Processed 2433/2433 frames
+  Prediction stats: min=-10.263, max=2.019, mean=-4.868
+  NMS: 3 candidates → 3 boundaries
+  ✓ Detected 4 shots
+  ✓ Detected 4 variable-length events
+  - Detected 4 events
+  - Extracted features: Globaltorch.Size([4, 768]), Localtorch.Size([4, 256, 1024])
+  - Graph: torch.Size([4, 4])
 [Stage 2/3] Subgraph Selection...
-  - Selected 8 events: [0, 2, 8, 10, 11, 12, 13, 14]
+  - Selected 4 events: [0, 1, 2, 3]
 [Stage 3/3] Graph-CoT Inference...
-   📊 Processing 8 frames at 224x224
-   💬 Using 8 <image> tokens for 8 frames
+   📊 Processing 4 frames at 224x224
+   💬 Using 4 <image> tokens for 4 frames
    💬 Prompt preview: USER: <image>
 <image>
 <image>
 <image>
-<image>
-<image>
-<image>
-<image>
-Question: How much did sales i...
+Question: How much did sales increase at Dunkin' Donuts locati...
    ✓ Processor succeeded
   - Prediction: A
   ✓ Sample 036_036-2: Pred=A | GT=D
 
 [EventGraph] Processing: /root/hhq/dataset/Video-MME/videos/MXKDvuEkSF0.mp4
 [Stage 1/3] Graph Construction...
-  - Detected 16 events
-  - Extracted features: Globaltorch.Size([16, 768]), Localtorch.Size([16, 256, 1024])
-  - Graph: torch.Size([16, 16])
+[TransNet V2] Loading pretrained model...
+  ✓ TransNet V2 loaded on cuda
+[TransNet V2] Detecting shots in: MXKDvuEkSF0.mp4
+  Video info: 2433 frames, 23.98 fps
+  Processing video in chunks of 500 frames...
+    Processed 1000/2433 frames
+    Processed 2000/2433 frames
+    Processed 2433/2433 frames
+                                                                                                                                                                                  Processing:  14%|█████████████████▋                                                                                                            | 7/50 [03:12<16:50, 23.50s/sample]Processing:  16%|████████████████████▏                                                                                                         | 8/50 [03:12<16:42, 23.87s/sample]                                                                                                                                                                                  Processing:  16%|████████████████████▏                                                                                                         | 8/50 [03:44<16:42, 23.87s/sample]Processing:  18%|██████████████████████▋                                                                                                       | 9/50 [03:44<18:05, 26.49s/sample]                                                                                                                                                                                  Processing:  18%|██████████████████████▋                                                                                                       | 9/50 [04:17<18:05, 26.49s/sample]Processing:  20%|█████████████████████████                                                                                                    | 10/50 [04:17<19:01, 28.54s/sample]Processing:  22%|███████████████████████████▌                                                                                                 | 11/50 [04:51<19:34, 30.12s/sample]Processing:  24%|██████████████████████████████                                                                                               | 12/50 [05:04<15:47, 24.93s/sample]Processing:  26%|████████████████████████████████▌                                                                                            | 13/50 [05:17<13:10, 21.37s/sample]Processing:  28%|███████████████████████████████████                                                                                          | 14/50 [05:33<11:49, 19.70s/sample]  Prediction stats: min=-10.263, max=2.019, mean=-4.868
+  NMS: 3 candidates → 3 boundaries
+  ✓ Detected 4 shots
+  ✓ Detected 4 variable-length events
+  - Detected 4 events
+  - Extracted features: Globaltorch.Size([4, 768]), Localtorch.Size([4, 256, 1024])
+  - Graph: torch.Size([4, 4])
 [Stage 2/3] Subgraph Selection...
-  - Selected 8 events: [3, 4, 5, 7, 8, 9, 10, 11]
+  - Selected 4 events: [0, 1, 2, 3]
 [Stage 3/3] Graph-CoT Inference...
-   📊 Processing 8 frames at 224x224
-   💬 Using 8 <image> tokens for 8 frames
+   📊 Processing 4 frames at 224x224
+   💬 Using 4 <image> tokens for 4 frames
    💬 Prompt preview: USER: <image>
 <image>
 <image>
 <image>
-<image>
-<image>
-<image>
-<image>
-Question: What is the estimate...
+Question: What is the estimated value of the global marketing ...
    ✓ Processor succeeded
   - Prediction: A
   ✓ Sample 036_036-3: Pred=A | GT=D
 
 [EventGraph] Processing: /root/hhq/dataset/Video-MME/videos/EQ-67udZEeg.mp4
 [Stage 1/3] Graph Construction...
-  - Detected 20 events
-  - Extracted features: Globaltorch.Size([20, 768]), Localtorch.Size([20, 256, 1024])
-  - Graph: torch.Size([20, 20])
+[TransNet V2] Loading pretrained model...
+  ✓ TransNet V2 loaded on cuda
+[TransNet V2] Detecting shots in: EQ-67udZEeg.mp4
+  Video info: 3116 frames, 29.97 fps
+  Processing video in chunks of 500 frames...
+    Processed 1000/3116 frames
+    Processed 2000/3116 frames
+    Processed 3000/3116 frames
+    Processed 3116/3116 frames
+  Prediction stats: min=-9.984, max=-0.413, mean=-5.281
+  ✓ Detected 1 shots
+  ⚠️  Too few shots (1), using fallback
+  ⚠️  Fallback: Fixed 2s window, 52 segments
+  - Detected 52 events
+  - Extracted features: Globaltorch.Size([52, 768]), Localtorch.Size([52, 256, 1024])
+  - Graph: torch.Size([52, 52])
 [Stage 2/3] Subgraph Selection...
-  - Selected 8 events: [11, 12, 14, 15, 16, 17, 18, 19]
+  - Selected 8 events: [26, 27, 32, 33, 39, 40, 47, 48]
 [Stage 3/3] Graph-CoT Inference...
    📊 Processing 8 frames at 224x224
    💬 Using 8 <image> tokens for 8 frames
@@ -248,11 +349,24 @@ Question: Which of the followi...
 
 [EventGraph] Processing: /root/hhq/dataset/Video-MME/videos/EQ-67udZEeg.mp4
 [Stage 1/3] Graph Construction...
-  - Detected 20 events
-  - Extracted features: Globaltorch.Size([20, 768]), Localtorch.Size([20, 256, 1024])
-  - Graph: torch.Size([20, 20])
+[TransNet V2] Loading pretrained model...
+  ✓ TransNet V2 loaded on cuda
+[TransNet V2] Detecting shots in: EQ-67udZEeg.mp4
+  Video info: 3116 frames, 29.97 fps
+  Processing video in chunks of 500 frames...
+    Processed 1000/3116 frames
+    Processed 2000/3116 frames
+    Processed 3000/3116 frames
+    Processed 3116/3116 frames
+  Prediction stats: min=-9.984, max=-0.413, mean=-5.281
+  ✓ Detected 1 shots
+  ⚠️  Too few shots (1), using fallback
+  ⚠️  Fallback: Fixed 2s window, 52 segments
+  - Detected 52 events
+  - Extracted features: Globaltorch.Size([52, 768]), Localtorch.Size([52, 256, 1024])
+  - Graph: torch.Size([52, 52])
 [Stage 2/3] Subgraph Selection...
-  - Selected 8 events: [1, 11, 12, 13, 14, 15, 16, 18]
+  - Selected 8 events: [26, 28, 29, 30, 31, 32, 33, 34]
 [Stage 3/3] Graph-CoT Inference...
    📊 Processing 8 frames at 224x224
    💬 Using 8 <image> tokens for 8 frames
@@ -266,16 +380,29 @@ Question: Which of the followi...
 <image>
 Question: What visual element ...
    ✓ Processor succeeded
-  - Prediction: B
-  ✓ Sample 037_037-2: Pred=B | GT=C
+  - Prediction: A
+  ✓ Sample 037_037-2: Pred=A | GT=C
 
 [EventGraph] Processing: /root/hhq/dataset/Video-MME/videos/EQ-67udZEeg.mp4
 [Stage 1/3] Graph Construction...
-  - Detected 20 events
-  - Extracted features: Globaltorch.Size([20, 768]), Localtorch.Size([20, 256, 1024])
-  - Graph: torch.Size([20, 20])
+[TransNet V2] Loading pretrained model...
+  ✓ TransNet V2 loaded on cuda
+[TransNet V2] Detecting shots in: EQ-67udZEeg.mp4
+  Video info: 3116 frames, 29.97 fps
+  Processing video in chunks of 500 frames...
+    Processed 1000/3116 frames
+    Processed 2000/3116 frames
+    Processed 3000/3116 frames
+    Processed 3116/3116 frames
+  Prediction stats: min=-9.984, max=-0.413, mean=-5.281
+  ✓ Detected 1 shots
+  ⚠️  Too few shots (1), using fallback
+  ⚠️  Fallback: Fixed 2s window, 52 segments
+  - Detected 52 events
+  - Extracted features: Globaltorch.Size([52, 768]), Localtorch.Size([52, 256, 1024])
+  - Graph: torch.Size([52, 52])
 [Stage 2/3] Subgraph Selection...
-  - Selected 8 events: [0, 1, 2, 4, 8, 9, 11, 16]
+  - Selected 8 events: [0, 3, 4, 20, 22, 23, 26, 27]
 [Stage 3/3] Graph-CoT Inference...
    📊 Processing 8 frames at 224x224
    💬 Using 8 <image> tokens for 8 frames
@@ -293,9 +420,20 @@ Question: Which of the followi...
 
 [EventGraph] Processing: /root/hhq/dataset/Video-MME/videos/GqeRnxSuLFI.mp4
 [Stage 1/3] Graph Construction...
-  - Detected 12 events
-  - Extracted features: Globaltorch.Size([12, 768]), Localtorch.Size([12, 256, 1024])
-  - Graph: torch.Size([12, 12])
+[TransNet V2] Loading pretrained model...
+  ✓ TransNet V2 loaded on cuda
+[TransNet V2] Detecting shots in: GqeRnxSuLFI.mp4
+  Video info: 1292 frames, 24.00 fps
+  Processing video in chunks of 500 frames...
+    Processed 1000/1292 frames
+    Processed 1292/1292 frames
+  Prediction stats: min=-13.452, max=6.307, mean=-8.481
+  NMS: 9 candidates → 9 boundaries
+  ✓ Detected 10 shots
+  ✓ Detected 10 variable-length events
+  - Detected 10 events
+  - Extracted features: Globaltorch.Size([10, 768]), Localtorch.Size([10, 256, 1024])
+  - Graph: torch.Size([10, 10])
 [Stage 2/3] Subgraph Selection...
   - Selected 8 events: [0, 1, 2, 3, 4, 5, 6, 8]
 [Stage 3/3] Graph-CoT Inference...
@@ -315,11 +453,22 @@ Question: Which color of cloth...
 
 [EventGraph] Processing: /root/hhq/dataset/Video-MME/videos/GqeRnxSuLFI.mp4
 [Stage 1/3] Graph Construction...
-  - Detected 12 events
-  - Extracted features: Globaltorch.Size([12, 768]), Localtorch.Size([12, 256, 1024])
-  - Graph: torch.Size([12, 12])
-Processing:  26%|████████████████████████████████▌                                                                                            | 13/50 [00:53<02:12,  3.57s/sample]Processing:  28%|███████████████████████████████████                                                                                          | 14/50 [00:56<01:57,  3.27s/sample]Processing:  30%|█████████████████████████████████████▌                                                                                       | 15/50 [01:01<02:17,  3.94s/sample]Processing:  32%|████████████████████████████████████████                                                                                     | 16/50 [01:07<02:27,  4.34s/sample]Processing:  34%|██████████████████████████████████████████▌                                                                                  | 17/50 [01:12<02:33,  4.64s/sample]Processing:  36%|█████████████████████████████████████████████                                                                                | 18/50 [01:15<02:14,  4.21s/sample]Processing:  38%|███████████████████████████████████████████████▌                                                                             | 19/50 [01:18<02:00,  3.89s/sample]Processing:  40%|██████████████████████████████████████████████████                                                                           | 20/50 [01:22<01:50,  3.70s/sample]Processing:  42%|████████████████████████████████████████████████████▌                                                                        | 21/50 [01:26<01:49,  3.78s/sample]Processing:  44%|███████████████████████████████████████████████████████                                                                      | 22/50 [01:29<01:46,  3.80s/sample]Processing:  46%|█████████████████████████████████████████████████████████▌                                                                   | 23/50 [01:33<01:42,  3.81s/sample]Processing:  48%|████████████████████████████████████████████████████████████                                                                 | 24/50 [01:35<01:24,  3.24s/sample]Processing:  50%|██████████████████████████████████████████████████████████████▌                                                              | 25/50 [01:37<01:11,  2.84s/sample][Stage 2/3] Subgraph Selection...
-  - Selected 8 events: [1, 2, 3, 4, 5, 6, 7, 8]
+[TransNet V2] Loading pretrained model...
+  ✓ TransNet V2 loaded on cuda
+[TransNet V2] Detecting shots in: GqeRnxSuLFI.mp4
+  Video info: 1292 frames, 24.00 fps
+  Processing video in chunks of 500 frames...
+    Processed 1000/1292 frames
+    Processed 1292/1292 frames
+  Prediction stats: min=-13.452, max=6.307, mean=-8.481
+  NMS: 9 candidates → 9 boundaries
+  ✓ Detected 10 shots
+  ✓ Detected 10 variable-length events
+  - Detected 10 events
+  - Extracted features: Globaltorch.Size([10, 768]), Localtorch.Size([10, 256, 1024])
+  - Graph: torch.Size([10, 10])
+[Stage 2/3] Subgraph Selection...
+  - Selected 8 events: [0, 1, 2, 3, 4, 5, 6, 7]
 [Stage 3/3] Graph-CoT Inference...
    📊 Processing 8 frames at 224x224
    💬 Using 8 <image> tokens for 8 frames
@@ -337,11 +486,22 @@ Question: According to the vid...
 
 [EventGraph] Processing: /root/hhq/dataset/Video-MME/videos/GqeRnxSuLFI.mp4
 [Stage 1/3] Graph Construction...
-  - Detected 12 events
-  - Extracted features: Globaltorch.Size([12, 768]), Localtorch.Size([12, 256, 1024])
-  - Graph: torch.Size([12, 12])
+[TransNet V2] Loading pretrained model...
+  ✓ TransNet V2 loaded on cuda
+[TransNet V2] Detecting shots in: GqeRnxSuLFI.mp4
+  Video info: 1292 frames, 24.00 fps
+  Processing video in chunks of 500 frames...
+    Processed 1000/1292 frames
+    Processed 1292/1292 frames
+  Prediction stats: min=-13.452, max=6.307, mean=-8.481
+  NMS: 9 candidates → 9 boundaries
+  ✓ Detected 10 shots
+  ✓ Detected 10 variable-length events
+  - Detected 10 events
+  - Extracted features: Globaltorch.Size([10, 768]), Localtorch.Size([10, 256, 1024])
+  - Graph: torch.Size([10, 10])
 [Stage 2/3] Subgraph Selection...
-  - Selected 8 events: [1, 2, 3, 4, 5, 6, 7, 8]
+  - Selected 8 events: [0, 1, 2, 3, 4, 5, 6, 7]
 [Stage 3/3] Graph-CoT Inference...
    📊 Processing 8 frames at 224x224
    💬 Using 8 <image> tokens for 8 frames
@@ -359,12 +519,25 @@ Question: Which best summarize...
 
 [EventGraph] Processing: /root/hhq/dataset/Video-MME/videos/XOJKiOw8Xqo.mp4
 [Stage 1/3] Graph Construction...
-  - Detected 23 events
-  - Extracted features: Globaltorch.Size([23, 768]), Localtorch.Size([23, 256, 1024])
-  - Graph: torch.Size([23, 23])
+[TransNet V2] Loading pretrained model...
+  ✓ TransNet V2 loaded on cuda
+[TransNet V2] Detecting shots in: XOJKiOw8Xqo.mp4
+  Video info: 3348 frames, 29.97 fps
+  Processing video in chunks of 500 frames...
+    Processed 1000/3348 frames
+    Processed 2000/3348 frames
+    Processed 3000/3348 frames
+    Processed 3348/3348 frames
+  Prediction stats: min=-15.385, max=6.478, mean=-6.949
+  NMS: 20 candidates → 19 boundaries
+  ✓ Detected 20 shots
+  ✓ Detected 19 variable-length events
+  - Detected 19 events
+  - Extracted features: Globaltorch.Size([19, 768]), Localtorch.Size([19, 256, 1024])
+  - Graph: torch.Size([19, 19])
 [Stage 2/3] Subgraph Selection...
-  - Selected 8 events: [2, 3, 7, 9, 12, 13, 17, 22]
-[Stage 3/3] Graph-CoT Inference...
+  - Selected 8 events: [2, 3, 5, 7, 8, 11, 17, 18]
+Processing:  30%|█████████████████████████████████████▌                                                                                       | 15/50 [06:07<13:58, 23.96s/sample]Processing:  32%|████████████████████████████████████████                                                                                     | 16/50 [06:40<15:08, 26.71s/sample]Processing:  34%|██████████████████████████████████████████▌                                                                                  | 17/50 [07:12<15:34, 28.32s/sample]Processing:  36%|█████████████████████████████████████████████                                                                                | 18/50 [07:30<13:28, 25.26s/sample]Processing:  38%|███████████████████████████████████████████████▌                                                                             | 19/50 [07:51<12:20, 23.89s/sample]Processing:  40%|██████████████████████████████████████████████████                                                                           | 20/50 [08:09<11:04, 22.16s/sample]Processing:  42%|████████████████████████████████████████████████████▌                                                                        | 21/50 [08:32<10:44, 22.24s/sample]Processing:  44%|███████████████████████████████████████████████████████                                                                      | 22/50 [08:53<10:19, 22.11s/sample][Stage 3/3] Graph-CoT Inference...
    📊 Processing 8 frames at 224x224
    💬 Using 8 <image> tokens for 8 frames
    💬 Prompt preview: USER: <image>
@@ -381,11 +554,24 @@ Question: Which time is displa...
 
 [EventGraph] Processing: /root/hhq/dataset/Video-MME/videos/XOJKiOw8Xqo.mp4
 [Stage 1/3] Graph Construction...
-  - Detected 23 events
-  - Extracted features: Globaltorch.Size([23, 768]), Localtorch.Size([23, 256, 1024])
-  - Graph: torch.Size([23, 23])
+[TransNet V2] Loading pretrained model...
+  ✓ TransNet V2 loaded on cuda
+[TransNet V2] Detecting shots in: XOJKiOw8Xqo.mp4
+  Video info: 3348 frames, 29.97 fps
+  Processing video in chunks of 500 frames...
+    Processed 1000/3348 frames
+    Processed 2000/3348 frames
+    Processed 3000/3348 frames
+    Processed 3348/3348 frames
+  Prediction stats: min=-15.385, max=6.478, mean=-6.949
+  NMS: 20 candidates → 19 boundaries
+  ✓ Detected 20 shots
+  ✓ Detected 19 variable-length events
+  - Detected 19 events
+  - Extracted features: Globaltorch.Size([19, 768]), Localtorch.Size([19, 256, 1024])
+  - Graph: torch.Size([19, 19])
 [Stage 2/3] Subgraph Selection...
-  - Selected 8 events: [2, 3, 4, 7, 8, 15, 17, 22]
+  - Selected 8 events: [2, 3, 5, 9, 11, 12, 17, 18]
 [Stage 3/3] Graph-CoT Inference...
    📊 Processing 8 frames at 224x224
    💬 Using 8 <image> tokens for 8 frames
@@ -403,11 +589,24 @@ Question: What is the color of...
 
 [EventGraph] Processing: /root/hhq/dataset/Video-MME/videos/XOJKiOw8Xqo.mp4
 [Stage 1/3] Graph Construction...
-  - Detected 23 events
-  - Extracted features: Globaltorch.Size([23, 768]), Localtorch.Size([23, 256, 1024])
-  - Graph: torch.Size([23, 23])
+[TransNet V2] Loading pretrained model...
+  ✓ TransNet V2 loaded on cuda
+[TransNet V2] Detecting shots in: XOJKiOw8Xqo.mp4
+  Video info: 3348 frames, 29.97 fps
+  Processing video in chunks of 500 frames...
+    Processed 1000/3348 frames
+    Processed 2000/3348 frames
+    Processed 3000/3348 frames
+    Processed 3348/3348 frames
+  Prediction stats: min=-15.385, max=6.478, mean=-6.949
+  NMS: 20 candidates → 19 boundaries
+  ✓ Detected 20 shots
+  ✓ Detected 19 variable-length events
+  - Detected 19 events
+  - Extracted features: Globaltorch.Size([19, 768]), Localtorch.Size([19, 256, 1024])
+  - Graph: torch.Size([19, 19])
 [Stage 2/3] Subgraph Selection...
-  - Selected 8 events: [0, 2, 3, 5, 13, 15, 17, 22]
+  - Selected 8 events: [0, 2, 5, 7, 9, 11, 16, 17]
 [Stage 3/3] Graph-CoT Inference...
    📊 Processing 8 frames at 224x224
    💬 Using 8 <image> tokens for 8 frames
@@ -425,11 +624,22 @@ Question: What is the topic of...
 
 [EventGraph] Processing: /root/hhq/dataset/Video-MME/videos/5ksVshqVuiM.mp4
 [Stage 1/3] Graph Construction...
-  - Detected 14 events
-  - Extracted features: Globaltorch.Size([14, 768]), Localtorch.Size([14, 256, 1024])
-  - Graph: torch.Size([14, 14])
+[TransNet V2] Loading pretrained model...
+  ✓ TransNet V2 loaded on cuda
+[TransNet V2] Detecting shots in: 5ksVshqVuiM.mp4
+  Video info: 1870 frames, 24.00 fps
+  Processing video in chunks of 500 frames...
+    Processed 1000/1870 frames
+    Processed 1870/1870 frames
+  Prediction stats: min=-16.575, max=8.143, mean=-7.643
+  NMS: 11 candidates → 11 boundaries
+  ✓ Detected 12 shots
+  ✓ Detected 12 variable-length events
+  - Detected 12 events
+  - Extracted features: Globaltorch.Size([12, 768]), Localtorch.Size([12, 256, 1024])
+  - Graph: torch.Size([12, 12])
 [Stage 2/3] Subgraph Selection...
-  - Selected 8 events: [0, 2, 6, 7, 8, 9, 11, 13]
+  - Selected 8 events: [0, 2, 3, 6, 7, 8, 10, 11]
 [Stage 3/3] Graph-CoT Inference...
    📊 Processing 8 frames at 224x224
    💬 Using 8 <image> tokens for 8 frames
@@ -447,11 +657,22 @@ Question: When did the events ...
 
 [EventGraph] Processing: /root/hhq/dataset/Video-MME/videos/5ksVshqVuiM.mp4
 [Stage 1/3] Graph Construction...
-  - Detected 14 events
-  - Extracted features: Globaltorch.Size([14, 768]), Localtorch.Size([14, 256, 1024])
-  - Graph: torch.Size([14, 14])
+[TransNet V2] Loading pretrained model...
+  ✓ TransNet V2 loaded on cuda
+[TransNet V2] Detecting shots in: 5ksVshqVuiM.mp4
+  Video info: 1870 frames, 24.00 fps
+  Processing video in chunks of 500 frames...
+    Processed 1000/1870 frames
+    Processed 1870/1870 frames
+  Prediction stats: min=-16.575, max=8.143, mean=-7.643
+  NMS: 11 candidates → 11 boundaries
+  ✓ Detected 12 shots
+  ✓ Detected 12 variable-length events
+  - Detected 12 events
+  - Extracted features: Globaltorch.Size([12, 768]), Localtorch.Size([12, 256, 1024])
+  - Graph: torch.Size([12, 12])
 [Stage 2/3] Subgraph Selection...
-  - Selected 8 events: [0, 1, 4, 5, 6, 10, 11, 12]
+  - Selected 8 events: [0, 1, 4, 5, 6, 7, 9, 10]
 [Stage 3/3] Graph-CoT Inference...
    📊 Processing 8 frames at 224x224
    💬 Using 8 <image> tokens for 8 frames
@@ -469,11 +690,22 @@ Question: What was Amazon's st...
 
 [EventGraph] Processing: /root/hhq/dataset/Video-MME/videos/5ksVshqVuiM.mp4
 [Stage 1/3] Graph Construction...
-  - Detected 14 events
-  - Extracted features: Globaltorch.Size([14, 768]), Localtorch.Size([14, 256, 1024])
-  - Graph: torch.Size([14, 14])
+[TransNet V2] Loading pretrained model...
+  ✓ TransNet V2 loaded on cuda
+[TransNet V2] Detecting shots in: 5ksVshqVuiM.mp4
+  Video info: 1870 frames, 24.00 fps
+  Processing video in chunks of 500 frames...
+    Processed 1000/1870 frames
+    Processed 1870/1870 frames
+  Prediction stats: min=-16.575, max=8.143, mean=-7.643
+  NMS: 11 candidates → 11 boundaries
+  ✓ Detected 12 shots
+  ✓ Detected 12 variable-length events
+  - Detected 12 events
+  - Extracted features: Globaltorch.Size([12, 768]), Localtorch.Size([12, 256, 1024])
+  - Graph: torch.Size([12, 12])
 [Stage 2/3] Subgraph Selection...
-  - Selected 8 events: [2, 6, 7, 8, 9, 10, 11, 12]
+  - Selected 8 events: [0, 2, 3, 6, 7, 8, 9, 10]
 [Stage 3/3] Graph-CoT Inference...
    📊 Processing 8 frames at 224x224
    💬 Using 8 <image> tokens for 8 frames
@@ -491,11 +723,23 @@ Question: What is the main con...
 
 [EventGraph] Processing: /root/hhq/dataset/Video-MME/videos/yl5ZXQmrtP0.mp4
 [Stage 1/3] Graph Construction...
-  - Detected 14 events
-  - Extracted features: Globaltorch.Size([14, 768]), Localtorch.Size([14, 256, 1024])
-  - Graph: torch.Size([14, 14])
+[TransNet V2] Loading pretrained model...
+  ✓ TransNet V2 loaded on cuda
+[TransNet V2] Detecting shots in: yl5ZXQmrtP0.mp4
+  Video info: 2128 frames, 29.97 fps
+  Processing video in chunks of 500 frames...
+    Processed 1000/2128 frames
+    Processed 2000/2128 frames
+    Processed 2128/2128 frames
+  Prediction stats: min=-15.313, max=5.759, mean=-7.310
+  NMS: 9 candidates → 8 boundaries
+  ✓ Detected 9 shots
+  ✓ Detected 9 variable-length events
+  - Detected 9 events
+  - Extracted features: Globaltorch.Size([9, 768]), Localtorch.Size([9, 256, 1024])
+  - Graph: torch.Size([9, 9])
 [Stage 2/3] Subgraph Selection...
-  - Selected 8 events: [1, 3, 4, 5, 6, 7, 8, 9]
+  - Selected 8 events: [0, 1, 2, 3, 4, 5, 6, 8]
 [Stage 3/3] Graph-CoT Inference...
    📊 Processing 8 frames at 224x224
    💬 Using 8 <image> tokens for 8 frames
@@ -513,11 +757,23 @@ Question: When is the zodiacal...
 
 [EventGraph] Processing: /root/hhq/dataset/Video-MME/videos/yl5ZXQmrtP0.mp4
 [Stage 1/3] Graph Construction...
-  - Detected 14 events
-  - Extracted features: Globaltorch.Size([14, 768]), Localtorch.Size([14, 256, 1024])
-  - Graph: torch.Size([14, 14])
+[TransNet V2] Loading pretrained model...
+  ✓ TransNet V2 loaded on cuda
+[TransNet V2] Detecting shots in: yl5ZXQmrtP0.mp4
+  Video info: 2128 frames, 29.97 fps
+  Processing video in chunks of 500 frames...
+    Processed 1000/2128 frames
+    Processed 2000/2128 frames
+    Processed 2128/2128 frames
+  Prediction stats: min=-15.313, max=5.759, mean=-7.310
+  NMS: 9 candidates → 8 boundaries
+  ✓ Detected 9 shots
+  ✓ Detected 9 variable-length events
+  - Detected 9 events
+  - Extracted features: Globaltorch.Size([9, 768]), Localtorch.Size([9, 256, 1024])
+  - Graph: torch.Size([9, 9])
 [Stage 2/3] Subgraph Selection...
-  - Selected 8 events: [0, 2, 3, 4, 6, 7, 9, 11]
+  - Selected 8 events: [0, 1, 2, 3, 4, 5, 6, 8]
 [Stage 3/3] Graph-CoT Inference...
    📊 Processing 8 frames at 224x224
    💬 Using 8 <image> tokens for 8 frames
@@ -535,11 +791,23 @@ Question: How many times is th...
 
 [EventGraph] Processing: /root/hhq/dataset/Video-MME/videos/yl5ZXQmrtP0.mp4
 [Stage 1/3] Graph Construction...
-  - Detected 14 events
-  - Extracted features: Globaltorch.Size([14, 768]), Localtorch.Size([14, 256, 1024])
-  - Graph: torch.Size([14, 14])
+[TransNet V2] Loading pretrained model...
+  ✓ TransNet V2 loaded on cuda
+[TransNet V2] Detecting shots in: yl5ZXQmrtP0.mp4
+  Video info: 2128 frames, 29.97 fps
+  Processing video in chunks of 500 frames...
+Processing:  46%|█████████████████████████████████████████████████████████▌                                                                   | 23/50 [09:15<09:49, 21.82s/sample]Processing:  48%|████████████████████████████████████████████████████████████                                                                 | 24/50 [09:26<08:09, 18.83s/sample]Processing:  50%|██████████████████████████████████████████████████████████████▌                                                              | 25/50 [09:37<06:51, 16.47s/sample]Processing:  52%|█████████████████████████████████████████████████████████████████                                                            | 26/50 [09:49<06:00, 15.03s/sample]Processing:  54%|███████████████████████████████████████████████████████████████████▌                                                         | 27/50 [10:16<07:08, 18.61s/sample]Processing:  56%|██████████████████████████████████████████████████████████████████████                                                       | 28/50 [10:44<07:49, 21.35s/sample]Processing:  58%|████████████████████████████████████████████████████████████████████████▌                                                    | 29/50 [11:10<07:59, 22.85s/sample]    Processed 1000/2128 frames
+    Processed 2000/2128 frames
+    Processed 2128/2128 frames
+  Prediction stats: min=-15.313, max=5.759, mean=-7.310
+  NMS: 9 candidates → 8 boundaries
+  ✓ Detected 9 shots
+  ✓ Detected 9 variable-length events
+  - Detected 9 events
+  - Extracted features: Globaltorch.Size([9, 768]), Localtorch.Size([9, 256, 1024])
+  - Graph: torch.Size([9, 9])
 [Stage 2/3] Subgraph Selection...
-  - Selected 8 events: [0, 2, 3, 5, 6, 9, 11, 12]
+  - Selected 8 events: [0, 1, 2, 3, 4, 5, 7, 8]
 [Stage 3/3] Graph-CoT Inference...
    📊 Processing 8 frames at 224x224
    💬 Using 8 <image> tokens for 8 frames
@@ -557,11 +825,24 @@ Question: What is the main top...
 
 [EventGraph] Processing: /root/hhq/dataset/Video-MME/videos/kRlhlCWplqk.mp4
 [Stage 1/3] Graph Construction...
-  - Detected 17 events
-  - Extracted features: Globaltorch.Size([17, 768]), Localtorch.Size([17, 256, 1024])
-  - Graph: torch.Size([17, 17])
+[TransNet V2] Loading pretrained model...
+  ✓ TransNet V2 loaded on cuda
+[TransNet V2] Detecting shots in: kRlhlCWplqk.mp4
+  Video info: 3327 frames, 30.00 fps
+  Processing video in chunks of 500 frames...
+    Processed 1000/3327 frames
+    Processed 2000/3327 frames
+    Processed 3000/3327 frames
+    Processed 3327/3327 frames
+  Prediction stats: min=-12.351, max=-0.876, mean=-7.901
+  ✓ Detected 1 shots
+  ⚠️  Too few shots (1), using fallback
+  ⚠️  Fallback: Fixed 2s window, 56 segments
+  - Detected 56 events
+  - Extracted features: Globaltorch.Size([56, 768]), Localtorch.Size([56, 256, 1024])
+  - Graph: torch.Size([56, 56])
 [Stage 2/3] Subgraph Selection...
-  - Selected 8 events: [2, 3, 4, 5, 6, 7, 13, 15]
+  - Selected 8 events: [16, 17, 18, 24, 32, 33, 34, 35]
 [Stage 3/3] Graph-CoT Inference...
    📊 Processing 8 frames at 224x224
    💬 Using 8 <image> tokens for 8 frames
@@ -579,11 +860,24 @@ Question: How many bodies are ...
 
 [EventGraph] Processing: /root/hhq/dataset/Video-MME/videos/kRlhlCWplqk.mp4
 [Stage 1/3] Graph Construction...
-  - Detected 17 events
-  - Extracted features: Globaltorch.Size([17, 768]), Localtorch.Size([17, 256, 1024])
-  - Graph: torch.Size([17, 17])
+[TransNet V2] Loading pretrained model...
+  ✓ TransNet V2 loaded on cuda
+[TransNet V2] Detecting shots in: kRlhlCWplqk.mp4
+  Video info: 3327 frames, 30.00 fps
+  Processing video in chunks of 500 frames...
+    Processed 1000/3327 frames
+    Processed 2000/3327 frames
+    Processed 3000/3327 frames
+    Processed 3327/3327 frames
+  Prediction stats: min=-12.351, max=-0.876, mean=-7.901
+  ✓ Detected 1 shots
+  ⚠️  Too few shots (1), using fallback
+  ⚠️  Fallback: Fixed 2s window, 56 segments
+  - Detected 56 events
+  - Extracted features: Globaltorch.Size([56, 768]), Localtorch.Size([56, 256, 1024])
+  - Graph: torch.Size([56, 56])
 [Stage 2/3] Subgraph Selection...
-  - Selected 8 events: [3, 4, 5, 6, 8, 11, 14, 16]
+  - Selected 8 events: [26, 27, 29, 30, 46, 47, 48, 49]
 [Stage 3/3] Graph-CoT Inference...
    📊 Processing 8 frames at 224x224
    💬 Using 8 <image> tokens for 8 frames
@@ -597,15 +891,28 @@ Question: How many bodies are ...
 <image>
 Question: Which of the followi...
    ✓ Processor succeeded
-  - Prediction: A
+  - Prediction: B
 
 [EventGraph] Processing: /root/hhq/dataset/Video-MME/videos/kRlhlCWplqk.mp4
 [Stage 1/3] Graph Construction...
-  - Detected 17 events
-  - Extracted features: Globaltorch.Size([17, 768]), Localtorch.Size([17, 256, 1024])
-  - Graph: torch.Size([17, 17])
+[TransNet V2] Loading pretrained model...
+  ✓ TransNet V2 loaded on cuda
+[TransNet V2] Detecting shots in: kRlhlCWplqk.mp4
+  Video info: 3327 frames, 30.00 fps
+  Processing video in chunks of 500 frames...
+    Processed 1000/3327 frames
+    Processed 2000/3327 frames
+    Processed 3000/3327 frames
+    Processed 3327/3327 frames
+  Prediction stats: min=-12.351, max=-0.876, mean=-7.901
+  ✓ Detected 1 shots
+  ⚠️  Too few shots (1), using fallback
+  ⚠️  Fallback: Fixed 2s window, 56 segments
+  - Detected 56 events
+  - Extracted features: Globaltorch.Size([56, 768]), Localtorch.Size([56, 256, 1024])
+  - Graph: torch.Size([56, 56])
 [Stage 2/3] Subgraph Selection...
-Processing:  52%|█████████████████████████████████████████████████████████████████                                                            | 26/50 [01:39<01:01,  2.58s/sample]Processing:  54%|███████████████████████████████████████████████████████████████████▌                                                         | 27/50 [01:45<01:25,  3.73s/sample]Processing:  56%|██████████████████████████████████████████████████████████████████████                                                       | 28/50 [01:51<01:35,  4.34s/sample]Processing:  58%|████████████████████████████████████████████████████████████████████████▌                                                    | 29/50 [01:57<01:38,  4.68s/sample]Processing:  60%|███████████████████████████████████████████████████████████████████████████                                                  | 30/50 [02:01<01:28,  4.44s/sample]Processing:  62%|█████████████████████████████████████████████████████████████████████████████▌                                               | 31/50 [02:04<01:21,  4.29s/sample]Processing:  64%|████████████████████████████████████████████████████████████████████████████████                                             | 32/50 [02:08<01:14,  4.15s/sample]Processing:  66%|██████████████████████████████████████████████████████████████████████████████████▌                                          | 33/50 [02:12<01:09,  4.08s/sample]Processing:  68%|█████████████████████████████████████████████████████████████████████████████████████                                        | 34/50 [02:16<01:05,  4.07s/sample]Processing:  70%|███████████████████████████████████████████████████████████████████████████████████████▌                                     | 35/50 [02:20<01:00,  4.01s/sample]Processing:  72%|██████████████████████████████████████████████████████████████████████████████████████████                                   | 36/50 [02:24<00:57,  4.10s/sample]Processing:  74%|████████████████████████████████████████████████████████████████████████████████████████████▌                                | 37/50 [02:29<00:53,  4.13s/sample]Processing:  76%|███████████████████████████████████████████████████████████████████████████████████████████████                              | 38/50 [02:33<00:49,  4.11s/sample]  - Selected 8 events: [1, 5, 6, 7, 8, 14, 15, 16]
+  - Selected 8 events: [4, 5, 7, 31, 38, 39, 41, 54]
 [Stage 3/3] Graph-CoT Inference...
    📊 Processing 8 frames at 224x224
    💬 Using 8 <image> tokens for 8 frames
@@ -623,11 +930,23 @@ Question: How was the video mo...
 
 [EventGraph] Processing: /root/hhq/dataset/Video-MME/videos/9jjTGpWmc5U.mp4
 [Stage 1/3] Graph Construction...
-  - Detected 41 events
-  - Extracted features: Globaltorch.Size([41, 768]), Localtorch.Size([41, 256, 1024])
-  - Graph: torch.Size([41, 41])
+[TransNet V2] Loading pretrained model...
+  ✓ TransNet V2 loaded on cuda
+[TransNet V2] Detecting shots in: 9jjTGpWmc5U.mp4
+  Video info: 2710 frames, 23.98 fps
+  Processing video in chunks of 500 frames...
+    Processed 1000/2710 frames
+    Processed 2000/2710 frames
+    Processed 2710/2710 frames
+  Prediction stats: min=-15.693, max=5.574, mean=-8.499
+  NMS: 29 candidates → 26 boundaries
+  ✓ Detected 27 shots
+  ✓ Detected 27 variable-length events
+  - Detected 27 events
+  - Extracted features: Globaltorch.Size([27, 768]), Localtorch.Size([27, 256, 1024])
+  - Graph: torch.Size([27, 27])
 [Stage 2/3] Subgraph Selection...
-  - Selected 8 events: [3, 4, 5, 6, 11, 12, 15, 18]
+  - Selected 8 events: [3, 4, 5, 8, 10, 13, 14, 23]
 [Stage 3/3] Graph-CoT Inference...
    📊 Processing 8 frames at 224x224
    💬 Using 8 <image> tokens for 8 frames
@@ -645,11 +964,23 @@ Question: Why does the roof ob...
 
 [EventGraph] Processing: /root/hhq/dataset/Video-MME/videos/9jjTGpWmc5U.mp4
 [Stage 1/3] Graph Construction...
-  - Detected 41 events
-  - Extracted features: Globaltorch.Size([41, 768]), Localtorch.Size([41, 256, 1024])
-  - Graph: torch.Size([41, 41])
+[TransNet V2] Loading pretrained model...
+  ✓ TransNet V2 loaded on cuda
+[TransNet V2] Detecting shots in: 9jjTGpWmc5U.mp4
+  Video info: 2710 frames, 23.98 fps
+  Processing video in chunks of 500 frames...
+    Processed 1000/2710 frames
+    Processed 2000/2710 frames
+    Processed 2710/2710 frames
+  Prediction stats: min=-15.693, max=5.574, mean=-8.499
+  NMS: 29 candidates → 26 boundaries
+  ✓ Detected 27 shots
+  ✓ Detected 27 variable-length events
+  - Detected 27 events
+  - Extracted features: Globaltorch.Size([27, 768]), Localtorch.Size([27, 256, 1024])
+  - Graph: torch.Size([27, 27])
 [Stage 2/3] Subgraph Selection...
-  - Selected 8 events: [0, 8, 16, 17, 25, 28, 29, 34]
+  - Selected 8 events: [0, 1, 4, 6, 11, 12, 14, 16]
 [Stage 3/3] Graph-CoT Inference...
    📊 Processing 8 frames at 224x224
    💬 Using 8 <image> tokens for 8 frames
@@ -667,11 +998,23 @@ Question: How many people are ...
 
 [EventGraph] Processing: /root/hhq/dataset/Video-MME/videos/9jjTGpWmc5U.mp4
 [Stage 1/3] Graph Construction...
-  - Detected 41 events
-  - Extracted features: Globaltorch.Size([41, 768]), Localtorch.Size([41, 256, 1024])
-  - Graph: torch.Size([41, 41])
+[TransNet V2] Loading pretrained model...
+  ✓ TransNet V2 loaded on cuda
+[TransNet V2] Detecting shots in: 9jjTGpWmc5U.mp4
+  Video info: 2710 frames, 23.98 fps
+  Processing video in chunks of 500 frames...
+    Processed 1000/2710 frames
+    Processed 2000/2710 frames
+    Processed 2710/2710 frames
+  Prediction stats: min=-15.693, max=5.574, mean=-8.499
+  NMS: 29 candidates → 26 boundaries
+  ✓ Detected 27 shots
+  ✓ Detected 27 variable-length events
+  - Detected 27 events
+  - Extracted features: Globaltorch.Size([27, 768]), Localtorch.Size([27, 256, 1024])
+  - Graph: torch.Size([27, 27])
 [Stage 2/3] Subgraph Selection...
-  - Selected 8 events: [16, 20, 23, 26, 27, 30, 34, 37]
+  - Selected 8 events: [6, 8, 11, 13, 14, 15, 18, 19]
 [Stage 3/3] Graph-CoT Inference...
    📊 Processing 8 frames at 224x224
    💬 Using 8 <image> tokens for 8 frames
@@ -689,11 +1032,23 @@ Question: Which type of disast...
 
 [EventGraph] Processing: /root/hhq/dataset/Video-MME/videos/fo0Hmch2YS0.mp4
 [Stage 1/3] Graph Construction...
-  - Detected 16 events
-  - Extracted features: Globaltorch.Size([16, 768]), Localtorch.Size([16, 256, 1024])
-  - Graph: torch.Size([16, 16])
+[TransNet V2] Loading pretrained model...
+  ✓ TransNet V2 loaded on cuda
+[TransNet V2] Detecting shots in: fo0Hmch2YS0.mp4
+  Video info: 2407 frames, 29.97 fps
+  Processing video in chunks of 500 frames...
+    Processed 1000/2407 frames
+    Processed 2000/2407 frames
+    Processed 2407/2407 frames
+  Prediction stats: min=-13.509, max=3.395, mean=-8.198
+  NMS: 12 candidates → 12 boundaries
+  ✓ Detected 13 shots
+  ✓ Detected 13 variable-length events
+  - Detected 13 events
+  - Extracted features: Globaltorch.Size([13, 768]), Localtorch.Size([13, 256, 1024])
+  - Graph: torch.Size([13, 13])
 [Stage 2/3] Subgraph Selection...
-  - Selected 8 events: [8, 9, 10, 11, 12, 13, 14, 15]
+Processing:  60%|███████████████████████████████████████████████████████████████████████████                                                  | 30/50 [11:35<07:47, 23.40s/sample]Processing:  62%|█████████████████████████████████████████████████████████████████████████████▌                                               | 31/50 [12:01<07:43, 24.38s/sample]Processing:  64%|████████████████████████████████████████████████████████████████████████████████                                             | 32/50 [12:26<07:21, 24.53s/sample]Processing:  66%|██████████████████████████████████████████████████████████████████████████████████▌                                          | 33/50 [12:49<06:45, 23.83s/sample]Processing:  68%|█████████████████████████████████████████████████████████████████████████████████████                                        | 34/50 [13:10<06:10, 23.16s/sample]Processing:  70%|███████████████████████████████████████████████████████████████████████████████████████▌                                     | 35/50 [13:32<05:41, 22.77s/sample]Processing:  72%|██████████████████████████████████████████████████████████████████████████████████████████                                   | 36/50 [13:55<05:20, 22.90s/sample]Processing:  74%|████████████████████████████████████████████████████████████████████████████████████████████▌                                | 37/50 [14:21<05:08, 23.76s/sample]  - Selected 8 events: [1, 4, 5, 7, 8, 9, 11, 12]
 [Stage 3/3] Graph-CoT Inference...
    📊 Processing 8 frames at 224x224
    💬 Using 8 <image> tokens for 8 frames
@@ -711,11 +1066,23 @@ Question: How many people can ...
 
 [EventGraph] Processing: /root/hhq/dataset/Video-MME/videos/fo0Hmch2YS0.mp4
 [Stage 1/3] Graph Construction...
-  - Detected 16 events
-  - Extracted features: Globaltorch.Size([16, 768]), Localtorch.Size([16, 256, 1024])
-  - Graph: torch.Size([16, 16])
+[TransNet V2] Loading pretrained model...
+  ✓ TransNet V2 loaded on cuda
+[TransNet V2] Detecting shots in: fo0Hmch2YS0.mp4
+  Video info: 2407 frames, 29.97 fps
+  Processing video in chunks of 500 frames...
+    Processed 1000/2407 frames
+    Processed 2000/2407 frames
+    Processed 2407/2407 frames
+  Prediction stats: min=-13.509, max=3.395, mean=-8.198
+  NMS: 12 candidates → 12 boundaries
+  ✓ Detected 13 shots
+  ✓ Detected 13 variable-length events
+  - Detected 13 events
+  - Extracted features: Globaltorch.Size([13, 768]), Localtorch.Size([13, 256, 1024])
+  - Graph: torch.Size([13, 13])
 [Stage 2/3] Subgraph Selection...
-  - Selected 8 events: [1, 3, 5, 7, 8, 9, 14, 15]
+  - Selected 8 events: [1, 2, 3, 4, 5, 6, 9, 12]
 [Stage 3/3] Graph-CoT Inference...
    📊 Processing 8 frames at 224x224
    💬 Using 8 <image> tokens for 8 frames
@@ -733,11 +1100,23 @@ Question: What is the most lik...
 
 [EventGraph] Processing: /root/hhq/dataset/Video-MME/videos/fo0Hmch2YS0.mp4
 [Stage 1/3] Graph Construction...
-  - Detected 16 events
-  - Extracted features: Globaltorch.Size([16, 768]), Localtorch.Size([16, 256, 1024])
-  - Graph: torch.Size([16, 16])
+[TransNet V2] Loading pretrained model...
+  ✓ TransNet V2 loaded on cuda
+[TransNet V2] Detecting shots in: fo0Hmch2YS0.mp4
+  Video info: 2407 frames, 29.97 fps
+  Processing video in chunks of 500 frames...
+    Processed 1000/2407 frames
+    Processed 2000/2407 frames
+    Processed 2407/2407 frames
+  Prediction stats: min=-13.509, max=3.395, mean=-8.198
+  NMS: 12 candidates → 12 boundaries
+  ✓ Detected 13 shots
+  ✓ Detected 13 variable-length events
+  - Detected 13 events
+  - Extracted features: Globaltorch.Size([13, 768]), Localtorch.Size([13, 256, 1024])
+  - Graph: torch.Size([13, 13])
 [Stage 2/3] Subgraph Selection...
-  - Selected 8 events: [8, 9, 10, 11, 12, 13, 14, 15]
+  - Selected 8 events: [4, 5, 6, 7, 8, 9, 11, 12]
 [Stage 3/3] Graph-CoT Inference...
    📊 Processing 8 frames at 224x224
    💬 Using 8 <image> tokens for 8 frames
@@ -751,15 +1130,27 @@ Question: What is the most lik...
 <image>
 Question: What are the people ...
    ✓ Processor succeeded
-  - Prediction: A
+  - Prediction: D
 
 [EventGraph] Processing: /root/hhq/dataset/Video-MME/videos/990ci2H9BBc.mp4
 [Stage 1/3] Graph Construction...
-  - Detected 15 events
-  - Extracted features: Globaltorch.Size([15, 768]), Localtorch.Size([15, 256, 1024])
-  - Graph: torch.Size([15, 15])
+[TransNet V2] Loading pretrained model...
+  ✓ TransNet V2 loaded on cuda
+[TransNet V2] Detecting shots in: 990ci2H9BBc.mp4
+  Video info: 2248 frames, 29.97 fps
+  Processing video in chunks of 500 frames...
+    Processed 1000/2248 frames
+    Processed 2000/2248 frames
+    Processed 2248/2248 frames
+  Prediction stats: min=-14.452, max=4.484, mean=-7.218
+  NMS: 9 candidates → 9 boundaries
+  ✓ Detected 10 shots
+  ✓ Detected 10 variable-length events
+  - Detected 10 events
+  - Extracted features: Globaltorch.Size([10, 768]), Localtorch.Size([10, 256, 1024])
+  - Graph: torch.Size([10, 10])
 [Stage 2/3] Subgraph Selection...
-  - Selected 8 events: [0, 2, 3, 6, 7, 8, 10, 11]
+  - Selected 8 events: [0, 1, 3, 4, 5, 6, 8, 9]
 [Stage 3/3] Graph-CoT Inference...
    📊 Processing 8 frames at 224x224
    💬 Using 8 <image> tokens for 8 frames
@@ -777,11 +1168,23 @@ Question: What astronomical ph...
 
 [EventGraph] Processing: /root/hhq/dataset/Video-MME/videos/990ci2H9BBc.mp4
 [Stage 1/3] Graph Construction...
-  - Detected 15 events
-  - Extracted features: Globaltorch.Size([15, 768]), Localtorch.Size([15, 256, 1024])
-  - Graph: torch.Size([15, 15])
+[TransNet V2] Loading pretrained model...
+  ✓ TransNet V2 loaded on cuda
+[TransNet V2] Detecting shots in: 990ci2H9BBc.mp4
+  Video info: 2248 frames, 29.97 fps
+  Processing video in chunks of 500 frames...
+    Processed 1000/2248 frames
+    Processed 2000/2248 frames
+    Processed 2248/2248 frames
+  Prediction stats: min=-14.452, max=4.484, mean=-7.218
+  NMS: 9 candidates → 9 boundaries
+  ✓ Detected 10 shots
+  ✓ Detected 10 variable-length events
+  - Detected 10 events
+  - Extracted features: Globaltorch.Size([10, 768]), Localtorch.Size([10, 256, 1024])
+  - Graph: torch.Size([10, 10])
 [Stage 2/3] Subgraph Selection...
-  - Selected 8 events: [2, 3, 4, 6, 7, 9, 11, 12]
+  - Selected 8 events: [0, 1, 2, 3, 4, 5, 6, 9]
 [Stage 3/3] Graph-CoT Inference...
    📊 Processing 8 frames at 224x224
    💬 Using 8 <image> tokens for 8 frames
@@ -799,11 +1202,23 @@ Question: Which of the followi...
 
 [EventGraph] Processing: /root/hhq/dataset/Video-MME/videos/990ci2H9BBc.mp4
 [Stage 1/3] Graph Construction...
-  - Detected 15 events
-  - Extracted features: Globaltorch.Size([15, 768]), Localtorch.Size([15, 256, 1024])
-  - Graph: torch.Size([15, 15])
+[TransNet V2] Loading pretrained model...
+  ✓ TransNet V2 loaded on cuda
+[TransNet V2] Detecting shots in: 990ci2H9BBc.mp4
+  Video info: 2248 frames, 29.97 fps
+  Processing video in chunks of 500 frames...
+    Processed 1000/2248 frames
+    Processed 2000/2248 frames
+    Processed 2248/2248 frames
+  Prediction stats: min=-14.452, max=4.484, mean=-7.218
+  NMS: 9 candidates → 9 boundaries
+  ✓ Detected 10 shots
+  ✓ Detected 10 variable-length events
+  - Detected 10 events
+  - Extracted features: Globaltorch.Size([10, 768]), Localtorch.Size([10, 256, 1024])
+  - Graph: torch.Size([10, 10])
 [Stage 2/3] Subgraph Selection...
-  - Selected 8 events: [2, 3, 4, 7, 8, 9, 11, 12]
+  - Selected 8 events: [0, 1, 2, 3, 4, 5, 6, 9]
 [Stage 3/3] Graph-CoT Inference...
    📊 Processing 8 frames at 224x224
    💬 Using 8 <image> tokens for 8 frames
@@ -821,11 +1236,23 @@ Question: Where were the peopl...
 
 [EventGraph] Processing: /root/hhq/dataset/Video-MME/videos/gD0MvkDGAMg.mp4
 [Stage 1/3] Graph Construction...
-  - Detected 15 events
-  - Extracted features: Globaltorch.Size([15, 768]), Localtorch.Size([15, 256, 1024])
-  - Graph: torch.Size([15, 15])
+[TransNet V2] Loading pretrained model...
+  ✓ TransNet V2 loaded on cuda
+[TransNet V2] Detecting shots in: gD0MvkDGAMg.mp4
+  Video info: 2439 frames, 25.00 fps
+  Processing video in chunks of 500 frames...
+    Processed 1000/2439 frames
+    Processed 2000/2439 frames
+    Processed 2439/2439 frames
+  Prediction stats: min=-16.799, max=4.337, mean=-7.900
+  NMS: 9 candidates → 9 boundaries
+  ✓ Detected 10 shots
+  ✓ Detected 10 variable-length events
+  - Detected 10 events
+  - Extracted features: Globaltorch.Size([10, 768]), Localtorch.Size([10, 256, 1024])
+  - Graph: torch.Size([10, 10])
 [Stage 2/3] Subgraph Selection...
-  - Selected 8 events: [0, 1, 2, 3, 4, 5, 9, 11]
+  - Selected 8 events: [0, 1, 2, 3, 5, 6, 8, 9]
 [Stage 3/3] Graph-CoT Inference...
    📊 Processing 8 frames at 224x224
    💬 Using 8 <image> tokens for 8 frames
@@ -843,11 +1270,23 @@ Question: What's the main poin...
 
 [EventGraph] Processing: /root/hhq/dataset/Video-MME/videos/gD0MvkDGAMg.mp4
 [Stage 1/3] Graph Construction...
-  - Detected 15 events
-  - Extracted features: Globaltorch.Size([15, 768]), Localtorch.Size([15, 256, 1024])
-  - Graph: torch.Size([15, 15])
+[TransNet V2] Loading pretrained model...
+  ✓ TransNet V2 loaded on cuda
+[TransNet V2] Detecting shots in: gD0MvkDGAMg.mp4
+  Video info: 2439 frames, 25.00 fps
+  Processing video in chunks of 500 frames...
+    Processed 1000/2439 frames
+    Processed 2000/2439 frames
+    Processed 2439/2439 frames
+  Prediction stats: min=-16.799, max=4.337, mean=-7.900
+  NMS: 9 candidates → 9 boundaries
+  ✓ Detected 10 shots
+  ✓ Detected 10 variable-length events
+  - Detected 10 events
+  - Extracted features: Globaltorch.Size([10, 768]), Localtorch.Size([10, 256, 1024])
+  - Graph: torch.Size([10, 10])
 [Stage 2/3] Subgraph Selection...
-  - Selected 8 events: [0, 1, 2, 3, 5, 6, 11, 13]
+  - Selected 8 events: [0, 1, 2, 3, 6, 7, 8, 9]
 [Stage 3/3] Graph-CoT Inference...
    📊 Processing 8 frames at 224x224
    💬 Using 8 <image> tokens for 8 frames
@@ -865,11 +1304,23 @@ Question: What is the first ce...
 
 [EventGraph] Processing: /root/hhq/dataset/Video-MME/videos/gD0MvkDGAMg.mp4
 [Stage 1/3] Graph Construction...
-  - Detected 15 events
-  - Extracted features: Globaltorch.Size([15, 768]), Localtorch.Size([15, 256, 1024])
-  - Graph: torch.Size([15, 15])
+[TransNet V2] Loading pretrained model...
+  ✓ TransNet V2 loaded on cuda
+[TransNet V2] Detecting shots in: gD0MvkDGAMg.mp4
+Processing:  76%|███████████████████████████████████████████████████████████████████████████████████████████████                              | 38/50 [14:45<04:45, 23.81s/sample]Processing:  78%|█████████████████████████████████████████████████████████████████████████████████████████████████▌                           | 39/50 [14:58<03:47, 20.64s/sample]Processing:  80%|████████████████████████████████████████████████████████████████████████████████████████████████████                         | 40/50 [15:13<03:08, 18.81s/sample]Processing:  82%|██████████████████████████████████████████████████████████████████████████████████████████████████████▌                      | 41/50 [15:26<02:34, 17.20s/sample]Processing:  84%|█████████████████████████████████████████████████████████████████████████████████████████████████████████                    | 42/50 [15:35<01:58, 14.76s/sample]Processing:  86%|███████████████████████████████████████████████████████████████████████████████████████████████████████████▌                 | 43/50 [15:44<01:30, 12.98s/sample]Processing:  88%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████               | 44/50 [15:53<01:10, 11.78s/sample]  Video info: 2439 frames, 25.00 fps
+  Processing video in chunks of 500 frames...
+    Processed 1000/2439 frames
+    Processed 2000/2439 frames
+    Processed 2439/2439 frames
+  Prediction stats: min=-16.799, max=4.337, mean=-7.900
+  NMS: 9 candidates → 9 boundaries
+  ✓ Detected 10 shots
+  ✓ Detected 10 variable-length events
+  - Detected 10 events
+  - Extracted features: Globaltorch.Size([10, 768]), Localtorch.Size([10, 256, 1024])
+  - Graph: torch.Size([10, 10])
 [Stage 2/3] Subgraph Selection...
-  - Selected 8 events: [0, 2, 4, 7, 9, 10, 13, 14]
+  - Selected 8 events: [0, 2, 3, 5, 6, 7, 8, 9]
 [Stage 3/3] Graph-CoT Inference...
    📊 Processing 8 frames at 224x224
    💬 Using 8 <image> tokens for 8 frames
@@ -887,12 +1338,22 @@ Question: How many times does ...
 
 [EventGraph] Processing: /root/hhq/dataset/Video-MME/videos/WTQ7_e8bnfM.mp4
 [Stage 1/3] Graph Construction...
-  - Detected 16 events
-  - Extracted features: Globaltorch.Size([16, 768]), Localtorch.Size([16, 256, 1024])
-  - Graph: torch.Size([16, 16])
+[TransNet V2] Loading pretrained model...
+  ✓ TransNet V2 loaded on cuda
+[TransNet V2] Detecting shots in: WTQ7_e8bnfM.mp4
+  Video info: 1272 frames, 30.00 fps
+  Processing video in chunks of 500 frames...
+    Processed 1000/1272 frames
+    Processed 1272/1272 frames
+  Prediction stats: min=-13.118, max=5.368, mean=-8.438
+  NMS: 13 candidates → 13 boundaries
+  ✓ Detected 14 shots
+  ✓ Detected 14 variable-length events
+  - Detected 14 events
+  - Extracted features: Globaltorch.Size([14, 768]), Localtorch.Size([14, 256, 1024])
+  - Graph: torch.Size([14, 14])
 [Stage 2/3] Subgraph Selection...
-Processing:  78%|█████████████████████████████████████████████████████████████████████████████████████████████████▌                           | 39/50 [02:35<00:40,  3.66s/sample]Processing:  80%|████████████████████████████████████████████████████████████████████████████████████████████████████                         | 40/50 [02:38<00:33,  3.38s/sample]Processing:  82%|██████████████████████████████████████████████████████████████████████████████████████████████████████▌                      | 41/50 [02:41<00:28,  3.16s/sample]Processing:  84%|█████████████████████████████████████████████████████████████████████████████████████████████████████████                    | 42/50 [02:43<00:22,  2.83s/sample]Processing:  86%|███████████████████████████████████████████████████████████████████████████████████████████████████████████▌                 | 43/50 [02:45<00:18,  2.64s/sample]Processing:  88%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████               | 44/50 [02:47<00:14,  2.42s/sample]Processing:  90%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████▌            | 45/50 [02:50<00:12,  2.59s/sample]Processing:  92%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████          | 46/50 [02:53<00:10,  2.67s/sample]Processing:  94%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▌       | 47/50 [02:56<00:08,  2.79s/sample]Processing:  96%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████     | 48/50 [03:00<00:06,  3.30s/sample]Processing:  98%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▌  | 49/50 [03:05<00:03,  3.63s/sample]Processing: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 50/50 [03:09<00:00,  3.86s/sample]Processing: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 50/50 [03:09<00:00,  3.79s/sample]
-  - Selected 8 events: [2, 4, 5, 6, 7, 10, 12, 14]
+  - Selected 8 events: [2, 4, 5, 6, 8, 10, 12, 13]
 [Stage 3/3] Graph-CoT Inference...
    📊 Processing 8 frames at 224x224
    💬 Using 8 <image> tokens for 8 frames
@@ -910,11 +1371,22 @@ Question: Which of the followi...
 
 [EventGraph] Processing: /root/hhq/dataset/Video-MME/videos/WTQ7_e8bnfM.mp4
 [Stage 1/3] Graph Construction...
-  - Detected 16 events
-  - Extracted features: Globaltorch.Size([16, 768]), Localtorch.Size([16, 256, 1024])
-  - Graph: torch.Size([16, 16])
+[TransNet V2] Loading pretrained model...
+  ✓ TransNet V2 loaded on cuda
+[TransNet V2] Detecting shots in: WTQ7_e8bnfM.mp4
+  Video info: 1272 frames, 30.00 fps
+  Processing video in chunks of 500 frames...
+    Processed 1000/1272 frames
+    Processed 1272/1272 frames
+  Prediction stats: min=-13.118, max=5.368, mean=-8.438
+  NMS: 13 candidates → 13 boundaries
+  ✓ Detected 14 shots
+  ✓ Detected 14 variable-length events
+  - Detected 14 events
+  - Extracted features: Globaltorch.Size([14, 768]), Localtorch.Size([14, 256, 1024])
+  - Graph: torch.Size([14, 14])
 [Stage 2/3] Subgraph Selection...
-  - Selected 8 events: [2, 3, 5, 6, 8, 10, 12, 13]
+  - Selected 8 events: [1, 2, 3, 5, 6, 8, 9, 13]
 [Stage 3/3] Graph-CoT Inference...
    📊 Processing 8 frames at 224x224
    💬 Using 8 <image> tokens for 8 frames
@@ -932,11 +1404,22 @@ Question: What is depicted in ...
 
 [EventGraph] Processing: /root/hhq/dataset/Video-MME/videos/WTQ7_e8bnfM.mp4
 [Stage 1/3] Graph Construction...
-  - Detected 16 events
-  - Extracted features: Globaltorch.Size([16, 768]), Localtorch.Size([16, 256, 1024])
-  - Graph: torch.Size([16, 16])
+[TransNet V2] Loading pretrained model...
+  ✓ TransNet V2 loaded on cuda
+[TransNet V2] Detecting shots in: WTQ7_e8bnfM.mp4
+  Video info: 1272 frames, 30.00 fps
+  Processing video in chunks of 500 frames...
+    Processed 1000/1272 frames
+    Processed 1272/1272 frames
+  Prediction stats: min=-13.118, max=5.368, mean=-8.438
+  NMS: 13 candidates → 13 boundaries
+  ✓ Detected 14 shots
+  ✓ Detected 14 variable-length events
+  - Detected 14 events
+  - Extracted features: Globaltorch.Size([14, 768]), Localtorch.Size([14, 256, 1024])
+  - Graph: torch.Size([14, 14])
 [Stage 2/3] Subgraph Selection...
-  - Selected 8 events: [4, 5, 6, 8, 9, 10, 12, 13]
+  - Selected 8 events: [4, 5, 6, 8, 9, 10, 11, 12]
 [Stage 3/3] Graph-CoT Inference...
    📊 Processing 8 frames at 224x224
    💬 Using 8 <image> tokens for 8 frames
@@ -954,143 +1437,210 @@ Question: What might be the im...
 
 [EventGraph] Processing: /root/hhq/dataset/Video-MME/videos/M7WOXFvwbSY.mp4
 [Stage 1/3] Graph Construction...
-  - Detected 12 events
-  - Extracted features: Globaltorch.Size([12, 768]), Localtorch.Size([12, 256, 1024])
-  - Graph: torch.Size([12, 12])
+[TransNet V2] Loading pretrained model...
+  ✓ TransNet V2 loaded on cuda
+[TransNet V2] Detecting shots in: M7WOXFvwbSY.mp4
+  Video info: 3625 frames, 30.00 fps
+  Processing video in chunks of 500 frames...
+    Processed 1000/3625 frames
+    Processed 2000/3625 frames
+    Processed 3000/3625 frames
+    Processed 3625/3625 frames
+  Prediction stats: min=-16.032, max=0.902, mean=-7.026
+  NMS: 3 candidates → 3 boundaries
+  ✓ Detected 4 shots
+  ✓ Detected 4 variable-length events
+  - Detected 4 events
+  - Extracted features: Globaltorch.Size([4, 768]), Localtorch.Size([4, 256, 1024])
+  - Graph: torch.Size([4, 4])
 [Stage 2/3] Subgraph Selection...
-  - Selected 8 events: [0, 2, 3, 4, 7, 8, 9, 11]
+  - Selected 4 events: [0, 1, 2, 3]
 [Stage 3/3] Graph-CoT Inference...
-   📊 Processing 8 frames at 224x224
-   💬 Using 8 <image> tokens for 8 frames
+   📊 Processing 4 frames at 224x224
+   💬 Using 4 <image> tokens for 4 frames
    💬 Prompt preview: USER: <image>
 <image>
 <image>
 <image>
-<image>
-<image>
-<image>
-<image>
-Question: Which galaxies are d...
-   ✓ Processor succeeded
-  - Prediction: B
-
-[EventGraph] Processing: /root/hhq/dataset/Video-MME/videos/M7WOXFvwbSY.mp4
-[Stage 1/3] Graph Construction...
-  - Detected 12 events
-  - Extracted features: Globaltorch.Size([12, 768]), Localtorch.Size([12, 256, 1024])
-  - Graph: torch.Size([12, 12])
-[Stage 2/3] Subgraph Selection...
-  - Selected 8 events: [2, 3, 4, 6, 7, 8, 9, 10]
-[Stage 3/3] Graph-CoT Inference...
-   📊 Processing 8 frames at 224x224
-   💬 Using 8 <image> tokens for 8 frames
-   💬 Prompt preview: USER: <image>
-<image>
-<image>
-<image>
-<image>
-<image>
-<image>
-<image>
-Question: What significant eve...
+Question: Which galaxies are depicted in the video?
+Options:
+A...
    ✓ Processor succeeded
   - Prediction: A
 
 [EventGraph] Processing: /root/hhq/dataset/Video-MME/videos/M7WOXFvwbSY.mp4
 [Stage 1/3] Graph Construction...
-  - Detected 12 events
-  - Extracted features: Globaltorch.Size([12, 768]), Localtorch.Size([12, 256, 1024])
-  - Graph: torch.Size([12, 12])
+[TransNet V2] Loading pretrained model...
+  ✓ TransNet V2 loaded on cuda
+[TransNet V2] Detecting shots in: M7WOXFvwbSY.mp4
+  Video info: 3625 frames, 30.00 fps
+  Processing video in chunks of 500 frames...
+    Processed 1000/3625 frames
+    Processed 2000/3625 frames
+    Processed 3000/3625 frames
+    Processed 3625/3625 frames
+  Prediction stats: min=-16.032, max=0.902, mean=-7.026
+  NMS: 3 candidates → 3 boundaries
+  ✓ Detected 4 shots
+  ✓ Detected 4 variable-length events
+  - Detected 4 events
+  - Extracted features: Globaltorch.Size([4, 768]), Localtorch.Size([4, 256, 1024])
+  - Graph: torch.Size([4, 4])
 [Stage 2/3] Subgraph Selection...
-  - Selected 8 events: [0, 3, 4, 6, 7, 8, 10, 11]
+  - Selected 4 events: [0, 1, 2, 3]
 [Stage 3/3] Graph-CoT Inference...
-   📊 Processing 8 frames at 224x224
-   💬 Using 8 <image> tokens for 8 frames
+   📊 Processing 4 frames at 224x224
+   💬 Using 4 <image> tokens for 4 frames
    💬 Prompt preview: USER: <image>
 <image>
 <image>
 <image>
-<image>
-<image>
-<image>
-<image>
-Question: Which of the followi...
+Question: What significant event is the number at the bottom o...
    ✓ Processor succeeded
-  - Prediction: B
+  - Prediction: A
 
-[EventGraph] Processing: /root/hhq/dataset/Video-MME/videos/RvnC--JjDBw.mp4
+[EventGraph] Processing: /root/hhq/dataset/Video-MME/videos/M7WOXFvwbSY.mp4
 [Stage 1/3] Graph Construction...
-  - Detected 11 events
-  - Extracted features: Globaltorch.Size([11, 768]), Localtorch.Size([11, 256, 1024])
-  - Graph: torch.Size([11, 11])
+[TransNet V2] Loading pretrained model...
+  ✓ TransNet V2 loaded on cuda
+[TransNet V2] Detecting shots in: M7WOXFvwbSY.mp4
+  Video info: 3625 frames, 30.00 fps
+  Processing video in chunks of 500 frames...
+    Processed 1000/3625 frames
+    Processed 2000/3625 frames
+    Processed 3000/3625 frames
+    Processed 3625/3625 frames
+  Prediction stats: min=-16.032, max=0.902, mean=-7.026
+  NMS: 3 candidates → 3 boundaries
+  ✓ Detected 4 shots
+  ✓ Detected 4 variable-length events
+  - Detected 4 events
+  - Extracted features: Globaltorch.Size([4, 768]), Localtorch.Size([4, 256, 1024])
+  - Graph: torch.Size([4, 4])
 [Stage 2/3] Subgraph Selection...
-  - Selected 8 events: [1, 3, 5, 6, 7, 8, 9, 10]
+  - Selected 4 events: [0, 1, 2, 3]
 [Stage 3/3] Graph-CoT Inference...
-   📊 Processing 8 frames at 224x224
-   💬 Using 8 <image> tokens for 8 frames
+   📊 Processing 4 frames at 224x224
+   💬 Using 4 <image> tokens for 4 frames
    💬 Prompt preview: USER: <image>
 <image>
 <image>
 <image>
-<image>
-<image>
-<image>
-<image>
-Question: Which activity is be...
+Question: Which of the following statements can be inferred ab...
    ✓ Processor succeeded
   - Prediction: A
 
 [EventGraph] Processing: /root/hhq/dataset/Video-MME/videos/RvnC--JjDBw.mp4
 [Stage 1/3] Graph Construction...
-  - Detected 11 events
-  - Extracted features: Globaltorch.Size([11, 768]), Localtorch.Size([11, 256, 1024])
-  - Graph: torch.Size([11, 11])
+[TransNet V2] Loading pretrained model...
+  ✓ TransNet V2 loaded on cuda
+[TransNet V2] Detecting shots in: RvnC--JjDBw.mp4
+  Video info: 2039 frames, 30.00 fps
+  Processing video in chunks of 500 frames...
+    Processed 1000/2039 frames
+    Processed 2000/2039 frames
+    Processed 2039/2039 frames
+  Prediction stats: min=-15.716, max=3.293, mean=-8.549
+  NMS: 3 candidates → 3 boundaries
+  ✓ Detected 4 shots
+  ✓ Detected 4 variable-length events
+  - Detected 4 events
+  - Extracted features: Globaltorch.Size([4, 768]), Localtorch.Size([4, 256, 1024])
+  - Graph: torch.Size([4, 4])
 [Stage 2/3] Subgraph Selection...
-  - Selected 8 events: [1, 2, 3, 6, 7, 8, 9, 10]
+  - Selected 4 events: [0, 1, 2, 3]
 [Stage 3/3] Graph-CoT Inference...
-   📊 Processing 8 frames at 224x224
-   💬 Using 8 <image> tokens for 8 frames
+   📊 Processing 4 frames at 224x224
+Processing:  90%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████▌            | 45/50 [16:13<01:11, 14.30s/sample]Processing:  92%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████          | 46/50 [16:32<01:03, 15.78s/sample]Processing:  94%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▌       | 47/50 [16:51<00:50, 16.75s/sample]Processing:  96%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████     | 48/50 [17:24<00:42, 21.41s/sample]Processing:  98%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▌  | 49/50 [17:54<00:24, 24.08s/sample]Processing: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 50/50 [18:25<00:00, 26.11s/sample]Processing: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 50/50 [18:25<00:00, 22.11s/sample]
+   💬 Using 4 <image> tokens for 4 frames
    💬 Prompt preview: USER: <image>
 <image>
 <image>
 <image>
-<image>
-<image>
-<image>
-<image>
-Question: Which feature of the...
+Question: Which activity is being performed by the astronaut i...
    ✓ Processor succeeded
   - Prediction: A
 
 [EventGraph] Processing: /root/hhq/dataset/Video-MME/videos/RvnC--JjDBw.mp4
 [Stage 1/3] Graph Construction...
-  - Detected 11 events
-  - Extracted features: Globaltorch.Size([11, 768]), Localtorch.Size([11, 256, 1024])
-  - Graph: torch.Size([11, 11])
+[TransNet V2] Loading pretrained model...
+  ✓ TransNet V2 loaded on cuda
+[TransNet V2] Detecting shots in: RvnC--JjDBw.mp4
+  Video info: 2039 frames, 30.00 fps
+  Processing video in chunks of 500 frames...
+    Processed 1000/2039 frames
+    Processed 2000/2039 frames
+    Processed 2039/2039 frames
+  Prediction stats: min=-15.716, max=3.293, mean=-8.549
+  NMS: 3 candidates → 3 boundaries
+  ✓ Detected 4 shots
+  ✓ Detected 4 variable-length events
+  - Detected 4 events
+  - Extracted features: Globaltorch.Size([4, 768]), Localtorch.Size([4, 256, 1024])
+  - Graph: torch.Size([4, 4])
 [Stage 2/3] Subgraph Selection...
-  - Selected 8 events: [1, 2, 3, 4, 5, 6, 7, 8]
+  - Selected 4 events: [0, 1, 2, 3]
 [Stage 3/3] Graph-CoT Inference...
-   📊 Processing 8 frames at 224x224
-   💬 Using 8 <image> tokens for 8 frames
+   📊 Processing 4 frames at 224x224
+   💬 Using 4 <image> tokens for 4 frames
    💬 Prompt preview: USER: <image>
 <image>
 <image>
 <image>
-<image>
-<image>
-<image>
-<image>
-Question: Considering the cont...
+Question: Which feature of the astronaut's equipment indicates...
    ✓ Processor succeeded
-  - Prediction: B
+  - Prediction: A
+
+[EventGraph] Processing: /root/hhq/dataset/Video-MME/videos/RvnC--JjDBw.mp4
+[Stage 1/3] Graph Construction...
+[TransNet V2] Loading pretrained model...
+  ✓ TransNet V2 loaded on cuda
+[TransNet V2] Detecting shots in: RvnC--JjDBw.mp4
+  Video info: 2039 frames, 30.00 fps
+  Processing video in chunks of 500 frames...
+    Processed 1000/2039 frames
+    Processed 2000/2039 frames
+    Processed 2039/2039 frames
+  Prediction stats: min=-15.716, max=3.293, mean=-8.549
+  NMS: 3 candidates → 3 boundaries
+  ✓ Detected 4 shots
+  ✓ Detected 4 variable-length events
+  - Detected 4 events
+  - Extracted features: Globaltorch.Size([4, 768]), Localtorch.Size([4, 256, 1024])
+  - Graph: torch.Size([4, 4])
+[Stage 2/3] Subgraph Selection...
+  - Selected 4 events: [0, 1, 2, 3]
+[Stage 3/3] Graph-CoT Inference...
+   📊 Processing 4 frames at 224x224
+   💬 Using 4 <image> tokens for 4 frames
+   💬 Prompt preview: USER: <image>
+<image>
+<image>
+<image>
+Question: Considering the context of the astronaut in the vide...
+   ✓ Processor succeeded
+  - Prediction: C
 
 [EventGraph] Processing: /root/hhq/dataset/Video-MME/videos/08km9Yqbt-A.mp4
 [Stage 1/3] Graph Construction...
-  - Detected 17 events
-  - Extracted features: Globaltorch.Size([17, 768]), Localtorch.Size([17, 256, 1024])
-  - Graph: torch.Size([17, 17])
+[TransNet V2] Loading pretrained model...
+  ✓ TransNet V2 loaded on cuda
+[TransNet V2] Detecting shots in: 08km9Yqbt-A.mp4
+  Video info: 3058 frames, 29.97 fps
+  Processing video in chunks of 500 frames...
+    Processed 1000/3058 frames
+    Processed 2000/3058 frames
+    Processed 3000/3058 frames
+    Processed 3058/3058 frames
+  Prediction stats: min=-13.728, max=4.212, mean=-7.558
+  NMS: 15 candidates → 14 boundaries
+  ✓ Detected 15 shots
+  ✓ Detected 15 variable-length events
+  - Detected 15 events
+  - Extracted features: Globaltorch.Size([15, 768]), Localtorch.Size([15, 256, 1024])
+  - Graph: torch.Size([15, 15])
 [Stage 2/3] Subgraph Selection...
-  - Selected 8 events: [0, 6, 8, 9, 10, 11, 12, 15]
+  - Selected 8 events: [0, 3, 5, 6, 8, 9, 10, 13]
 [Stage 3/3] Graph-CoT Inference...
    📊 Processing 8 frames at 224x224
    💬 Using 8 <image> tokens for 8 frames
@@ -1108,11 +1658,24 @@ Question: What is the No.2 cel...
 
 [EventGraph] Processing: /root/hhq/dataset/Video-MME/videos/08km9Yqbt-A.mp4
 [Stage 1/3] Graph Construction...
-  - Detected 17 events
-  - Extracted features: Globaltorch.Size([17, 768]), Localtorch.Size([17, 256, 1024])
-  - Graph: torch.Size([17, 17])
+[TransNet V2] Loading pretrained model...
+  ✓ TransNet V2 loaded on cuda
+[TransNet V2] Detecting shots in: 08km9Yqbt-A.mp4
+  Video info: 3058 frames, 29.97 fps
+  Processing video in chunks of 500 frames...
+    Processed 1000/3058 frames
+    Processed 2000/3058 frames
+    Processed 3000/3058 frames
+    Processed 3058/3058 frames
+  Prediction stats: min=-13.728, max=4.212, mean=-7.558
+  NMS: 15 candidates → 14 boundaries
+  ✓ Detected 15 shots
+  ✓ Detected 15 variable-length events
+  - Detected 15 events
+  - Extracted features: Globaltorch.Size([15, 768]), Localtorch.Size([15, 256, 1024])
+  - Graph: torch.Size([15, 15])
 [Stage 2/3] Subgraph Selection...
-  - Selected 8 events: [5, 6, 7, 12, 13, 14, 15, 16]
+  - Selected 8 events: [2, 3, 5, 10, 11, 12, 13, 14]
 [Stage 3/3] Graph-CoT Inference...
    📊 Processing 8 frames at 224x224
    💬 Using 8 <image> tokens for 8 frames
@@ -1130,11 +1693,24 @@ Question: On what date is the ...
 
 [EventGraph] Processing: /root/hhq/dataset/Video-MME/videos/08km9Yqbt-A.mp4
 [Stage 1/3] Graph Construction...
-  - Detected 17 events
-  - Extracted features: Globaltorch.Size([17, 768]), Localtorch.Size([17, 256, 1024])
-  - Graph: torch.Size([17, 17])
+[TransNet V2] Loading pretrained model...
+  ✓ TransNet V2 loaded on cuda
+[TransNet V2] Detecting shots in: 08km9Yqbt-A.mp4
+  Video info: 3058 frames, 29.97 fps
+  Processing video in chunks of 500 frames...
+    Processed 1000/3058 frames
+    Processed 2000/3058 frames
+    Processed 3000/3058 frames
+    Processed 3058/3058 frames
+  Prediction stats: min=-13.728, max=4.212, mean=-7.558
+  NMS: 15 candidates → 14 boundaries
+  ✓ Detected 15 shots
+  ✓ Detected 15 variable-length events
+  - Detected 15 events
+  - Extracted features: Globaltorch.Size([15, 768]), Localtorch.Size([15, 256, 1024])
+  - Graph: torch.Size([15, 15])
 [Stage 2/3] Subgraph Selection...
-  - Selected 8 events: [3, 4, 5, 6, 7, 11, 12, 16]
+  - Selected 8 events: [1, 2, 3, 4, 6, 9, 10, 14]
 [Stage 3/3] Graph-CoT Inference...
    📊 Processing 8 frames at 224x224
    💬 Using 8 <image> tokens for 8 frames
@@ -1151,5 +1727,5 @@ Question: What direction shoul...
   - Prediction: A
 
 ✅ Done! Results saved to ../result/eventgraph_200samples_7b_parallel/VideoMME_EventGraph-LMM_all_Video-LLaVA-7B_chunk2.json
-📈 Accuracy: 13/50 = 26.00%
+📈 Accuracy: 14/50 = 28.00%
 ❌ Errors: 0
