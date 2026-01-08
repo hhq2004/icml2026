@@ -1,0 +1,82 @@
+====================================================================================================
+📊 All Test Results Accuracy Report
+====================================================================================================
+
+✅ dycoke_smoke_test                             | DyCoke               |   13/50   =  26.00% ✓
+✅ eventgraph_200samples_7b                      | EventGraph-LMM       |   17/50   =  34.00% ⚠
+✅ eventgraph_200samples_7b_parallel             | EventGraph-LMM       |   69/200  =  34.50% ✓
+✅ eventgraph_50samples_7b_parallel              | EventGraph-LMM       |   18/50   =  36.00% ✓
+✅ eventgraph_full                               | EventGraph-LMM       |  822/2697 =  30.48% ✓
+✅ eventgraph_test                               | EventGraph-LMM       |  197/600  =  32.83% ✓
+✅ fastv_50samples_7b_parallel                   | FastV                |   16/50   =  32.00% ✓
+✅ no_compression_200samples_7b                  | No-Compression       |   73/200  =  36.50% ✓
+✅ scenegraph_cap_smoke_test                     | SceneGraph-Cap       |   17/50   =  34.00% ✓
+✅ test_50samples_7b_parallel                    | Q-Frame              |   16/50   =  32.00% ✓
+✅ tome_full_50samples_7b_parallel               | ToMe                 |   13/50   =  26.00% ✓
+
+====================================================================================================
+📈 Summary by Method
+====================================================================================================
+
+
+🔹 DyCoke
+────────────────────────────────────────────────────────────────────────────────────────────────────
+  • dycoke_smoke_test                             | 50 samples      |  26.00%
+
+🔹 EventGraph-LMM
+────────────────────────────────────────────────────────────────────────────────────────────────────
+  • eventgraph_full                               | 2697 samples    |  30.48%
+  • eventgraph_test                               | 600 samples     |  32.83%
+  • eventgraph_200samples_7b_parallel             | 200 samples     |  34.50%
+  • eventgraph_200samples_7b                      | 50 samples      |  34.00%
+  • eventgraph_50samples_7b_parallel              | 50 samples      |  36.00%
+  └─ Best (largest dataset): 30.48% (822/2697)
+
+🔹 FastV
+────────────────────────────────────────────────────────────────────────────────────────────────────
+  • fastv_50samples_7b_parallel                   | 50 samples      |  32.00%
+
+🔹 No-Compression
+────────────────────────────────────────────────────────────────────────────────────────────────────
+  • no_compression_200samples_7b                  | 200 samples     |  36.50%
+
+🔹 Q-Frame
+────────────────────────────────────────────────────────────────────────────────────────────────────
+  • test_50samples_7b_parallel                    | 50 samples      |  32.00%
+
+🔹 SceneGraph-Cap
+────────────────────────────────────────────────────────────────────────────────────────────────────
+  • scenegraph_cap_smoke_test                     | 50 samples      |  34.00%
+
+🔹 ToMe
+────────────────────────────────────────────────────────────────────────────────────────────────────
+  • tome_full_50samples_7b_parallel               | 50 samples      |  26.00%
+
+========================================================================================================================
+🏆 Complete Ranking (All Tests)
+========================================================================================================================
+
+   🥇 No-Compression (200 samples)                  |  36.50% (  73/200 )
+   🥈 EventGraph-LMM (50 samples)                   |  36.00% (  18/50  )
+   🥉 EventGraph-LMM (200 samples, parallel)        |  34.50% (  69/200 )
+  4. EventGraph-LMM (200 samples)                  |  34.00% (  17/50  )
+  5. SceneGraph-Cap (Smoke test)                   |  34.00% (  17/50  )
+  6. EventGraph-LMM (600 samples, Shot Detection fixed) |  32.83% ( 197/600 )
+  7. FastV (50 samples)                            |  32.00% (  16/50  )
+  8. Q-Frame (50 samples)                          |  32.00% (  16/50  )
+  9. EventGraph-LMM (Full Dataset)                 |  30.48% ( 822/2697)
+ 10. DyCoke (Smoke test)                           |  26.00% (  13/50  )
+ 11. ToMe (Full Dataset)                           |  26.00% (  13/50  )
+
+========================================================================================================================
+📁 Total folders scanned: 12
+✅ Valid results found: 11
+========================================================================================================================
+
+Legend:
+  ✓ = Sample count matches expected
+  ⚠ = Sample count mismatch (check if test was interrupted)
+
+Note:
+  - Results with more samples are generally more reliable
+  - Compare methods on the same sample count for fair evaluation
