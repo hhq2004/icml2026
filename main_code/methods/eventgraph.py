@@ -69,7 +69,18 @@ class EventGraphLMM(BaseMethod):
         print(f"[EventGraph-LMM] ✅ Initialization complete!")
     
     def _load_clip_model(self):
-        """加载CLIP-ViT-L/14 (论文Section 4.1)"""
+        """
+        加载CLIP-ViT-L/14模型用于图构建（论文Section 4.1）
+        
+        优先从本地路径加载模型，如果本地不存在则从Hugging Face下载。
+        模型加载后会移动到GPU并设置为评估模式。
+        
+        Raises:
+            Exception: 如果模型加载失败，抛出原始异常
+        
+        Note:
+            使用CLIP-ViT-L/14作为图构建的视觉编码器
+        """
         local_clip_path = "/root/hhq/models/clip-vit-large-patch14"
         
         if os.path.exists(local_clip_path):
